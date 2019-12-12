@@ -14,6 +14,8 @@ export freqdim,
        slice_end!,
        slice_duration,
        slice_duration!,
+       slice_timing,
+       slice_timing!,
        echo_time,
        echo_time!,
        inversion_time,
@@ -104,8 +106,12 @@ export freqdim,
        total_readout_time,
        total_readout_time!
 
-
-include("neuroproperty.jl")
 include("properties.jl")
+include("task_events.jl")
+include("spatial_properties.jl")
+include("modality_agnostic.jl")
+include("hardware.jl")
+include("sequence.jl")
+include("time.jl")
 
 end
