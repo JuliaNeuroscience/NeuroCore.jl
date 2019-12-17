@@ -189,7 +189,7 @@ denotes a decreased value with respect to the contrast suffix. This is commonly
 the case when Cerebral Blood Volume is estimated via usage of a contrast agent
 in conjunction with a T2* weighted acquisition protocol.
 """
-negative_contrast(x) = getter(x, "NegativeContrast", Bool, x -> false)
+negative_contrast(x) = getter(x, "NegativeContrast", Bool, i -> false)
 
 
 """

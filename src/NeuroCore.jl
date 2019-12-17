@@ -106,6 +106,11 @@ export freqdim,
        total_readout_time,
        total_readout_time!
 
+const OneF64Sec = 1.0u"s"
+const F64Sec = typeof(OneF64Sec)
+const OneF64Tesla = 1.0u"T"
+const F64Tesla = typeof(OneF64Tesla)
+
 include("utils.jl")
 include("properties.jl")
 include("coordinates.jl")

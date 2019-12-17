@@ -35,7 +35,7 @@ check_type(x, f, ::MissingProperty, default) = _check_type(x, f, default)
 _check_type(x, f::Function, default) = __check_type(x, f(x), default)
 _check_type(x, ::Type{T}, default) where {T}= __check_type(x, T, default)
 __check_type(x, ::Type{T}, f::Function) where {T} = __check_type(x, T, f(x))
-__check_type(x, ::Type{T}, val) where {T} = val isa T ? val : T(val)::T
+__check_type(x, ::Type{T}, val) where {T} = val isa T ? val : T(val)
 
 function setter_error(x, pname)
     error("$(typeof(x)) does not have `properties` method. Cannot set $(pname) property.")

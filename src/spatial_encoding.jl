@@ -102,7 +102,7 @@ See also: [`phase_encoding_direction`](@ref)
 phase_encoding_direction!(x, val) = setter!(x, "PhaseEncodingDirection", String, val)
 
 """
-    effective_echo_spacing(x) -> Float64
+    effective_echo_spacing(x) -> F64Sec
 
 Returns the effective echo spacing.
 
@@ -124,7 +124,7 @@ reflected in a single DICOM tag for all possible aforementioned scan
 manipulations). See [here](https://lcni.uoregon.edu/kb-articles/kb-0003) and
 [here](https://github.com/neurolabusc/dcm_qa/tree/master/In/TotalReadoutTime)
 """
-effective_echo_spacing(x) = getter(x, "EffectiveEchoSpacing", Float64, i -> 0.0)
+effective_echo_spacing(x) = getter(x, "EffectiveEchoSpacing", F64Sec, i -> 0.0u"s")
 
 """
     effective_echo_spacing!(x, val)
@@ -133,10 +133,10 @@ Sets the effective echo spacing.
 
 See also: [`effective_echo_spacing`](@ref)
 """
-effective_echo_spacing!(x, val) = setter!(x, "EffectiveEchoSpacing", Float64, val)
+effective_echo_spacing!(x, val) = setter!(x, "EffectiveEchoSpacing", F64Sec, val)
 
 """
-    total_readout_time(x) -> Float64
+    total_readout_time(x) -> F64Sec
 
 Returns the total readout time.
 
@@ -153,7 +153,7 @@ encoding directions are present (see 8.9.4).
 <sup>3</sup>We use the "FSL definition", i.e, the time between the center of the
 first "effective" echo and the center of the last "effective" echo.
 """
-total_readout_time(x) = getter(x, "TotalReadoutTime", Float64, i -> 1.0)
+total_readout_time(x) = getter(x, "TotalReadoutTime", F64Sec, i -> 1.0u"s")
 
 """
     total_readout_time!(x, val)
@@ -162,4 +162,4 @@ Sets the total readout time.
 
 See also: [`total_readout_time`](@ref)
 """
-total_readout_time!(x, val) = setter!(x, "TotalReadoutTime", Float64, val)
+total_readout_time!(x, val) = setter!(x, "TotalReadoutTime", F64Sec, val)
