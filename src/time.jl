@@ -207,4 +207,4 @@ delay_after_trigger!(x, val) = setter!(x, "DelayAfterTrigger", F64Sec, val)
 Returns start time in seconds in relation to the start of acquisition of the first
 data sample in the corresponding neural dataset (negative values are allowed).
 """
-start_time(x) = maybe_ustrip(first(timeaxis(x)))
+start_time(x) = first(timeaxis(x))

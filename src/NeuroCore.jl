@@ -111,7 +111,6 @@ const F64Sec = typeof(OneF64Sec)
 const OneF64Tesla = 1.0u"T"
 const F64Tesla = typeof(OneF64Tesla)
 
-include("utils.jl")
 include("properties.jl")
 include("coordinates.jl")
 include("hardware.jl")
