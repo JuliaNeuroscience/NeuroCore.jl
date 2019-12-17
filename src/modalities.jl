@@ -1,6 +1,11 @@
 
+abstract type NeuroModality end
+
+
+abstract type AnatomicalImage <: NeuroModality end
+
 struct T1WeightedImage <: AnatomicalImage end
-const T1w = T1Weighted()
+const T1w = T1WeightedImage()
 modality_label(::T1WeightedImage) = "T1w"
 
 struct T2WeightedImage <: AnatomicalImage end
@@ -25,11 +30,11 @@ modality_label(::T2StarImage) = "T2star"
 
 struct FastLowAngleShot <: AnatomicalImage end
 const FLASH = FastLowAngleShot()
-modality_label(::FLASH) = "FLASH"
+modality_label(::FastLowAngleShot) = "FLASH"
 
 struct FluidAttenuatedInversionRecovery <: AnatomicalImage end
 const FLAIR = FluidAttenuatedInversionRecovery()
-modality_label(::FLAIR) = "FLAIR"
+modality_label(::FluidAttenuatedInversionRecovery) = "FLAIR"
 
 struct ProtonDensity <: AnatomicalImage end
 const PD = ProtonDensity()
@@ -45,11 +50,11 @@ modalitylabel(::CombinedPDT2) = "PDT2"
 
 struct InplaneT1Image <: AnatomicalImage end
 const InplaneT1 = InplaneT1Image()
-modality_label(::InplaneT1) = "inplaneT1"
+modality_label(::InplaneT1Image) = "inplaneT1"
 
 struct InplaneT2Image <: AnatomicalImage end
 const InplaneT2 = InplaneT2Image()
-modality_label(::InplaneT2) = "inplaneT2"
+modality_label(::InplaneT2Image) = "inplaneT2"
 
 struct Angiography <: AnatomicalImage end
 modality_label(::Angiography) = "angio"
@@ -61,7 +66,7 @@ const DefaceMask = DefaceMaskImage()
 ###
 ### FunctionalImage
 ###
-abstract type FunctionalImage end
+abstract type FunctionalImage <: NeuroModality end
 
 struct BloodOxygenLevelDependent <: FunctionalImage end
 const BOLD = BloodOxygenLevelDependent()
@@ -120,13 +125,15 @@ const BVal = BValues()
 ###
 ### Electrode acquired modalities
 ###
-struct Magnetoencephalogram <: FunctionalImage end
-const MEG = Magnetoencephalography()
+abstract type Electrophysiology <: NeuroModality end
 
-struct Electroencephalogram <: FunctionalImage end
+struct Magnetoencephalogram <: Electrophysiology end
+const MEG = Magnetoencephalogram()
+
+struct Electroencephologram <: Electrophysiology end
 const EEG = Electroencephologram()
 
-struct InvasiveElectroencephalogram <: FunctionalImage end
+struct InvasiveElectroencephalogram <: Electrophysiology end
 const iEEG = InvasiveElectroencephalogram()
 
 struct Electrocorticogram <: Electrophysiology end

@@ -170,3 +170,26 @@ version compiled on MM/DD/YYYY"). |
 function pulse_sequence_details end
 =#
 
+#= TODO negative_contrast
+"""
+    negative_contrast -> Bool
+"""
+function negative_contrast end
+=#
+
+# TODO contrast_bolus_ingredient
+"""
+    contrast_bolus_ingredient(x) = ""
+
+Return active ingredient of constrast agent. Values MUST be one of: IODINE,
+GADOLINIUM, CARBON DIOXIDE, BARIUM, XENON.
+"""
+contrast_bolus_ingredient(x) = getter(x, "ContrastBolusIngredient", String, i -> "")
+
+"""
+    contrast_bolus_ingredient!(x, val)
+
+Sets the active ingredient of agent. Values MUST be one of: IODINE, GADOLINIUM,
+CARBON DIOXIDE, BARIUM, XENON.
+"""
+contrast_bolus_ingredient!(x, val) = setter!(x, "ContrastBolusIngredient", String, val)

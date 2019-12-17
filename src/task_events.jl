@@ -127,7 +127,3 @@ event_description(x) = getter(x, "EventDescription", String, x -> "")
 Returns Hierarchical Event Descriptor (HED) Tag. See Appendix III for details.
 """
 event_description!(x, val) = setter!(x, "EventDescription", String, val)
-
-
-
-

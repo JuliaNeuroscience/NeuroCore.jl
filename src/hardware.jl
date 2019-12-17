@@ -1,18 +1,4 @@
 """
-    bids_version(x)
-
-Returns the version of the BIDS standard that was used.
-"""
-bids_version(x) = getter(x, "BIDSVersion", String, x -> "1.0")
-
-"""
-    bids_version!(x, val)
-
-Sets the version of the BIDS standard that was used.
-"""
-bids_version!(x, val) = setter!(x, "BIDSVersion", String, val)
-
-"""
     manufacturer(x) -> String
 
 Returns the manufacturer of the equipment that produced the composite instances.

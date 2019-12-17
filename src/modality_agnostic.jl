@@ -12,7 +12,6 @@ Sets the name of the dataset.
 """
 dataset_name!(x, val) = dataset_name!(x, "Name", String, val)
 
-
 """
     bids_version(x)
 
@@ -33,7 +32,7 @@ bids_version!(x, val) = setter!(x, "BIDSVersion", String, val)
 Returns the license that a given dataset is distributed under? The use of
 license name abbreviations is suggested for specifying a license
 (e.g., PD, PDDL, CCO).
-""",
+"""
 license(x) = getter(x,  "License", String, x -> "")
 
 """
@@ -42,7 +41,7 @@ license(x) = getter(x,  "License", String, x -> "")
 Sets the license that a given dataset is distributed under? The use of
 license name abbreviations is suggested for specifying a license
 (e.g., PD, PDDL, CCO).
-""",
+"""
 license!(x, val) = setter!(x,  "License", String, val)
 
 """

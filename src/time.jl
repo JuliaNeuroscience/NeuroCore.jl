@@ -1,18 +1,3 @@
-# dwell_time - dicom_tag=(0x0019, 0x1018)
-# echo_time - dicom_tag=(0x0018, 0x0081)
-# inversion_time - dicom_tag=(0x0018, 0x0082)
-# repitition_time - dicom_tag=(0x0018,0x0080)
-# acqduration - dicom_tag=(0x0018, 0x9073)
-
-"""
-    is_time_axis(ni::Index) -> Bool
-
-Test whether the axis `ax` corresponds to time.
-"""
-is_time_axis(::T) where {T} = is_time_axis(T)
-is_time_axis(::Type{<:AbstractIndex{:time}}) = true
-is_time_axis(::Type{<:AbstractIndex{name}}) where {name} = false
-
 """
     time_units(img)
 
@@ -20,10 +5,6 @@ Returns the units (i.e. Unitful.unit) the time axis is measured in. If not avail
 `nothing` is returned.
 """
 time_units(x::Any) = unit(eltype(timeaxis(x)))
-
-timedim(x) = find_axis(istimeaxis, axes(x))
-
-time_axis(x) = filter_axes(is_time_axis, x)
 
 """
     echo_time(x) -> Float64
@@ -219,21 +200,10 @@ See also: [`delay_after_trigger`](@ref).
 """
 delay_after_trigger!(x, val) = setter!(x, "DelayAfterTrigger", Float64, val)
 
-# TODO
 """
     start_time(x) -> Float64
 
 Returns start time in seconds in relation to the start of acquisition of the first
 data sample in the corresponding neural dataset (negative values are allowed).
 """
-#=neuroproperty(
-    :start_time,
-    "StartTime",
-    Float64,
-    x -> Float64(maybe_ustrip(first(time_axis(x)))),
-    property_def="""
-    
-    """
-)
-=#
-
+start_time(x) = maybe_ustrip(first(timeaxis))

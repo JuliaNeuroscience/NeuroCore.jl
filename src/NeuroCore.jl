@@ -1,6 +1,6 @@
 module NeuroCore
 
-using ImageCore
+using ImageCore, ImageAxes, Unitful
 
 export freqdim,
        freqdim!,
@@ -106,12 +106,15 @@ export freqdim,
        total_readout_time,
        total_readout_time!
 
+include("utils.jl")
 include("properties.jl")
-include("task_events.jl")
-include("spatial_properties.jl")
-include("modality_agnostic.jl")
+include("coordinates.jl")
 include("hardware.jl")
+include("modalities.jl")
+include("modality_agnostic.jl")
+include("spatial_properties.jl")
 include("sequence.jl")
+include("task_events.jl")
 include("time.jl")
 
 end

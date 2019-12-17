@@ -5,14 +5,12 @@ struct CoordinateSystem{S} end
 """
 const UnkownSpace = CoordinateSystem{:unkown}()
 
-
 """
     ScannerSpace
 
 In scanner space.
 """
 const ScannerSpace = CoordinateSystem{:scanner}()
-
 
 """
     AnatomicalSpace
