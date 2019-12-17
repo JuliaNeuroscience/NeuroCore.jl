@@ -19,7 +19,12 @@
 # inversion_time - dicom_tag=(0x0018, 0x0082)
 # repitition_time - dicom_tag=(0x0018,0x0080)
 # acqduration - dicom_tag=(0x0018, 0x9073)
-
+# parallel_reduction_factor_inplane - dicomtag(0x0018,0x9069)
+# scan_options - Tag 0018, 0022
+# partial_fourier - dicom_tag=(0x0018,0x9081)
+# parallel_reduction_factor_in_plane - dicom (0x0018,0x9069)
+# parallel_acquisition_technique - dicom_tag=(0x0018,0x9078)
+# partial_fourier_direction - dicom_tag=(0x0018,0x9036)
 
 struct MissingProperty end
 const MProperty = MissingProperty()

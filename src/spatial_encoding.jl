@@ -1,4 +1,3 @@
-
 """
     nshots(x) -> Int
 
@@ -6,7 +5,7 @@ Returns the number of RF excitations needed to reconstruct a slice or volume.
 Please mind that this is not the same as Echo Train Length which denotes the
 number of lines of k-space collected after an excitation.
 """
-nshots(x) = getter(x,  "NumberRFExcitations", Int, x -> 0)
+nshots(x) = getter(x,  "NumberRFExcitations", Int, i -> 0)
 
 """
     nshots!(x, val)
@@ -15,46 +14,43 @@ Sets the number of RF excitations needed to reconstruct a slice or volume.
 """
 nshots!(x, val) = setter!(x,  "NumberRFExcitations", Int, val)
 
-
-#= TODO parallel_reduction_factor_in_plane
-neuroproperty(
-    :parallel_reduction_factor_in_plane,
-    "ParallelReductionFactorInPlane"
-
 """
+    parallel_reduction_factor_in_plane(x) -> Int
+
 The parallel imaging (e.g, GRAPPA) factor. Use the denominator of the fraction
 of k-space encoded for each slice. For example, 2 means half of k-space is
-encoded. Corresponds to DICOM Tag 0018, 9069 `Parallel Reduction Factor
-In-plane`.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
-
-    parallel_reduction_factor_inplane
-
-Measurement time reduction factor expressed as ratio of original and reduced
-measurement time for the in-plane direction. Required if Frame Type (0008,9007)
-Value 1 of this frame is ORIGINAL and Parallel Acquisition (0018,9077) equals
-YES. Otherwise may be present if Frame Type (0008,9007) Value 1 is DERIVED and
-Parallel Acquisition (0018,9077) equals YES.
+encoded.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 """
-function parallel_reduction_factor_inplane end
-dicomtag(::typeof(parallel_reduction_factor_inplane)) = (0x0018,0x9069)
-=#
+parallel_reduction_factor_in_plane(x) = getter(x, "ParallelReductionFactorInPlane", Int, i -> 0)
+
+"""
+    parallel_reduction_factor_in_plane!(x, val)
+
+Sets the `parallel_reduction_factor_inplane` property. See
+[`parallel_reduction_factor_inplane](@ref) for details.
+"""
+parallel_reduction_factor_in_plane!(x, val) = setter!(x, "ParallelReductionFactorInPlane", Int, val)
 
 """
     parallel_acquisition_technique(x) -> String
 
-The type of parallel imaging used (e.g. GRAPPA, SENSE).
+Returns the type of parallel imaging used (e.g. GRAPPA, SENSE).
 """
-parallel_acquisition_technique(x) = getter(x, "ParallelAcquisitionTechnique", String, x -> "")
+parallel_acquisition_technique(x) = getter(x, "ParallelAcquisitionTechnique", String, i -> "")
 
-# parallel_reduction_factor_in_plane - dicom_tag=(0x0018,0x9078)
+"""
+    parallel_acquisition_technique!(x, val)
 
-# TODO check partial fourier
+Sets the type of parallel imaging used (e.g. GRAPPA, SENSE).
+"""
+parallel_acquisition_technique!(x, val) = setter!(x, "ParallelAcquisitionTechnique", String, val)
+
 """
     partial_fourier(x) -> Float64
 
 Returns the fraction of partial Fourier information collected.
 """
-partial_fourier(x) = getter(x, "PartialFourier", Float64, x -> 1.0)
+partial_fourier(x) = getter(x, "PartialFourier", Float64, i -> 1.0)
 
 """
     partial_fourier!(x, val)
@@ -63,15 +59,12 @@ Set the fraction of partial Fourier information collected.
 """
 partial_fourier!(x, val) = setter!(x, "PartialFourier", Float64, val)
 
-# partial_fourier - dicom_tag=(0x0018,0x9081)
-
 """
     partial_fourier_direction(x) -> String
 
 Returns the direction where only partial Fourier information was collected.
 """
-partial_fourier_direction(x) = getter(x, "PartialFourierDirection", String, x -> "")
-# partial_fourier_direction - dicom_tag=(0x0018,0x9036)
+partial_fourier_direction(x) = getter(x, "PartialFourierDirection", String, i -> "")
 
 """
     partial_fourier_direction!(x, val)
@@ -97,7 +90,7 @@ parameter is REQUIRED if corresponding fieldmap data is present or when using
 multiple runs with different phase encoding directions (which can be later used
 for field inhomogeneity correction).
 """
-phase_encoding_direction(x) = getter(x, "PhaseEncodingDirection", String, x -> "")
+phase_encoding_direction(x) = getter(x, "PhaseEncodingDirection", String, i -> "")
 
 """
     phase_encoding_direction(x) -> String
@@ -131,7 +124,7 @@ reflected in a single DICOM tag for all possible aforementioned scan
 manipulations). See [here](https://lcni.uoregon.edu/kb-articles/kb-0003) and
 [here](https://github.com/neurolabusc/dcm_qa/tree/master/In/TotalReadoutTime)
 """
-effective_echo_spacing(x) = getter(x, "EffectiveEchoSpacing", Float64, x -> 0.0)
+effective_echo_spacing(x) = getter(x, "EffectiveEchoSpacing", Float64, i -> 0.0)
 
 """
     effective_echo_spacing!(x, val)
@@ -160,7 +153,7 @@ encoding directions are present (see 8.9.4).
 <sup>3</sup>We use the "FSL definition", i.e, the time between the center of the
 first "effective" echo and the center of the last "effective" echo.
 """
-total_readout_time(x) = getter(x, "TotalReadoutTime", Float64, x -> 1.0)
+total_readout_time(x) = getter(x, "TotalReadoutTime", Float64, i -> 1.0)
 
 """
     total_readout_time!(x, val)

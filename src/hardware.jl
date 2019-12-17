@@ -164,14 +164,19 @@ See also: ['coil_combination_method'](@ref)
 """
 coil_combination_method!(x, val) =  getter(x, "CoilCombinationMethod", String, val)
 
-#= TODO: determine type
-@property(manufacturer_model_name, "Manufacturer", x -> String, x -> "")
+# TODO: should this be a string or a v"xxx"
 """
-    software_versions(x) -> Vector
+    software_versions(x) -> String
 
-Manufacturer’s designation of software version of the equipment that produced
-the composite instances.
+Returns the manufacturer’s designation of software version of the equipment
+that produced the composite instances.
 """
-software_versions(x::Any) = ""
-=#
+software_versions(x) = getter(x, "SoftwareVersions", String, x -> "")
 
+"""
+    software_versions!(x, val)
+
+Sets the manufacturer’s designation of software version of the equipment
+that produced the composite instances.
+"""
+software_versions!(x, val) = setter!(x, "SoftwareVersions", String, val)

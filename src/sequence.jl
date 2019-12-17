@@ -146,40 +146,61 @@ Returns the multiband factor, for multiband acquisitions.
 """
 multiband_acceleration_factor!(x, val) = setter!(x, "MultibandAccelerationFactor", String, val)
 
-#= TODO: scan_options is this the same as scanning_sequence
+# TODO: what's the best type for this?
 """
-    scan_options
+    scan_options(x)
 
-Parameters of ScanningSequence. Corresponds to DICOM 
-`Scan Options`.
+Parameters of ScanningSequence. Corresponds to DICOM  `Scan Options`.
 """
-scan_options
-# scan_options - Tag 0018, 0022
+scan_options(x) = getter(x, "ScanOptions", Any, i -> Dict{String,Any}())
 
-=#
-
-#= TODO pulse_sequence_details
 """
-    pulse_sequence_details
+    scan_options!(x, val)
 
-Information beyond pulse sequence type that identifies the specific pulse
+Sets the parameters of ScanningSequence.
+"""
+scan_options!(x, val) = setter!(x, "ScanOptions", Any, val)
+
+"""
+    pulse_sequence_details(x) -> String
+
+Returns information beyond pulse sequence type that identifies the specific pulse
 sequence used (i.e. "Standard Siemens Sequence distributed with the VB17
 software," "Siemens WIP ### version #.##," or "Sequence written by X using a
-version compiled on MM/DD/YYYY"). |
+version compiled on MM/DD/YYYY").
 """
-function pulse_sequence_details end
-=#
+pulse_sequence_details(x) = getter(x, "PulseSequenceDetails", String, i -> "")
 
-#= TODO negative_contrast
 """
-    negative_contrast -> Bool
-"""
-function negative_contrast end
-=#
+    pulse_sequence_details!(x, val)
 
-# TODO contrast_bolus_ingredient
+Returns information beyond pulse sequence type that identifies the specific pulse
+sequence used (i.e. "Standard Siemens Sequence distributed with the VB17
+software," "Siemens WIP ### version #.##," or "Sequence written by X using a
+version compiled on MM/DD/YYYY").
 """
-    contrast_bolus_ingredient(x) = ""
+pulse_sequence_details!(x, val) = setter!(x, "PulseSequenceDetails", String, val)
+
+"""
+    negative_contrast(x) -> Bool
+
+Returns value specifying whether increasing voxel intensity (within sample voxels)
+denotes a decreased value with respect to the contrast suffix. This is commonly
+the case when Cerebral Blood Volume is estimated via usage of a contrast agent
+in conjunction with a T2* weighted acquisition protocol.
+"""
+negative_contrast(x) = getter(x, "NegativeContrast", Bool, x -> false)
+
+
+"""
+    negative_contrast!(x, val)
+
+Sets the `negative_contrast` property. See [`negative_contrast`](@ref) for details.
+"""
+negative_contrast!(x, val) = setter!(x, "NegativeContrast", Bool, val)
+
+"""
+    contrast_bolus_ingredient(x) -> String
 
 Return active ingredient of constrast agent. Values MUST be one of: IODINE,
 GADOLINIUM, CARBON DIOXIDE, BARIUM, XENON.

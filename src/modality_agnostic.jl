@@ -134,7 +134,6 @@ Sets the Document Object Identifier of the dataset (not the corresponding paper)
 """
 doi!(x, val) = getter(x, "DatasetDOI", String, val)
 
-
 """
     stream_offset(x) -> Int
 
