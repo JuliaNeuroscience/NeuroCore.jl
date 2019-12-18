@@ -3,7 +3,7 @@ struct CoordinateSystem{S} end
 """
     UnkownSpace
 """
-const UnkownSpace = CoordinateSystem{:unkown}()
+const UnknownSpace = CoordinateSystem{:unknown}()
 
 """
     ScannerSpace
