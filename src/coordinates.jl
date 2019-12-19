@@ -168,5 +168,4 @@ the corresponding tuple converted to an array.
 """
 affine_matrix(x::Any) = getter(x, "affine_matrix", MMatrix{4,4,Float64,16}, i -> default_affinemat(i))
 
-
 affine_matrix!(x::Any, val::AbstractMatrix) = setter!(x, "affine_matrix", val, MMatrix{4,4,Float64,16})

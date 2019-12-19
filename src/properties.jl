@@ -1,41 +1,14 @@
-# TODO these are dicom tags accompnying formal properties
-# flip_angle - dicom_tag = (0x0018,0x1314)
-# contrast_bolus_ingredient (0x0018,0x1048)
-# sequence_name - dicom_tag=(0x0018,0x0024)
-# scanning_sequence - dicom_tag=(0x0018, 0x0020)
-# sequence_variant - dicom_tag=(0x0018,0x0021)
-# manufacturer - dicom_tag=(0x0008, 0x0070)
-# manufacturer_model_name - dicom_tag=(0x0008, 0x1090)
-# device_serial_number - dicom_tag = (0x0018, 0x1000)
-# software_versions - dicomtag(::typeof(software_versions)) = (0x0018, 0x1020)
-# magnetic_field_strength - dicom_tag=(0x0018,0x0087)
-# receiver_coil_name - dicom_tag=(0x0018, 0x1250)
-# institution_name - dicom_tag = (0x0008,0x0080)
-# institution_address - dicom_tag = (0x0008,0x0081)
-# institutional_department_name - dicom_tag=(0x0008,0x1040)
-# station_name - dicom_tag=(0x0008, 0x1010)
-# dwell_time - dicom_tag=(0x0019, 0x1018)
-# echo_time - dicom_tag=(0x0018, 0x0081)
-# inversion_time - dicom_tag=(0x0018, 0x0082)
-# repitition_time - dicom_tag=(0x0018,0x0080)
-# acqduration - dicom_tag=(0x0018, 0x9073)
-# parallel_reduction_factor_inplane - dicomtag(0x0018,0x9069)
-# scan_options - Tag 0018, 0022
-# partial_fourier - dicom_tag=(0x0018,0x9081)
-# parallel_reduction_factor_in_plane - dicom (0x0018,0x9069)
-# parallel_acquisition_technique - dicom_tag=(0x0018,0x9078)
-# partial_fourier_direction - dicom_tag=(0x0018,0x9036)
-
 struct MissingProperty end
 const MProperty = MissingProperty()
 
-check_type(x, f, val, default) where {X} = _check_type(x, f, val)
-check_type(x, f, ::MissingProperty, default) = _check_type(x, f, default)
+check_type(x, ptype, ::MissingProperty, default) = _to_type(x, ptype, default)
+check_type(x, ptype, val, default) = _to_type(x, ptype, val)
 
-_check_type(x, f::Function, default) = __check_type(x, f(x), default)
-_check_type(x, ::Type{T}, default) where {T}= __check_type(x, T, default)
-__check_type(x, ::Type{T}, f::Function) where {T} = __check_type(x, T, f(x))
-__check_type(x, ::Type{T}, val) where {T} = val isa T ? val : T(val)
+_to_type(x, ptype::Function, val::Function) = __to_type(ptype(x), val(x))
+_to_type(x, ptype::Function, val) = __to_type(ptype(x), val)
+_to_type(x, ::Type{T}, val::Function) where {T} = __to_type(T, val(x))
+_to_type(x, ::Type{T}, val) where {T} = __to_type(T, val)
+__to_type(::Type{T}, val) where {T} = val isa T ? val : T(val)::T
 
 function setter_error(x, pname)
     error("$(typeof(x)) does not have `properties` method. Cannot set $(pname) property.")
@@ -47,7 +20,7 @@ end
 Provides a type stable interface to retreiving properties from the properties of `x`.
 
 * `x::Any`: Any object that may or may not have properties as defined in `ImageCore.jl`.
-* `pname::String`: The property name that should be searched for in `x`'s properties.
+* `pname::Symbol`: The property name that should be searched for in `x`'s properties.
 * `ptype::Union{Function,Type}`: If `pytype` is a `Type` then whatever is returned
   is first converted to this type. If `ptype` is a `Function` then `ptype(x)` is called
   to determine the appropriate return type.
@@ -61,7 +34,7 @@ Provides a type stable interface to retreiving properties from the properties of
 ```
 julia> new_property(x) = getter(x, "new_property", String, x -> "nothing")
 
-julia> p = Dict{String,Any}()
+julia> p = Dict{Symbol,Any}()
 
 julia> new_property(p)
 "nothing"
@@ -75,7 +48,7 @@ julia> new_property(p)
 getter(x, pname, ptype, pdef) = _pre_getter(HasProperties(x), x, pname, ptype, pdef)
 getter(x::AbstractDict, pname, ptype, pdef) = check_type(x, ptype, _getter(x, pname), pdef)
 _pre_getter(::HasProperties{true}, x, pname, ptype, pdef) = check_type(x, ptype, _getter(properties(x), pname), pdef)
-_pre_getter(::HasProperties{false}, x, pname, ptype, pdef) = check_type(x, f, MProperty, pdef)
+_pre_getter(::HasProperties{false}, x, pname, ptype, pdef) = check_type(x, ptype, MProperty, pdef)
 _getter(x, pname) = get(x, pname, MProperty)
 
 
@@ -85,7 +58,7 @@ _getter(x, pname) = get(x, pname, MProperty)
 Provides a type stable interface to setting the properties the properties of `x`.
 
 * `x::Any`: Any object that may or may not have properties as defined in `ImageCore.jl`.
-* `pname::String`: The property name that should be searched for in `x`'s properties.
+* `pname::Symbol`: The property name that should be searched for in `x`'s properties.
 * `ptype::Union{Function,Type}`: If `pytype` is a `Type` then `val` is ensured to
   be a subtype of this. If `ptype` is a `Function` then `ptype(x)` is called
   to determine the appropriate `Type` the `val` should be a subtype of.
@@ -95,7 +68,7 @@ Provides a type stable interface to setting the properties the properties of `x`
 ```
 julia> new_property!(x, val) = setter!(x, "new_property", String, val)
 
-julia> p = Dict{String,Any}()
+julia> p = Dict{Symbol,Any}()
 
 julia> new_property(p, "not nothing")
 

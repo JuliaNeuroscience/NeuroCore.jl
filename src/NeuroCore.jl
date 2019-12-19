@@ -1,75 +1,9 @@
 module NeuroCore
 
-using ImageCore, ImageAxes, Unitful
+using ImageCore, ImageAxes, Unitful, ImageMetadata #CoordinateTransformations, Rotations
 
-export freqdim,
-       freqdim!,
-       slicedim,
-       slicedim!,
-       phasedim,
-       phasedim!,
-       slice_start,
-       slice_start!,
-       slice_end,
-       slice_end!,
-       slice_duration,
-       slice_duration!,
-       slice_timing,
-       slice_timing!,
-       echo_time,
-       echo_time!,
-       inversion_time,
-       inversion_time!,
-       delay_time,
-       delay_time!,
-       acquisition_duration,
-       acquisition_duration!,
-       delay_after_trigger,
-       delay_after_trigger!,
-       start_time,
-       start_time!,
-       nvol_user_discarded,
-       nvol_user_discarded!,
-       nvol_scanner_discarded,
-       nvol_scanner_discarded!,
-       institution_name,
-       institution_name!,
-       institution_address,
-       institution_address!,
-       institutional_department_name,
-       institutional_department_name!,
-       station_name,
-       station_name!,
-       manufacturer,
-       manufacturer!,
-       manufacturer_model_name,
-       manufacturer_model_name!,
-       magnetic_field_strength,
-       magnetic_field_strength!,
-       receiver_coil_name,
-       receiver_coil_name!,
-       receive_coil_active_elements,
-       receive_coil_active_elements!,
-       gradient_set_type,
-       gradient_set_type!,
-       matrix_coil_mode,
-       matrix_coil_mode!,
-       coil_combination_method,
-       coil_combination_method!,
-       flip_angle,
-       flip_angle!,
-       multiband_acceleration_factor,
-       multiband_acceleration_factor!,
-       pulse_sequence,
-       pulse_sequence!,
-       scanning_sequence,
-       scanning_sequence!,
-       sequence_variant,
-       sequence_variant!,
-       sequence_name,
-       sequence_name!,
-       nonlinear_gradient_correction,
-       nonlinear_gradient_correction!,
+export NeuroMetadata,
+       NeuroMetaArray,
        event_onset,
        event_onset!,
        event_duration,
@@ -88,37 +22,37 @@ export freqdim,
        calmin,
        calmin!,
        magic_bytes,
-       magic_bytes!,
-       nshots,
-       nshots!,
-       parallel_reduction_factor_in_plane,
-       parallel_reduction_factor_in_plane!,
-       parallel_acquisition_technique,
-       parallel_acquisition_technique!,
-       partial_fourier,
-       partial_fourier!,
-       partial_fourier_direction,
-       partial_fourier_direction!,
-       phase_encoding_direction,
-       phase_encoding_direction!,
-       effective_echo_spacing,
-       effective_echo_spacing!,
-       total_readout_time,
-       total_readout_time!
+       magic_bytes!
 
 const OneF64Sec = 1.0u"s"
 const F64Sec = typeof(OneF64Sec)
+
 const OneF64Tesla = 1.0u"T"
 const F64Tesla = typeof(OneF64Tesla)
 
+const OneF64Hz = 1.0u"Hz"
+const F64Hz = typeof(OneF64Hz)
+
+const OneIntDeg = 1.0u"°"
+const IntDeg = typeof(OneIntDeg)
+
 include("properties.jl")
 include("coordinates.jl")
-include("hardware.jl")
+include("bids_entities.jl")
 include("modalities.jl")
 include("modality_agnostic.jl")
 include("spatial_properties.jl")
-include("sequence.jl")
 include("task_events.jl")
-include("time.jl")
+include("data.jl")
+include("metadata.jl")
+include("getproperty.jl")
+include("array.jl")
+
+function help(s::Symbol)
+    t = getfield(NeuroCore, Docs.META)[Docs.Binding(NeuroCore, s)].docs[Tuple{Any}].text
+    for t_i in t
+        println(t_i)
+    end
+end
 
 end

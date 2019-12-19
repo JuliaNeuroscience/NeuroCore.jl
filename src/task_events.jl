@@ -1,4 +1,3 @@
-
 """
     onset(x) -> F64Sec
 
@@ -93,7 +92,6 @@ stimulus_file(x) = getter(x, "StimulusFile", String, i -> "")
 Sets the `stimulus_file` property. See [`stimulus_file`](@ref) for more details.
 """
 stimulus_file!(x, val) = setter!(x, "StimulusFile", String, val)
-
 
 """
     event_marker(x) -> String
