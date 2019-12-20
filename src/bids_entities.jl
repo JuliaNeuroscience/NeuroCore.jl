@@ -75,8 +75,8 @@ CogPOID!(x, val) =  getter(x, :CogPOID, String, val)
 """
     ContrastBolusIngredient(x) -> String
 
-Return active ingredient of constrast agent. Values MUST be one of: IODINE,
-GADOLINIUM, CARBON DIOXIDE, BARIUM, XENON.
+Return active ingredient of constrast agent. See [`ContrastIngrediant`](@ref) for
+more details.
 """
 ContrastBolusIngredient(x) = getter(x, :ContrastBolusIngredient, String, i -> "")
 ContrastBolusIngredient!(x, val) = setter!(x, :ContrastBolusIngredient, String, val)
@@ -506,7 +506,7 @@ PartialFourierDirection(x) = getter(x, :PartialFourierDirection, String, i -> ""
 PartialFourierDirection!(x, val) = setter!(x, :PartialFourierDirection, String, val)
 
 """
-    PhaseEncodingDirection(x) -> String
+    PhaseEncodingDirection(x) -> EncodingDirection
 
 Returns the phase encoding direction.
 
@@ -522,8 +522,8 @@ parameter is REQUIRED if corresponding fieldmap data is present or when using
 multiple runs with different phase encoding directions (which can be later used
 for field inhomogeneity correction).
 """
-PhaseEncodingDirection(x) = getter(x, :PhaseEncodingDirection, String, i -> "")
-PhaseEncodingDirection!(x, val) = setter!(x, :PhaseEncodingDirection, String, val)
+PhaseEncodingDirection(x) = EncodingDirection(phasedim(x))
+PhaseEncodingDirection!(x, val) = slicedim(x, val)
 
 """
     PowerLineFrequency(x) -> F64Hz
@@ -670,21 +670,21 @@ SequenceVarient(x) = getter(x, :SequenceVarient, String, i -> "")
 SequenceVarient!(x, val) = setter!(x, :SequenceVarient, String, val)
 
 """
-    SliceEncodingDirection(x) -> String
+    SliceEncodingDirection(x) -> EncodingDirection
 
-Possible values: i, j, k, i-, j-, k- (the axis of the NIfTI data along which
+Possible values: `i`, `j`, `k`, `ineg, `jneg`, `kneg` (the axis of the NIfTI data along which
 slices were acquired, and the direction in which SliceTiming is defined with
-respect to). i, j, k identifiers correspond to the first, second and third axis
-of the data in the NIfTI file. A - sign indicates that the contents of
+respect to). `i`, `j`, `k` identifiers correspond to the first, second and third axis
+of the data in the NIfTI file. `*neg` indicates that the contents of
 SliceTiming are defined in reverse order - that is, the first entry corresponds
 to the slice with the largest index, and the final entry corresponds to slice
 index zero. When present, the axis defined by SliceEncodingDirection needs to be
-consistent with the ‘slice_dim’ field in the NIfTI header. When absent, the
+consistent with the ‘slicedim’ field in the NIfTI header. When absent, the
 entries in SliceTiming must be in the order of increasing slice index as defined
 by the NIfTI header.
 """
-SliceEncodingDirection(x) = getter(x, :SliceEncodingDirection, String, i -> "")
-SliceEncodingDirection!(x, val) = setter!(x, :SliceEncodingDirection, String, val)
+SliceEncodingDirection(x) = EncodingDirection(slicedim(x))
+SliceEncodingDirection!(x, val) = slicedim!(x, val)
 
 """
     SliceTiming(x) -> Vector{F64Sec}
@@ -787,4 +787,3 @@ AcquisitionDuration be defined.
 """
 VolumeTiming(x) = getter(x, :VolumeTiming, Vector{F64Sec}, i -> F64Sec[])
 VolumeTiming!(x, val) = setter!(x, :VolumeTiming, Vector{F64Sec}, val)
-

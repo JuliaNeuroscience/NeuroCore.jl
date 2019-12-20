@@ -1,4 +1,3 @@
-
 """
     is_electrophysiology(::T) -> Bool
 
