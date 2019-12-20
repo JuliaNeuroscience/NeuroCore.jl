@@ -10,13 +10,34 @@ to the slice with the largest index, and the final entry corresponds to slice
 index zero. 
 """
 @enum EncodingDirection begin
-    i = 1
-    in = -1
-    j = 2
-    jn = -2
-    k = 3
-    kn = -3
+    ipos = 1
+    ineg = -1
+    jpos = 2
+    jneg = -2
+    kpos = 3
+    kneg = -3
 end
+
+EncodingDirection(e::AbstractString) = EncodingDirection(Symbol(e))
+function EncodingDirection(e::Symbol)
+    if e === Symbol("i")
+        return ipos
+    elseif e === Symbol("i-")
+        return ineg
+    elseif e === Symbol("j+")
+        return jpos
+    elseif e === Symbol("j-")
+        return jneg
+    elseif e === Symbol("k+")
+        return kpos
+    elseif e === Symbol("k-")
+        return kneg
+    else
+        error("$e is not a supported encoding direction.")
+    end
+end
+
+Base.String(e::EncodingDirection) = String(Symbol(e))
 
 """
     ContrastIngrediant
@@ -28,6 +49,7 @@ An enumerable type with the following possible values:
 * `DIOXIDE`
 * `BARIUM`
 * `XENON`
+* `UnkownContrast`
 """
 @enum ContrastIngrediant begin
     IODINE
@@ -36,6 +58,7 @@ An enumerable type with the following possible values:
     DIOXIDE
     BARIUM
     XENON
+    UnkownContrast
 end
 ContrastIngrediant(i::AbstractString) = ContrastIngrediant(Symbol(i))
 function ContrastIngrediant(i::Symbol)
@@ -52,8 +75,7 @@ function ContrastIngrediant(i::Symbol)
     elseif i === :XENON
         return XENON
     else
-        error("$i is not a supported contrast ingredient. See ContrastIngrediant
-              for supported ingrediants.")
+        return UnkownContrast
     end
 end
 Base.String(i::ContrastIngrediant) = String(Symbol(i))

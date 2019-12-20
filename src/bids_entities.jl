@@ -10,15 +10,15 @@ AcquisitionDuration(x) = getter(x, :AcquisitionDuration, F64Sec, i -> 1.0u"s")
 AcquisitionDuration!(x, val) = setter!(x, :AcquisitionDuration, F64Sec, val)
 
 """
-    AnatomicalLandmarkCoordinates(x) -> Dict{String,NTuple{3,Float64}}
+    AnatomicalLandmarkCoordinates(x) -> CoordinateList
 
 Key:value pairs of any number of additional anatomical landmarks and their coordinates
 in voxel units (where first voxel has index 0,0,0) relative to the associated anatomical
-MRI, (e.g. Dict("AC" => (127.0,119.0,149.0), "PC"=> (128.0,93.0,141.0),
-"IH"=> (131.0114.0,206.0)).
+MRI, (e.g. Dict(:AC => (127.0,119.0,149.0), :PC=> (128.0,93.0,141.0),
+:IH=> (131.0114.0,206.0)).
 """
-AnatomicalLandmarkCoordinates(x) = getter(x, :AnatomicalLandmarkCoordinates, Dict{String,NTuple{3,Float64}}, i -> Dict{String,NTuple{3,Float64}}())
-AnatomicalLandmarkCoordinates!(x, val) = setter!(x, :AnatomicalLandmarkCoordinates, Dict{String,NTuple{3,Float64}}, val)
+AnatomicalLandmarkCoordinates(x) = getter(x, :AnatomicalLandmarkCoordinates, CoordinateList, i -> CoordinateList())
+AnatomicalLandmarkCoordinates!(x, val) = setter!(x, :AnatomicalLandmarkCoordinates, CoordinateList, val)
 
 """
     AnatomicalLandmarkCoordinateSystem(x)
@@ -53,7 +53,7 @@ combination, but other methods exist. The image reconstruction is changed by
 the coil combination method (as for the matrix coil mode above), so anything
 non-standard should be reported.
 """
-CoilCombinationMethod(x) =  getter(x, :CoilCombinationMethod, String, i -> "")
+CoilCombinationMethod(x) =  getter(x, :CoilCombinationMethod, String, i -> "rSOS")
 CoilCombinationMethod!(x, val) =  getter(x, :CoilCombinationMethod, String, val)
 
 """
@@ -78,8 +78,8 @@ CogPOID!(x, val) =  getter(x, :CogPOID, String, val)
 Return active ingredient of constrast agent. See [`ContrastIngrediant`](@ref) for
 more details.
 """
-ContrastBolusIngredient(x) = getter(x, :ContrastBolusIngredient, String, i -> "")
-ContrastBolusIngredient!(x, val) = setter!(x, :ContrastBolusIngredient, String, val)
+ContrastBolusIngredient(x) = getter(x, :ContrastBolusIngredient, ContrastIngrediant, i -> UnkownContrast)
+ContrastBolusIngredient!(x, val) = setter!(x, :ContrastBolusIngredient, ContrastIngrediant, val)
 
 """
     DelayTime(x) -> F64Sec
@@ -213,17 +213,8 @@ Boolean field to specify if electrical stimulation was done during the recording
 (options are `true` or `false`). Parameters for event-like stimulation should be
 specified in the _events.tsv file.
 """
-ElectricalStimulation(x) = getter(x, :ElectricalStimulationParameters, Bool, i -> false)
-ElectricalStimulation!(x, val) = setter!(x, :ElectricalStimulationParameters, Bool, val)
-
-"""
-    EpochLength(x) -> F64Sec
-
-Duration of individual epochs in seconds (e.g., 1) in case of epoched data. If
-recording was continuous or discontinuous, leave out the field.
-"""
-EpochLength(x) = getter(x, :EpochLength, F64Sec, OneF64Sec)
-EpochLength!(x, val) = getter(x, :EpochLength, F64Sec, val)
+ElectricalStimulation(x) = getter(x, :ElectricalStimulation, Bool, i -> false)
+ElectricalStimulation!(x, val) = setter!(x, :ElectricalStimulation, Bool, val)
 
 """
     ElectricalStimulationParameters(x) -> String
@@ -234,6 +225,15 @@ described here in freeform text.
 """
 ElectricalStimulationParameters(x) = getter(x, :ElectricalStimulationParameters, String, i -> "")
 ElectricalStimulationParameters!(x, val) = setter!(x, :ElectricalStimulationParameters, String, val)
+
+"""
+    EpochLength(x) -> F64Sec
+
+Duration of individual epochs in seconds (e.g., 1) in case of epoched data. If
+recording was continuous or discontinuous, leave out the field.
+"""
+EpochLength(x) = getter(x, :EpochLength, F64Sec, OneF64Sec)
+EpochLength!(x, val) = getter(x, :EpochLength, F64Sec, val)
 
 """
     FiducialDescription(x) -> String
@@ -249,12 +249,12 @@ FiducialDescription(x) = getter(x, :FiducialDescription, String, i -> "")
 FiducialDescription!(x, val) = setter!(x, :FiducialDescription, String, val)
 
 """
-    FlipAngle(x) -> Int
+    FlipAngle(x) -> IntDeg
 
 Returns the flip angle for the acquisition in degrees.
 """
-FlipAngle(x) = getter(x, :FlipAngle, Int, i -> 0)
-FlipAngle!(x, val) = setter!(x, :FlipAngle, Int, val)
+FlipAngle(x) = getter(x, :FlipAngle, IntDeg, i -> OneIntDeg)
+FlipAngle!(x, val) = setter!(x, :FlipAngle, IntDeg, val)
 
 """
     GradientSetType(x) -> String
@@ -268,7 +268,7 @@ GradientSetType(x) = getter(x, :GradientSetType, String, i -> "")
 GradientSetType!(x, val) = setter!(x, :GradientSetType, String, val)
 
 """
-    HeadCoilCoordinates(x) -> Dict{String,NTuple{3,Float64}}
+    HeadCoilCoordinates(x) -> CoordinateList
 
 Key:value pairs describing head localization coil labels and their coordinates,
 interpreted following the HeadCoilCoordinateSystem, e.g., {NAS: [12.7,21.3,13.9],
@@ -277,8 +277,8 @@ at locations that have a known anatomical name (e.g. for Elekta, Yokogawa system
 in that case generic labels can be used (e.g. {coil1: [12.2,21.3,12.3],
 coil2: [6.7,12.3,8.6], coil3: [21.9,11.0,8.1]} ).
 """
-HeadCoilCoordinates(x) = getter(x, :HeadCoilCoordinates, Dict{String,NTuple{3,Float64}}, i -> Dict{String,NTuple{3,Float64}}())
-HeadCoilCoordinates!(x, val) = setter!(x, :HeadCoilCoordinates, Dict{String,NTuple{3,Float64}}, val)
+HeadCoilCoordinates(x) = getter(x, :HeadCoilCoordinates, CoordinateList, i -> CoordinateList())
+HeadCoilCoordinates!(x, val) = setter!(x, :HeadCoilCoordinates, CoordinateList, val)
 
 """
     HeadCoilCoordinateSystem(x) -> CoordinateSystem
@@ -510,17 +510,12 @@ PartialFourierDirection!(x, val) = setter!(x, :PartialFourierDirection, String, 
 
 Returns the phase encoding direction.
 
-Possible values: `i`, `j`, `k`, `i-`, `j-`, `k-`. The letters `i`, `j`, `k`
-correspond to the first, second and third axis of the data in the NIFTI file.
-The polarity of the phase encoding is assumed to go from zero index to maximum
-index unless `-` sign is present (then the order is reversed - starting from
-the highest index instead of zero). `PhaseEncodingDirection` is defined as the
-direction along which phase is was modulated which may result in visible
-distortions. Note that this is not the same as the DICOM term
-`InPlanePhaseEncodingDirectiong` which can have `ROW` or `COL` values. This
-parameter is REQUIRED if corresponding fieldmap data is present or when using
-multiple runs with different phase encoding directions (which can be later used
-for field inhomogeneity correction).
+`PhaseEncodingDirection` is defined as the direction along which phase is was
+modulated which may result in visible distortions. Note that this is not the
+same as the DICOM term `InPlanePhaseEncodingDirectiong` which can have `ROW` or
+`COL` values. This parameter is REQUIRED if corresponding fieldmap data is present
+or when using multiple runs with different phase encoding directions (which can
+be later used for field inhomogeneity correction).
 """
 PhaseEncodingDirection(x) = EncodingDirection(phasedim(x))
 PhaseEncodingDirection!(x, val) = slicedim(x, val)

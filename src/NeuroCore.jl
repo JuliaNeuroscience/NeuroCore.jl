@@ -1,6 +1,6 @@
 module NeuroCore
 
-using ImageCore, ImageAxes, Unitful, ImageMetadata, Markdown #CoordinateTransformations, Rotations
+using ImageCore, ImageAxes, Unitful, ImageMetadata, Markdown
 
 export NeuroMetadata,
        NeuroMetaArray,
@@ -27,7 +27,9 @@ const F64Hz = typeof(OneF64Hz)
 const OneIntDeg = 1.0u"°"
 const IntDeg = typeof(OneIntDeg)
 
-#include("enums.jl")
+const CoordinateList = Dict{Symbol,NTuple{3,Float64}}
+
+include("enums.jl")
 include("properties.jl")
 include("coordinates.jl")
 include("bids_entities.jl")
