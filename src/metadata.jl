@@ -24,7 +24,7 @@ Base.get(m::NeuroMetadata, k, default) = get(properties(m), k, default)
 
 Base.get!(m::NeuroMetadata, k, default) = get!(properties(m), k, default)
 
-Base.in(m::NeuroMetadata, k) = in(propname(m), k)
+Base.in(k, m::NeuroMetadata) = in(k, propname(m))
 
 Base.getkey(m::NeuroMetadata, k, default) = getkey(properties(m), k, default)
 

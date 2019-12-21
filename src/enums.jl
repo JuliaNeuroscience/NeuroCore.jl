@@ -24,11 +24,11 @@ function EncodingDirection(e::Symbol)
         return ipos
     elseif e === Symbol("i-")
         return ineg
-    elseif e === Symbol("j+")
+    elseif e === Symbol("j")
         return jpos
     elseif e === Symbol("j-")
         return jneg
-    elseif e === Symbol("k+")
+    elseif e === Symbol("k")
         return kpos
     elseif e === Symbol("k-")
         return kneg

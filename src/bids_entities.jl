@@ -2,7 +2,7 @@
     AcquisitionDuration(x) -> F64Sec
 
 Duration (in seconds) of volume acquisition. This field is REQUIRED for
-sequences that are described with the VolumeTimingfield and that not have the
+sequences that are described with the VolumeTimingfield and that do not have the
 SliceTiming field set to allowed for accurate calculation of "acquisition time".
 This field is mutually exclusive with RepetitionTime.
 """

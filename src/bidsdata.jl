@@ -1,3 +1,37 @@
+"""
+    BIDSMetadata
+
+Metadata for describing a BIDS dataset.
+
+
+* `name::String`: The name of the dataset
+* `bids_version::String`: The version of the BIDS standard that was used.
+* `license::Union{String,Nothing}`: Returns the license that a given dataset is
+  distributed under? The use of license name abbreviations is suggested for
+  specifying a license (e.g., PD, PDDL, CCO).
+* `authors::Union{Vector{String},Nothing}`: list of individuals who contributed
+  to the creation/curation of the dataset.
+* `acknowledgedgements::Union{String,Nothing}`: Returns the text acknowledging
+  contributions of individuals or institutions beyond those listed in Authors or Funding.
+* `how_to_acknowledge::Union{String,Nothing}`: Instructions how researchers using
+  this dataset should acknowledge the original authors. This field can also be used
+  to define a publication that should be cited in publications that use the dataset.
+* `funding::Union{Vector{String},Nothing}`: List of sources of funding (grant numbers)
+* `references::Union{Vector{String},Nothing}`: List of references to publication
+  that contain information on the dataset, or links.
+* `doi::Union{String,Nothing}`: Returns the Document Object Identifier of the dataset (not the corresponding paper)
+"""
+Base.@kwdef struct BIDSMetadata
+    name::String
+    bids_version::String
+    license::Union{String,Nothing}=nothing
+    authors::Union{Vector{String},Nothing}=nothing
+    acknowledgedgements::Union{String,Nothing}=nothing
+    how_to_acknowledge::Union{String,Nothing}=nothing
+    funding::Union{Vector{String},Nothing}=nothing
+    references::Union{Vector{String},Nothing}=nothing
+    doi::Union{String,Nothing}=nothing
+end
 
 # TODO FileIO integration
 # TODO HED format should probably involve its own package

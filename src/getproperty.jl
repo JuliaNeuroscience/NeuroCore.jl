@@ -1,14 +1,4 @@
 const PROPERTIES = [
-    :stream_offset,
-    :auxfiles,
-    :srcfile,
-    :calmax,
-    :calmin,
-    :freqdim,
-    :phasedim,
-    :slicedim,
-    :slice_start,
-
     :AcquisitionDuration,
     :AnatomicalLandmarkCoordinates,
     :AnatomicalLandmarkCoordinateSystem,
@@ -44,7 +34,7 @@ const PROPERTIES = [
     :InversionTime,
     :MagneticFieldStrength,
     :Manufacturer,
-    :Manufacturer_model_name,
+    :ManufacturerModelName,
     :MatrixCoilMode,
     :MRTransmitCoilSequence,
     :MultibandAccelerationFactor,
@@ -86,7 +76,6 @@ NO_SET_PROPERTIES = [:AnatomicalLandmarkCoordinateSystem,
                      :AnatomicalLandmarkCoordinateUnits,
                      :HeadCoilCoordinateSystem,
                      :HeadCoilCoordinateUnits]
-
 eget = """
     if s === :description
         return description(x)
@@ -111,7 +100,6 @@ eget = eget * """
     end
 end
 
-###
 eset = """
     if s === :description
         return description!(x, val)

@@ -50,25 +50,6 @@ function coordinate_system!(x::Any, val::CoordinateSystem)
     setter!(x, "coordinate_system", val, CoordinateSystem)
 end
 
-
-# TODO
-"""
-    slice_direction
-
-Possible values: `i`, `j`, `k`, `i-`, `j-`, `k-` (the axis of the NIfTI data
-along which slices were acquired, and the direction in which `SliceTiming` is
-defined with respect to). `i`, `j`, `k` identifiers correspond to the first,
-second and third axis of the data in the NIfTI file. A `-` sign indicates that
-the contents of `SliceTiming` are defined in reverse order - that is, the first
-entry corresponds to the slice with the largest index, and the final entry
-corresponds to slice index zero. When present, the axis defined by
-`SliceEncodingDirection` needs to be consistent with the ‘slice_dim’ field in
-the NIfTI header. When absent, the entries in `SliceTiming` must be in the
-order of increasing slice index as defined by the NIfTI header.                                                                                                                                                                                           |
-"""
-function slice_direction end
-
-
 """
     sform_code(x) -> CoordinateSystem
 
@@ -125,9 +106,9 @@ This is primarily included for the purpose of compatibility with DICOM formats, 
 (see the [DICOM standard](http://dicom.nema.org/medical/dicom/current/output/chtml/part03/sect_C.7.6.2.html#sect_C.7.6.2.1.1) for more details;
 Note, these values should be in interpreted as 'mm').
 """
-sform(x::Any) = getter(x, "sform", MMatrix{4,4,Float64,16}, i->default_affinemat(i))
+sform(x::Any) = getter(x, "sform", MMatrix{4,4,Float64,16}, i-> affine_map(i))
 
-sform!(x::Any, val::AbstractMatrix) = setter!(x, "sform", val, MMatrix{4,4,Float64,16})
+sform!(x::Any, val::AbstractMatrix) = setter!(x, "sform", val, i -> affine_map(i))
 
 
 function default_affinemat(x::Any)
@@ -142,31 +123,34 @@ function default_affinemat(x::Any)
     end
 end
 
-function _default_affinemat(x::Any)
-    _default_affinemat(spacedirections(x), pixelspacing(x))
-end
-
-
-function _default_affinemat(sd::NTuple{2,NTuple{2,T}}, ps::NTuple{2,T}) where T
-    MMatrix{4,4,Float64,16}(sd[1][1], sd[2][1], 0, 0,
-                            sd[1][2], sd[2][2], 0, 0,
-                                   0,        0, 0, 0,
-                               ps[1],    ps[2], 0, 0)
-end
-
-function _default_affinemat(sd::NTuple{3,NTuple{3,T}}, ps::NTuple{3,T}) where T
-    MMatrix{4,4,Float64,16}(sd[1][1], sd[2][1], sd[3][1], 0,
-                            sd[1][2], sd[2][2], sd[3][2], 0,
-                            sd[1][3], sd[2][3], sd[3][3], 0,
-                               ps[1],    ps[2],    ps[3], 0)
-end
-
 """
-    affine_matrix(x) -> MMatrix{4,4,Float64,16}
+    affine_map(x) -> MMatrix{4,4,Float64,16}
 
 Returns affine matrix. For an instance that returns `spacedirections` this is
 the corresponding tuple converted to an array.
 """
-affine_matrix(x::Any) = getter(x, "affine_matrix", MMatrix{4,4,Float64,16}, i -> default_affinemat(i))
+function affine_map(x)
+    return _spacedirection_to_rotation(spacedirections(x)) ∘ _pixelspacing_to_linearmap(pixelspacing(x))
+end
 
-affine_matrix!(x::Any, val::AbstractMatrix) = setter!(x, "affine_matrix", val, MMatrix{4,4,Float64,16})
+function _pixelspacing_to_linearmap(ps::NTuple{2,T}) where {T}
+    return @inbounds LinearMap(SVector(Float64(ps[1]), Float64(ps[2]), 0.0))
+end
+
+function _pixelspacing_to_linearmap(ps::NTuple{3,T}) where {T}
+    return @inbounds LinearMap(SVector(Float64(ps[1]), Float64(ps[2]), Float64(ps[3])))
+end
+
+function _spacedirection_to_rotation(::Type{R}, sd::NTuple{2,NTuple{2,T}}) where {R,T}
+    return @inbounds R(SMatrix{3,3,Float64,9}(
+        sd[1][1], sd[2][1], 0,
+        sd[1][2], sd[2][2], 0,
+               0,        0, 0))
+end
+
+function _spacedirection_to_rotation(::Type{R}, sd::NTuple{3,NTuple{3,T}}) where {R,T}
+    return @inbounds R(SMatrix{3,3,Float64,9}(
+        sd[1][1], sd[2][1], sd[3][1],
+        sd[1][2], sd[2][2], sd[3][2],
+        sd[1][3], sd[2][3], sd[3][3]))
+end

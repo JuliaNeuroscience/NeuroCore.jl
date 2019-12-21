@@ -1,19 +1,29 @@
 module NeuroCore
 
 using ImageCore, ImageAxes, Unitful, ImageMetadata, Markdown
+using StaticArrays, Rotations, CoordinateTransformations
 
 export NeuroMetadata,
        NeuroMetaArray,
        BIDSMetadata,
-       neurohelp
-       #=
+       # methods
        calmax,
-       calmax!,
        calmin,
-       calmin!,
-       magic_bytes,
-       magic_bytes!
-       =#
+       description,
+       freqdim,
+       is_anatomical,
+       is_functional,
+       is_electrophysiology,
+       neurohelp,
+       phasedim,
+       stream_offset,
+       slicedim,
+       slice_end,
+       slice_start,
+       spatial_offset,
+       spatial_units,
+       time_units
+
 
 const OneF64Sec = 1.0u"s"
 const F64Sec = typeof(OneF64Sec)
@@ -29,33 +39,25 @@ const IntDeg = typeof(OneIntDeg)
 
 const CoordinateList = Dict{Symbol,NTuple{3,Float64}}
 
+const NeuroAffine{R} = AffineMap{R,SArray{Tuple{3},Float64,1,3}}
+
 include("enums.jl")
 include("properties.jl")
 include("coordinates.jl")
 include("bids_entities.jl")
-include("modalities.jl")
-include("modality_agnostic.jl")
-include("event_table.jl")
+include("bidsdata.jl")
 include("getproperty.jl")
-include("bidsmetadata.jl")
 include("metadata.jl")
 include("array.jl")
+include("traits.jl")
 
 """
-    neurohelp(func[; extended = false])
+    neurohelp(func[;])
 
-For help on a specific function's arguments, type `help_arguments(function_name)`.
-
-For help on a specific function's attributes, type `help_attributes(plot_Type)`.
-
-Use the optional `extended = true` keyword argument to see more details.
 """
-neurohelp(func; kw_args...) = neurohelp(stdout, func; kw_args...) #defaults to STDOUT
-
-function neurohelp(io::IO, input::Symbol; extended = false)
-    return neurohelp(io, getproperty(NeuroCore, input); extended=extended)
-end
-function neurohelp(io::IO, input; extended = false)
+neurohelp(func) = neurohelp(stdout, func)
+neurohelp(io::IO, input::Symbol) = neurohelp(io, getproperty(NeuroCore, input))
+function neurohelp(io::IO, input)
     buffer = IOBuffer()
     println(buffer, Base.Docs.doc(input))
     Markdown.parse(String(take!(buffer)))

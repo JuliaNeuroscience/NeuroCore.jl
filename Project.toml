@@ -4,8 +4,11 @@ authors = ["Tokazama <zchristensen7@gmail.com>"]
 version = "0.1.0"
 
 [deps]
+CoordinateTransformations = "150eb455-5306-5404-9cee-2592286d6298"
 ImageAxes = "2803e5a7-5153-5ecf-9a86-9b4c37f5f5ac"
 ImageCore = "a09fc81d-aa75-5fe9-8630-4744c3626534"
 ImageMetadata = "bc367c6b-8a6b-528e-b4bd-a4b897500b49"
 Markdown = "d6f4376e-aef5-505a-96c1-9c027394607a"
+Rotations = "6038ab10-8711-5258-84ad-4b1120ba62dc"
+StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
 Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
