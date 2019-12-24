@@ -54,7 +54,7 @@ the coil combination method (as for the matrix coil mode above), so anything
 non-standard should be reported.
 """
 CoilCombinationMethod(x) =  getter(x, :CoilCombinationMethod, String, i -> "rSOS")
-CoilCombinationMethod!(x, val) =  getter(x, :CoilCombinationMethod, String, val)
+CoilCombinationMethod!(x, val) =  setter!(x, :CoilCombinationMethod, String, val)
 
 """
     CogAtlasID(x) -> String
@@ -62,7 +62,7 @@ CoilCombinationMethod!(x, val) =  getter(x, :CoilCombinationMethod, String, val)
 URL of the corresponding [Cognitive Atlas Task](https://www.cognitiveatlas.org/) term.
 """
 CogAtlasID(x) =  getter(x, :CogAtlasID, String, i -> "")
-CogAtlasID!(x, val) =  getter(x, :CogAtlasID, String, val)
+CogAtlasID!(x, val) =  setter!(x, :CogAtlasID, String, val)
 
 """
     CogPOID(x) -> String
@@ -70,7 +70,7 @@ CogAtlasID!(x, val) =  getter(x, :CogAtlasID, String, val)
 URL of the corresponding [CogPO](http://www.cogpo.org/) term.
 """
 CogPOID(x) =  getter(x, :CogPOID, String, i -> "")
-CogPOID!(x, val) =  getter(x, :CogPOID, String, val)
+CogPOID!(x, val) =  setter!(x, :CogPOID, String, val)
 
 """
     ContrastBolusIngredient(x) -> String
@@ -175,7 +175,7 @@ reflected in a single DICOM tag for all possible aforementioned scan
 manipulations). See [here](https://lcni.uoregon.edu/kb-articles/kb-0003) and
 [here](https://github.com/neurolabusc/dcm_qa/tree/master/In/TotalReadoutTime)
 """
-EffectiveEchoSpacing(x) = getter(x, :EffectiveEchoSpacing, F64Sec, i -> 0.0u"s")
+EffectiveEchoSpacing(x) = getter(x, :EffectiveEchoSpacing, F64Sec, i -> 1.0u"s")
 EffectiveEchoSpacing!(x, val) = setter!(x, :EffectiveEchoSpacing, F64Sec, val)
 
 """
@@ -233,7 +233,7 @@ Duration of individual epochs in seconds (e.g., 1) in case of epoched data. If
 recording was continuous or discontinuous, leave out the field.
 """
 EpochLength(x) = getter(x, :EpochLength, F64Sec, OneF64Sec)
-EpochLength!(x, val) = getter(x, :EpochLength, F64Sec, val)
+EpochLength!(x, val) = setter!(x, :EpochLength, F64Sec, val)
 
 """
     FiducialDescription(x) -> String
@@ -518,7 +518,7 @@ or when using multiple runs with different phase encoding directions (which can
 be later used for field inhomogeneity correction).
 """
 PhaseEncodingDirection(x) = EncodingDirection(phasedim(x))
-PhaseEncodingDirection!(x, val) = slicedim(x, val)
+PhaseEncodingDirection!(x, val) = phasedim!(x, val)
 
 """
     PowerLineFrequency(x) -> F64Hz
@@ -620,7 +620,7 @@ NIfTI header. This field is mutually exclusive with VolumeTiming and is derived
 from DICOM Tag 0018, 0080 and converted to seconds.
 """
 RepetitionTime(x) = getter(x, :RepetitionTime, F64Sec, i -> 1.0u"s")
-RepetitionTime!(x, val) = setter!(x, :RepititionTime, F64Sec, val)
+RepetitionTime!(x, val) = setter!(x, :RepetitionTime, F64Sec, val)
 
 """
     SamplingFrequency -> F64Hz
@@ -636,8 +636,8 @@ SamplingFrequency!(x, val) = setter!(x, :SamplingFrequency, F64Hz, val)
 
 Parameters of ScanningSequence. Corresponds to DICOM  `Scan Options`.
 """
-ScanOptions(x) = getter(x, :ScanOptions, Any, i -> Dict{String,Any}())
-ScanOptions!(x, val) = setter!(x, :ScanOptions, Any, val)
+ScanOptions(x) = getter(x, :ScanOptions, Dict{Symbol,Any}, i -> Dict{Symbol,Any}())
+ScanOptions!(x, val) = setter!(x, :ScanOptions, Dict{Symbol,Any}, val)
 
 # TODO enumerable for bolus ingredient
 """

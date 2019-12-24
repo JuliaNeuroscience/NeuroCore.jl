@@ -45,8 +45,8 @@ julia> new_property(p)
 "not nothing"
 ```
 """
-getter(x, pname, ptype, pdef) = _pre_getter(HasProperties(x), x, pname, ptype, pdef)
-getter(x::AbstractDict, pname, ptype, pdef) = check_type(x, ptype, _getter(x, pname), pdef)
+@inline getter(x, pname, ptype, pdef) = _pre_getter(HasProperties(x), x, pname, ptype, pdef)
+@inline getter(x::AbstractDict, pname, ptype, pdef) = check_type(x, ptype, _getter(x, pname), pdef)
 _pre_getter(::HasProperties{true}, x, pname, ptype, pdef) = check_type(x, ptype, _getter(properties(x), pname), pdef)
 _pre_getter(::HasProperties{false}, x, pname, ptype, pdef) = check_type(x, ptype, MProperty, pdef)
 _getter(x, pname) = get(x, pname, MProperty)
@@ -76,7 +76,7 @@ julia> p["new_property"]
 "not nothing"
 ```
 """
-setter!(x, pname, ptype, val) = _pre_setter!(HasProperties(x), x, pname, ptype, val)
-setter!(x::AbstractDict, pname, ptype, pdef) = setindex!(x, _check_type(x, ptype, val, pdef), pname)
-_pre_setter!(::HasProperties{true}, x, pname, ptype, val) = setindex!(x, _check_type(x, ptype, val), pname)
+@inline setter!(x, pname, ptype, val) = _pre_setter!(HasProperties(x), x, pname, ptype, val)
+setter!(x::AbstractDict, pname, ptype, val) = setindex!(x, _to_type(x, ptype, val), pname)
+_pre_setter!(::HasProperties{true}, x, pname, ptype, val) = setindex!(properties(x), _to_type(x, ptype, val), pname)
 _pre_setter!(::HasProperties{false}, x, pname, ptype, pdef) = setter_error(x, pname)

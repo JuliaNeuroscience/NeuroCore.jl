@@ -18,6 +18,7 @@ const PROPERTIES = [
     :EEGGround,
     :EEGPlacementScheme,
     :ElectricalStimulation,
+    :ElectricalStimulationParameters,
     :EpochLength,
     :FiducialDescription,
     :FlipAngle,
@@ -76,54 +77,48 @@ NO_SET_PROPERTIES = [:AnatomicalLandmarkCoordinateSystem,
                      :AnatomicalLandmarkCoordinateUnits,
                      :HeadCoilCoordinateSystem,
                      :HeadCoilCoordinateUnits]
-eget = """
-    if s === :description
-        return description(x)
-    """
-for p in PROPERTIES
-    global eget = eget * """
-        elseif s === :$(p)
-            return $(p)(x)
-        """
+
+function generate_getproperty(props)
+    e = :(return getindex(properties(x),  s))
+    for p in props
+        e = :(if $(Expr(:call, :(===), :s, QuoteNode(p)))
+              return $p(x)
+          else
+              $e
+          end
+         )
+    end
+    @eval begin
+        function neuroproperty(x, s::Symbol)
+            Base.@_inline_meta
+            $e
+        end
+    end
+    return nothing
 end
+generate_getproperty(PROPERTIES)
 
-eget = eget * """
-    else
-        return getindex(x, s)
+function generate_setproperty(props, noprops)
+    e = :(return setindex!(properties(x), val, s))
+    for p in props
+        if p in noprops
+            continue
+        else
+            pp = Symbol(p, :!)
+            e = :(if $(Expr(:call, :(===), :s, QuoteNode(p)))
+                  return $pp(x, val)
+              else
+                  $e
+              end
+             )
+        end
     end
-    """
-
-@eval begin
-    function neuroproperty(x, s::Symbol)
-        Base.@_inline_meta
-        $eget
+    @eval begin
+        function neuroproperty!(x, s::Symbol, val)
+            Base.@_inline_meta
+            $e
+        end
     end
+    return nothing
 end
-
-eset = """
-    if s === :description
-        return description!(x, val)
-    """
-for p in PROPERTIES
-    if p in NO_SET_PROPERTIES
-        continue
-    else
-        global eset = eset * """
-            elseif s === :$(p)
-                return $(p)!(x, val)
-            """
-    end
-end
-
-eset = eset * """
-    else
-        return setindex!(x, val, s)
-    end
-    """
-
-@eval begin
-    function neuroproperty!(x, s::Symbol, val)
-        Base.@_inline_meta
-        $eset
-    end
-end
+generate_setproperty(PROPERTIES, NO_SET_PROPERTIES)

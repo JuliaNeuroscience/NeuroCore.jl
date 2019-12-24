@@ -1,3 +1,8 @@
+"""
+    NeuroMetadata
+
+Dictionary structure for storing neuroscience related metadata.
+"""
 struct NeuroMetadata{D<:AbstractDict{Symbol,Any}} <: AbstractDict{Symbol,Any}
     _properties::D
 end
@@ -13,8 +18,6 @@ end
 ImageMetadata.properties(nm::NeuroMetadata) = getfield(nm, :_properties)
 
 Base.copy(nm::NeuroMetadata) = NeuroMetadata(copy(properties(nm)))
-
-Base.setindex!(m::NeuroMetadata, X, k::Symbol) = setindex!(properties(m), X, k)
 
 Base.haskey(m::NeuroMetadata, k) = haskey(properties(m), k)
 
@@ -45,7 +48,11 @@ Base.iterate(m::NeuroMetadata, state) = iterate(properties(m), state)
 Base.filter!(pred, m::NeuroMetadata) = filter!(pred, properties(m))
 
 @inline Base.getproperty(x::NeuroMetadata, s::Symbol) = neuroproperty(x, s)
-@inline Base.getindex(x::NeuroMetadata, s::Symbol) = neuroproperty(x, s)
+@inline Base.setproperty!(x::NeuroMetadata, s::Symbol, val) = neuroproperty!(x, s, val)
+
+@inline Base.getindex(x::NeuroMetadata, s::Symbol) = getindex(properties(x), s)
+@inline Base.setindex!(x::NeuroMetadata, val, s::Symbol) = setindex!(properties(x), val, s)
+
 
 function Base.propertynames(x::NeuroMetadata)
     return isempty(x) ? Tuple(PROPERTIES) : Tuple(merge(PROPERTIES, [keys(x)...]))

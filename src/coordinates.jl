@@ -110,7 +110,6 @@ sform(x::Any) = getter(x, "sform", MMatrix{4,4,Float64,16}, i-> affine_map(i))
 
 sform!(x::Any, val::AbstractMatrix) = setter!(x, "sform", val, i -> affine_map(i))
 
-
 function default_affinemat(x::Any)
     if sform_code(x) === UnkownSpace
         if qform_code(x) === UnkownSpace

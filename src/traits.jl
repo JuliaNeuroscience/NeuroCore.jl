@@ -34,9 +34,9 @@ description!(x, val) = setter!(x, "description", String, val)
     freqdim(x) -> Int
 
 Which spatial dimension (1, 2, or 3) corresponds to phase acquisition. If not
-applicable to scan type defaults to `0`.
+applicable to scan type defaults to `1`.
 """
-freqdim(x) = getter(x, :freqdim, Int, 0)
+freqdim(x) = getter(x, :freqdim, Int, 1)
 freqdim!(x, val) = setter!(x, :freqdim, Int, val)
 
 """
@@ -67,7 +67,7 @@ is_functional(::Type{T}) where {T} = false
 
 Which spatial dimension (1, 2, or 3) corresponds to phase acquisition.
 """
-phasedim(x) = getter(x, :phasedim, Int, i -> 0)
+phasedim(x) = getter(x, :phasedim, Int, i -> 1)
 phasedim!(x, val) = setter!(x, :phasedim, Int, val)
 
 """
@@ -75,7 +75,7 @@ phasedim!(x, val) = setter!(x, :phasedim, Int, val)
 
 Which dimension slices where acquired at throughout MRI acquisition.
 """
-slicedim(x) = getter(x, :slicedim, Int, i -> 0)
+slicedim(x) = getter(x, :slicedim, Int, i -> 1)
 slicedim!(x, val) = setter!(x, :slicedim, Int, val)
 
 """
