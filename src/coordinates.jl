@@ -43,4 +43,3 @@ coordinate_system(x::Any) = getter(x, "coordinatespace", CoordinateSystem, Unkow
 function coordinate_system!(x::Any, val::CoordinateSystem)
     return setter!(x, "coordinate_system", val, CoordinateSystem)
 end
-

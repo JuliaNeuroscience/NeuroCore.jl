@@ -4,7 +4,7 @@ using NeuroCore: F64Sec, F64Tesla, F64Hz, IntDeg, OneF64Sec, OneF64Tesla, OneF64
 using NeuroCore: UnkownContrast, IODINE, ipos, jpos
 
 
-include("bids_entities.jl")
+include("bids_tests.jl")
 
 #= TODO
     :stream_offset,

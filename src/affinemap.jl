@@ -22,7 +22,7 @@ sform_code!(x::Any, val::CoordinateSystem) = setter!(x, "sform_code", val, Coord
 """
     qform_code(x) -> CoordinateSystem
 
-Code describing the orientation of the image in the scanner.
+Code describing the orientation of the image in its acquired space.
 
 Should only be one of the following (although others are allowed):
 

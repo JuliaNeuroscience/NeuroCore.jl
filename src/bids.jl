@@ -1,50 +1,60 @@
 """
-    AcquisitionDuration(x) -> F64Sec
+    acquisition_duration(x) -> F64Sec
 
 Duration (in seconds) of volume acquisition. This field is REQUIRED for
-sequences that are described with the VolumeTimingfield and that do not have the
-SliceTiming field set to allowed for accurate calculation of "acquisition time".
-This field is mutually exclusive with RepetitionTime.
+sequences that are described with the volume_timingfield and that do not have the
+slice_timing field set to allowed for accurate calculation of "acquisition time".
+This field is mutually exclusive with repetition_time.
+
+Corresponds to BIDS "AcquisitionDuration".
 """
-AcquisitionDuration(x) = getter(x, :AcquisitionDuration, F64Sec, i -> 1.0u"s")
-AcquisitionDuration!(x, val) = setter!(x, :AcquisitionDuration, F64Sec, val)
+acquisition_duration(x) = getter(x, :acquisition_duration, F64Sec, i -> 1.0u"s")
+acquisition_duration!(x, val) = setter!(x, :acquisition_duration, F64Sec, val)
 
 """
-    AnatomicalLandmarkCoordinates(x) -> CoordinateList
+    anatomical_landmark_coordinates(x) -> CoordinateList
 
 Key:value pairs of any number of additional anatomical landmarks and their coordinates
 in voxel units (where first voxel has index 0,0,0) relative to the associated anatomical
 MRI, (e.g. Dict(:AC => (127.0,119.0,149.0), :PC=> (128.0,93.0,141.0),
 :IH=> (131.0114.0,206.0)).
+
+Corresponds to BIDS "AnatomicalLandmarkCoordinates".
 """
-AnatomicalLandmarkCoordinates(x) = getter(x, :AnatomicalLandmarkCoordinates, CoordinateList, i -> CoordinateList())
-AnatomicalLandmarkCoordinates!(x, val) = setter!(x, :AnatomicalLandmarkCoordinates, CoordinateList, val)
+anatomical_landmark_coordinates(x) = getter(x, :anatomical_landmark_coordinates, CoordinateList, i -> CoordinateList())
+anatomical_landmark_coordinates!(x, val) = setter!(x, :anatomical_landmark_coordinates, CoordinateList, val)
 
 """
-    AnatomicalLandmarkCoordinateSystem(x)
+    anatomical_landmark_coordinate_system(x)
 
 Defines the coordinate system for the anatomical landmarks. See [`CoordinateSystem`](@ref).
+
+Corresponds to BIDS "AnatomicalLandmarkCoordinateSystem".
 """
-AnatomicalLandmarkCoordinateSystem(x) = coordinate_system(x)
+anatomical_landmark_coordinate_system(x) = coordinate_system(x)
 
 """
-    AnatomicalLandmarkCoordinateUnits(x)
+    anatomical_landmark_coordinate_units(x)
 
-Units of the coordinates of AnatomicalLandmarkCoordinateSystem. MUST be m, cm, or mm.
+Units of the coordinates of anatomical_landmark_coordinate_system. MUST be m, cm, or mm.
+
+Corresponds to BIDS "AnatomicalLandmarkCoordinateUnits"
 """
-AnatomicalLandmarkCoordinateUnits(x) = spatial_units(x)
+anatomical_landmark_coordinate_units(x) = spatial_units(x)
 
 """
-AnatomicalLandmarkCoordinateSystemDescription
+anatomical_landmark_coordinate_systemDescription
 
 Freeform text description or link to document describing the anatomical coordinate
 system detail.
+
+Corresponds to BIDS "AnatomicalLandmarkCoordinateSystemDescription"
 """
-AnatomicalLandmarkCoordinateSystemDescription(x) = getter(x, :AnatomicalLandmarkCoordinateSystemDescription, String, i -> "")
-AnatomicalLandmarkCoordinateSystemDescription!(x, val) = setter!(x, :AnatomicalLandmarkCoordinateSystemDescription, String, val)
+anatomical_landmark_coordinate_system_description(x) = getter(x, :anatomical_landmark_coordinate_system_description, String, i -> "")
+anatomical_landmark_coordinate_system_description!(x, val) = setter!(x, :anatomical_landmark_coordinate_system_description, String, val)
 
 """
-    CoilCombinationMethod(x) -> String
+    coil_combination_method(x) -> String
 
 Returns the coil combination method.
 
@@ -52,9 +62,11 @@ Almost all fMRI studies using phased-array coils use root-sum-of-squares (rSOS)
 combination, but other methods exist. The image reconstruction is changed by
 the coil combination method (as for the matrix coil mode above), so anything
 non-standard should be reported.
+
+Corresponds to BIDS "CoilCombinationMethod"
 """
-CoilCombinationMethod(x) =  getter(x, :CoilCombinationMethod, String, i -> "rSOS")
-CoilCombinationMethod!(x, val) =  setter!(x, :CoilCombinationMethod, String, val)
+coil_combination_method(x) =  getter(x, :coil_combination_method, String, i -> "rSOS")
+coil_combination_method!(x, val) =  setter!(x, :coil_combination_method, String, val)
 
 """
     CogAtlasID(x) -> String
@@ -73,94 +85,104 @@ CogPOID(x) =  getter(x, :CogPOID, String, i -> "")
 CogPOID!(x, val) =  setter!(x, :CogPOID, String, val)
 
 """
-    ContrastBolusIngredient(x) -> String
+    contrast_bolus_ingredient(x) -> String
 
 Return active ingredient of constrast agent. See [`ContrastIngrediant`](@ref) for
 more details.
+
+Corresponds to BIDS "ContrastBolusIngredient".
 """
-ContrastBolusIngredient(x) = getter(x, :ContrastBolusIngredient, ContrastIngrediant, i -> UnkownContrast)
-ContrastBolusIngredient!(x, val) = setter!(x, :ContrastBolusIngredient, ContrastIngrediant, val)
+contrast_bolus_ingredient(x) = getter(x, :contrast_bolus_ingredient, ContrastIngrediant, i -> UnkownContrast)
+contrast_bolus_ingredient!(x, val) = setter!(x, :contrast_bolus_ingredient, ContrastIngrediant, val)
 
 """
-    DelayTime(x) -> F64Sec
+    delay_time(x) -> F64Sec
 
 Returns the user specified time (in seconds) to delay the acquisition of data for
 the following volume. If the field is not present it is assumed to be set to zero.
-Corresponds to Siemens CSA header field lDelayTimeInTR. This field is REQUIRED
-for sparse sequences using the RepetitionTime field that do not have the
-SliceTiming field set to allowed for accurate calculation of "acquisition time".
-This field is mutually exclusive with VolumeTiming.
+Corresponds to Siemens CSA header field ldelay_timeInTR. This field is REQUIRED
+for sparse sequences using the repetition_time field that do not have the
+slice_timing field set to allowed for accurate calculation of "acquisition time".
+This field is mutually exclusive with volume_timing.
+
+Corresponds to BIDS "DelayTime".
 """
-DelayTime(x) = getter(x, :DelayTime, F64Sec, i -> 1.0u"s")
-DelayTime!(x, val) = setter!(x, :DelayTime, F64Sec, val)
+delay_time(x) = getter(x, :delay_time, F64Sec, i -> 1.0u"s")
+delay_time!(x, val) = setter!(x, :delay_time, F64Sec, val)
 
 """
-    DelayAfterTrigger(x) -> F64Sec
+    delay_after_trigger(x) -> F64Sec
 
 Returns duration (in seconds) from trigger delivery to scan onset. This delay is
 commonly caused by adjustments and loading times. This specification is entirely
-independent of NumberOfVolumesDiscardedByScanner or NumberOfVolumesDiscardedByUser,
+independent of number_of_volumes_discarded_by_scanner or number_of_volumes_discarded_by_user,
 as the delay precedes the acquisition.
+
+Corresponds to BIDS "DelayAfterTrigger".
 """
-DelayAfterTrigger(x) = getter(x, :DelayAfterTrigger, F64Sec, i -> 1.0u"s")
-DelayAfterTrigger!(x, val) = setter!(x, :DelayAfterTrigger, F64Sec, val)
+delay_after_trigger(x) = getter(x, :delay_after_trigger, F64Sec, i -> 1.0u"s")
+delay_after_trigger!(x, val) = setter!(x, :delay_after_trigger, F64Sec, val)
 
 """
-    DeviceSerialNumber(x) -> String
+    device_serial_number(x) -> String
 
 The serial number of the equipment that produced the composite instances.
 A pseudonym can also be used to prevent the equipment from being identifiable,
 so long as each pseudonym is unique within the dataset.
+
+Corresponds to BIDS "DeviceSerialNumber".
 """
-DeviceSerialNumber(x) = getter(x, :DeviceSerialNumber, String, i -> "00000")
-DeviceSerialNumber!(x, val) = setter!(x, :DeviceSerialNumber, String, val)
+device_serial_number(x) = getter(x, :device_serial_number, String, i -> "00000")
+device_serial_number!(x, val) = setter!(x, :device_serial_number, String, val)
 
 """
-    DewarPosition(x)
+    dewar_position(x)
 
 Position of the dewar during the MEG scan: upright, supine or degrees of angle
 from vertical: for example on CTF systems, upright=15°, supine = 90°.
+
+Corresponds to BIDS "DewarPosition".
 """
-DewarPosition(x) = getter(x, :DewarPosition, IntDeg, i -> OneIntDeg)
-DewarPosition!(x, val) = setter!(x, :DewarPosition, IntDeg, val)
+dewar_position(x) = getter(x, :dewar_position, IntDeg, i -> OneIntDeg)
+dewar_position!(x, val) = setter!(x, :dewar_position, IntDeg, val)
 
 """
-    DwellTime(x) -> F64Sec
+    dwell_time(x) -> F64Sec
 
 Actual dwell time (in seconds) of the receiver per point in the readout
 direction, including any oversampling. For Siemens, this corresponds to DICOM
 field (0019,1018) (in ns). This value is necessary for the optional readout
 distortion correction of anatomicals in the HCP Pipelines. It also usefully
 provides a handle on the readout bandwidth, which isn’t captured in the other
-metadata tags. Not to be confused with `EffectiveEchoSpacing`, and the frequent
+metadata tags. Not to be confused with `effective_echo_spacing`, and the frequent
 mislabeling of echo spacing (which is spacing in the phase encoding direction)
 as "dwell time" (which is spacing in the readout direction).
+
+Corresponds to BIDS "DwellTime".
 """
-DwellTime(x) = getter(x, :DwellTime, F64Sec, i -> 1.0u"s")
-DwellTime!(x, val) = setter!(x, :DwellTime, F64Sec, val)
-
-"""
-    EchoTime(x) -> F64Sec
-
-Return the echo time (TE) for the acquisition.
-
-This parameter is REQUIRED if corresponding fieldmap data is present or the
-data comes from a multi echo sequence.
-
-please note that the DICOM term is in milliseconds not seconds
-"""
-EchoTime(x) = getter(x, :EchoTime, F64Sec, i -> 1.0u"s")
-EchoTime!(x, val) = setter!(x, :EchoTime, F64Sec, val)
+dwell_time(x) = getter(x, :dwell_time, F64Sec, i -> 1.0u"s")
+dwell_time!(x, val) = setter!(x, :dwell_time, F64Sec, val)
 
 """
-    EffectiveEchoSpacing(x) -> F64Sec
+    echo_time(x) -> F64Sec
+
+The echo time (TE) for the acquisition. This parameter is REQUIRED if corresponding
+fieldmap data is present or the data comes from a multi echo sequence.
+
+Corresponds to BIDS "EchoTime".
+"""
+echo_time(x) = getter(x, :echo_time, F64Sec, i -> 1.0u"s")
+echo_time!(x, val) = setter!(x, :echo_time, F64Sec, val)
+
+"""
+    effective_echo_spacing(x) -> F64Sec
 
 Returns the effective echo spacing.
 
 The "effective" sampling interval, specified in seconds, between lines in the
 phase-encoding direction, defined based on the size of the reconstructed image
 in the phase direction. It is frequently, but incorrectly, referred to as
-"dwell time" (see `DwellTime` parameter below for actual dwell time). It is
+"dwell time" (see `dwell_time` parameter below for actual dwell time). It is
 required for unwarping distortions using field maps. Note that beyond just
 in-plane acceleration, a variety of other manipulations to the phase encoding
 need to be accounted for properly, including partial fourier, phase
@@ -173,70 +195,84 @@ This parameter is REQUIRED if corresponding fieldmap data is present.
 the size of the actual reconstructed data in the phase direction (which is NOT
 reflected in a single DICOM tag for all possible aforementioned scan
 manipulations). See [here](https://lcni.uoregon.edu/kb-articles/kb-0003) and
-[here](https://github.com/neurolabusc/dcm_qa/tree/master/In/TotalReadoutTime)
+[here](https://github.com/neurolabusc/dcm_qa/tree/master/In/total_readout_time)
+
+Corresponds to BIDS "EffectiveEchoSpacing".
 """
-EffectiveEchoSpacing(x) = getter(x, :EffectiveEchoSpacing, F64Sec, i -> 1.0u"s")
-EffectiveEchoSpacing!(x, val) = setter!(x, :EffectiveEchoSpacing, F64Sec, val)
+effective_echo_spacing(x) = getter(x, :effective_echo_spacing, F64Sec, i -> 1.0u"s")
+effective_echo_spacing!(x, val) = setter!(x, :effective_echo_spacing, F64Sec, val)
 
 """
-    EEGElectrodeGroups(x) -> String
+    eeg_electrode_groups(x) -> String
 
 Field to describe the way electrodes are grouped into strips, grids or depth probes
-e.g., {'grid1': "10x8 grid on left temporal pole", 'strip2': "1x8 electrode strip on xxx"}.
+e.g., `Dict(:grid1 => "10x8 grid on left temporal pole", :strip2 => "1x8 electrode strip on xxx")`.
+
+Corresponds to BIDS "EEGElectrodeGroups".
 """
-EEGElectrodeGroups(x) = getter(x, :EEGElectrodeGroups, String, i -> "")
-EEGElectrodeGroups!(x, val) = setter!(x, :EEGElectrodeGroups, String, val)
+eeg_electrode_groups(x) = getter(x, :eeg_electrode_groups, Dict{Symbol,String}, i -> Dict{Symbol,String}())
+eeg_electrode_groups!(x, val) = setter!(x, :eeg_electrode_groups, Dict{Symbol,String}, val)
 
 """
-    EEGGround(x) -> String
+    eeg_ground(x) -> String
 
 Description of the location of the ground electrode ("placed on right mastoid (M2)").
+
+Corresponds to BIDS "EEGGround".
 """
-EEGGround(x) = getter(x, :EEGGround, String, i -> "")
-EEGGround!(x, val) = setter!(x, :EEGGround, String, val)
+eeg_ground(x) = getter(x, :eeg_ground, String, i -> "")
+eeg_ground!(x, val) = setter!(x, :eeg_ground, String, val)
 
 """
-    EEGPlacementScheme(x)
+    eeg_placement_scheme(x)
 
 Freeform description of the placement of the iEEG electrodes.
 Left/right/bilateral/depth/surface (e.g., "left frontal grid and bilateral
 hippocampal depth" or "surface strip and STN depth" or "clinical indication
 bitemporal, bilateral temporal strips and left grid").
+
+Corresponds to BIDS "EEGPlacementScheme".
 """
-EEGPlacementScheme(x) = getter(x, :EEGPlacementScheme, String, i -> "")
-EEGPlacementScheme!(x, val) = setter!(x, :EEGPlacementScheme, String, val)
+eeg_placement_scheme(x) = getter(x, :eeg_placement_scheme, String, i -> "")
+eeg_placement_scheme!(x, val) = setter!(x, :eeg_placement_scheme, String, val)
 
 """
-    ElectricalStimulation(x) -> Bool
+    electrical_stimulation(x) -> Bool
 
 Boolean field to specify if electrical stimulation was done during the recording
 (options are `true` or `false`). Parameters for event-like stimulation should be
 specified in the _events.tsv file.
+
+Corresponds to BIDS "ElectricalStimulation".
 """
-ElectricalStimulation(x) = getter(x, :ElectricalStimulation, Bool, i -> false)
-ElectricalStimulation!(x, val) = setter!(x, :ElectricalStimulation, Bool, val)
+electrical_stimulation(x) = getter(x, :electrical_stimulation, Bool, i -> false)
+electrical_stimulation!(x, val) = setter!(x, :electrical_stimulation, Bool, val)
 
 """
-    ElectricalStimulationParameters(x) -> String
+    electrical_stimulation_parameters(x) -> String
 
 Free form description of stimulation parameters, such as frequency, shape etc.
 Specific onsets can be specified in the _events.tsv file. Specific shapes can be
 described here in freeform text.
+
+Corresponds to BIDS "ElectricalStimulationParameters".
 """
-ElectricalStimulationParameters(x) = getter(x, :ElectricalStimulationParameters, String, i -> "")
-ElectricalStimulationParameters!(x, val) = setter!(x, :ElectricalStimulationParameters, String, val)
+electrical_stimulation_parameters(x) = getter(x, :electrical_stimulation_parameters, String, i -> "")
+electrical_stimulation_parameters!(x, val) = setter!(x, :electrical_stimulation_parameters, String, val)
 
 """
-    EpochLength(x) -> F64Sec
+    epoch_length(x) -> F64Sec
 
 Duration of individual epochs in seconds (e.g., 1) in case of epoched data. If
 recording was continuous or discontinuous, leave out the field.
+
+Corresponds to BIDS "EpochLength".
 """
-EpochLength(x) = getter(x, :EpochLength, F64Sec, OneF64Sec)
-EpochLength!(x, val) = setter!(x, :EpochLength, F64Sec, val)
+epoch_length(x) = getter(x, :epoch_length, F64Sec, OneF64Sec)
+epoch_length!(x, val) = setter!(x, :epoch_length, F64Sec, val)
 
 """
-    FiducialDescription(x) -> String
+    fiducial_description(x) -> String
 
 A freeform text field documenting the anatomical landmarks that were used and how
 the head localization coils were placed relative to these. This field can describe,
@@ -244,197 +280,239 @@ for instance, whether the true anatomical locations of the left and right pre-au
 points were used and digitized, or rather whether they were defined as the intersection
 between the tragus and the helix (the entry of the ear canal), or any other anatomical
 description of selected points in the vicinity of the ears.
+
+Corresponds to BIDS "FiducialDescription".
 """
-FiducialDescription(x) = getter(x, :FiducialDescription, String, i -> "")
-FiducialDescription!(x, val) = setter!(x, :FiducialDescription, String, val)
+fiducial_description(x) = getter(x, :fiducial_description, String, i -> "")
+fiducial_description!(x, val) = setter!(x, :fiducial_description, String, val)
 
 """
-    FlipAngle(x) -> IntDeg
+    flip_angle(x) -> IntDeg
 
 Returns the flip angle for the acquisition in degrees.
+
+Corresponds to BIDS "FlipAngle".
 """
-FlipAngle(x) = getter(x, :FlipAngle, IntDeg, i -> OneIntDeg)
-FlipAngle!(x, val) = setter!(x, :FlipAngle, IntDeg, val)
+flip_angle(x) = getter(x, :flip_angle, IntDeg, i -> OneIntDeg)
+flip_angle!(x, val) = setter!(x, :flip_angle, IntDeg, val)
 
 """
-    GradientSetType(x) -> String
+    gradient_set_type(x) -> String
 
 Returns the gradient set type. It should be possible to infer the gradient coil
 from the scanner model. If not, e.g. because of a custom upgrade or use of a
 gradient insert set, then the specifications of the actual gradient coil should
 be reported independently.
+
+Corresponds to BIDS "GradientSetType".
 """
-GradientSetType(x) = getter(x, :GradientSetType, String, i -> "")
-GradientSetType!(x, val) = setter!(x, :GradientSetType, String, val)
+gradient_set_type(x) = getter(x, :gradient_set_type, String, i -> "")
+gradient_set_type!(x, val) = setter!(x, :gradient_set_type, String, val)
 
 """
-    HeadCoilCoordinates(x) -> CoordinateList
+    head_coil_coordinates(x) -> CoordinateList
 
 Key:value pairs describing head localization coil labels and their coordinates,
-interpreted following the HeadCoilCoordinateSystem, e.g., {NAS: [12.7,21.3,13.9],
+interpreted following the head_coil_coordinate_system, e.g., {NAS: [12.7,21.3,13.9],
 LPA: [5.2,11.3,9.6], RPA: [20.2,11.3,9.1]}. Note that coils are not always placed
 at locations that have a known anatomical name (e.g. for Elekta, Yokogawa systems);
 in that case generic labels can be used (e.g. {coil1: [12.2,21.3,12.3],
 coil2: [6.7,12.3,8.6], coil3: [21.9,11.0,8.1]} ).
+
+Corresponds to BIDS "HeadCoilCoordinates".
 """
-HeadCoilCoordinates(x) = getter(x, :HeadCoilCoordinates, CoordinateList, i -> CoordinateList())
-HeadCoilCoordinates!(x, val) = setter!(x, :HeadCoilCoordinates, CoordinateList, val)
+head_coil_coordinates(x) = getter(x, :head_coil_coordinates, CoordinateList, i -> CoordinateList())
+head_coil_coordinates!(x, val) = setter!(x, :head_coil_coordinates, CoordinateList, val)
 
 """
-    HeadCoilCoordinateSystem(x) -> CoordinateSystem
+    head_coil_coordinate_system(x) -> CoordinateSystem
 
 Defines the coordinate system for the coils.
+
+Corresponds to BIDS "HeadCoilCoordinateSystem".
 """
-HeadCoilCoordinateSystem(x) = getter(x, :HeadCoilCoordinateSystem, CoordinateSystem, i -> UnknownSpace)
+head_coil_coordinate_system(x) = getter(x, :head_coil_coordinate_system, CoordinateSystem, i -> UnknownSpace)
 
 """
-    HeadCoilCoordinateSystemDescription(x) -> String
+    head_coil_coordinate_system_description(x) -> String
 
 Freeform text description or link to document describing the Head Coil coordinate
 system system in detail.
+
+Corresponds to BIDS "HeadCoilCoordinateSystemDescription".
 """
-HeadCoilCoordinateSystemDescription(x) = getter(x, :HeadCoilCoordinateSystemDescription, String, i -> "")
-HeadCoilCoordinateSystemDescription!(x, val) = setter!(x, :HeadCoilCoordinateSystemDescription, String, val)
+head_coil_coordinate_system_description(x) = getter(x, :head_coil_coordinate_system_description, String, i -> "")
+head_coil_coordinate_system_description!(x, val) = setter!(x, :head_coil_coordinate_system_description, String, val)
 
 """
-    HeadCoilCoordinateUnits(x) -> m, cm, or mm
+    head_coil_coordinate_units(x) -> m, cm, or mm
 
-Units of the coordinates of HeadCoilCoordinateSystem.
+Units of the coordinates of head_coil_coordinate_system.
+
+Corresponds to BIDS "HeadCoilCoordinateUnits".
 """
-HeadCoilCoordinateUnits(x) = spatial_units(x)
+head_coil_coordinate_units(x) = spatial_units(x)
 
 """
-    InstitutionAddress(x) -> String
+    institution_address(x) -> String
 
 Return the address of the institution in charge of the equipment that produced
 the composite instances.
+
+Corresponds to BIDS "InstitutionAddress".
 """
-InstitutionAddress(x) = getter(x, :InstitutionAddress, String, i -> "")
-InstitutionAddress!(x, val) = setter!(x, :InstitutionAddress, String, val)
+institution_address(x) = getter(x, :institution_address, String, i -> "")
+institution_address!(x, val) = setter!(x, :institution_address, String, val)
 
 """
-    InstitutionalDepartmentName(x) -> String
+    institutional_department_name(x) -> String
 
 Return the department in the institution in charge of the equipment that produced
 the composite instances.
+
+Corresponds to BIDS "InstitutionalDepartmentName".
 """
-InstitutionalDepartmentName(x) = getter(x, :InstitutionalDepartmentName, String, i -> "")
-InstitutionalDepartmentName!(x, val) = setter!(x, :InstitutionalDepartmentName, String, val)
+institutional_department_name(x) = getter(x, :institutional_department_name, String, i -> "")
+institutional_department_name!(x, val) = setter!(x, :institutional_department_name, String, val)
 
 """
-    InstitutionName(x) -> String
+    institution_name(x) -> String
 
 Returns the name of the institution in charge of the equipment that produced the
 composite instances.
+
+Corresponds to BIDS "InstitutionName".
 """
-InstitutionName(x) = getter(x, :InstitutionName, String, i -> "")
-InstitutionName!(x, val) = setter!(x, :InstitutionName, String, val)
+institution_name(x) = getter(x, :institution_name, String, i -> "")
+institution_name!(x, val) = setter!(x, :institution_name, String, val)
 
 """
-    Instructions(x) -> String
+    instructions(x) -> String
 
 Text of the instructions given to participants before the scan. This is especially
 important in context of resting state fMRI and distinguishing between eyes open and
 eyes closed paradigms.
+
+Corresponds to BIDS "Instructions".
 """
-Instructions(x) = getter(x, :Instructions, String, i -> "")
-Instructions!(x, val) = setter!(x, :Instructions, String, val)
+instructions(x) = getter(x, :instructions, String, i -> "")
+instructions!(x, val) = setter!(x, :instructions, String, val)
 
 """
-    IntendedFor(x) -> Vector{String}
+    intended_for(x) -> Vector{String}
 
 Path or list of path relative to the subject subfolder pointing to the structural
 MRI, possibly of different types if a list is specified, to be used with the MEG
 recording. The path(s) need(s) to use forward slashes instead of backward slashes
 (e.g. ses-/anat/sub-01_T1w.nii.gz).
+
+Corresponds to BIDS "IntendedFor".
 """
-IntendedFor(x) = getter(x, :IntendedFor, Vector{String}, i -> String[])
-IntendedFor!(x, val) = setter!(x, :IntendedFor, Vector{String}, val)
+intended_for(x) = getter(x, :intended_for, Vector{String}, i -> String[])
+intended_for!(x, val) = setter!(x, :intended_for, Vector{String}, val)
 
 """
-    InversionTime(x) -> F64Sec
+    inversion_time(x) -> F64Sec
 
 Returns the inversion time (TI) for the acquisition, specified in seconds.
 Inversion time is the time after the middle of inverting RF pulse to middle of
 excitation pulse to detect the amount of longitudinal magnetization.
+
+Corresponds to BIDS "InversionTime".
 """
-InversionTime(x) = getter(x, :InversionTime, F64Sec, i -> 1.0u"s")
-InversionTime!(x, val) = setter!(x, :InversionTime, F64Sec, val)
+inversion_time(x) = getter(x, :inversion_time, F64Sec, i -> 1.0u"s")
+inversion_time!(x, val) = setter!(x, :inversion_time, F64Sec, val)
 
 """
-    MagneticFieldStrength(x) -> F64Tesla
+    magnetic_field_strength(x) -> F64Tesla
 
 The nominal field strength of MR magnet in Tesla.
+
+Corresponds to BIDS "MagneticFieldStrength".
 """
-MagneticFieldStrength(x) = getter(x, :MagneticFieldStrength, F64Tesla, i -> 3.0u"T")
-MagneticFieldStrength!(x, val) = setter!(x, :MagneticFieldStrength, F64Tesla, val)
+magnetic_field_strength(x) = getter(x, :magnetic_field_strength, F64Tesla, i -> 3.0u"T")
+magnetic_field_strength!(x, val) = setter!(x, :magnetic_field_strength, F64Tesla, val)
 
 """
-    Manufacturer(x) -> String
+    manufacturer(x) -> String
 
-The Manufacturer of the equipment that produced the composite instances.
-"""
-Manufacturer(x) = getter(x, :Manufacturer, String, i -> "")
-Manufacturer!(x, val) = setter!(x, :Manufacturer, String, val)
+The manufacturer of the equipment that produced the composite instances.
 
+Corresponds to BIDS "Manufacturer".
 """
-    ManufacturerModelName(x) -> String
-
-The Manufacturer's model name of the equipment that produced the composite instances.
-"""
-ManufacturerModelName(x) = getter(x, :ManufacturerModelName, String, i -> "")
-ManufacturerModelName!(x, val) = setter!(x, :ManufacturerModelName, String, val)
+manufacturer(x) = getter(x, :manufacturer, String, i -> "")
+manufacturer!(x, val) = setter!(x, :manufacturer, String, val)
 
 """
-    MatrixCoilMode(x) -> String
+    manufacturer_model_name(x) -> String
+
+The manufacturer's model name of the equipment that produced the composite instances.
+
+Corresponds to BIDS "ManufacturerModelName".
+"""
+manufacturer_model_name(x) = getter(x, :manufacturer_model_name, String, i -> "")
+manufacturer_model_name!(x, val) = setter!(x, :manufacturer_model_name, String, val)
+
+"""
+    matrix_coil_mode(x) -> String
 
 Returns the matrix coil mode. A method for reducing the number of independent
 channels by combining in analog the signals from multiple coil elements. There
 are typically different default modes when using un-accelerated or accelerated
 (e.g. GRAPPA, SENSE) imaging.
+
+Corresponds to BIDS "MatrixCoilMode".
 """
-MatrixCoilMode(x) = getter(x, :MatrixCoilMode, String, i -> "")
-MatrixCoilMode!(x, val) = setter!(x, :MatrixCoilMode, String, val)
+matrix_coil_mode(x) = getter(x, :matrix_coil_mode, String, i -> "")
+matrix_coil_mode!(x, val) = setter!(x, :matrix_coil_mode, String, val)
 
 """
-    MRTransmitCoilSequence(x) -> String
+    mr_transmit_coil_sequence(x) -> String
 
 A sequence that provides information about the transmit coil used. This is a
 relevant field if a non-standard transmit coil is used.
+
+Corresponds to BIDS "MRTransmitCoilSequence".
 """
-MRTransmitCoilSequence(x) = getter(x, :MRTransmitCoilSequence, String, i -> "")
-MRTransmitCoilSequence!(x, val) = setter!(x, :MRTransmitCoilSequence, String, val)
+mr_transmit_coil_sequence(x) = getter(x, :mr_transmit_coil_sequence, String, i -> "")
+mr_transmit_coil_sequence!(x, val) = setter!(x, :mr_transmit_coil_sequence, String, val)
 
 """
-    MultibandAccelerationFactor(x) -> String
+    multiband_acceleration_factor(x) -> String
 
 Returns the multiband factor, for multiband acquisitions.
+
+Corresponds to BIDS "MultibandAccelerationFactor".
 """
-MultibandAccelerationFactor(x) = getter(x, :MultibandAccelerationFactor, String, i -> "")
-MultibandAccelerationFactor!(x, val) = setter!(x, :MultibandAccelerationFactor, String, val)
+multiband_acceleration_factor(x) = getter(x, :multiband_acceleration_factor, String, i -> "")
+multiband_acceleration_factor!(x, val) = setter!(x, :multiband_acceleration_factor, String, val)
 
 """
-    NegativeContrast(x) -> Bool
+    negative_contrast(x) -> Bool
 
 Specifies whether increasing voxel intensity (within sample voxels)
 denotes a decreased value with respect to the contrast suffix. This is commonly
 the case when Cerebral Blood Volume is estimated via usage of a contrast agent
 in conjunction with a T2* weighted acquisition protocol.
+
+Corresponds to BIDS "NegativeContrast".
 """
-NegativeContrast(x) = getter(x, :NegativeContrast, Bool, i -> false)
-NegativeContrast!(x, val) = setter!(x, :NegativeContrast, Bool, val)
+negative_contrast(x) = getter(x, :negative_contrast, Bool, i -> false)
+negative_contrast!(x, val) = setter!(x, :negative_contrast, Bool, val)
 
 """
-    NonlinearGradientCorrection(x) -> Bool
+    nonlinear_gradient_correction(x) -> Bool
 
 Returns `Bool` stating if the image saved has been corrected for gradient
 nonlinearities by the scanner sequence. Default is `false`.
+
+Corresponds to BIDS "".
 """
-NonlinearGradientCorrection(x) = getter(x, :NonlinearGradientCorrection, Bool, i -> false)
-NonlinearGradientCorrection!(x, val) = setter!(x, :NonlinearGradientCorrection, Bool, val)
+nonlinear_gradient_correction(x) = getter(x, :nonlinear_gradient_correction, Bool, i -> false)
+nonlinear_gradient_correction!(x, val) = setter!(x, :nonlinear_gradient_correction, Bool, val)
 
 """
-    NumberOfVolumesDiscardedByScanner(x) -> Int
+    number_of_volumes_discarded_by_scanner(x) -> Int
 
 Returns the number of volumes ("dummy scans") discarded by the scanner (as opposed
 to those discarded by the user post hoc) before saving the imaging file. For example,
@@ -443,133 +521,159 @@ have this field as 4. A sequence that doesn't discard dummy scans would have
 this set to 0. Please note that the onsets recorded in the _event.tsv file
 should always refer to the beginning of the acquisition of the first volume in
 the corresponding imaging file - independent of the value of
-NumberOfVolumesDiscardedByScanner field.
+number_of_volumes_discarded_by_scanner field.
+
+Corresponds to BIDS "NumberOfVolumesDiscardedByScanner".
 """
-NumberOfVolumesDiscardedByScanner(x) = getter(x, :NumberOfVolumesDiscardedByScanner, Int, i -> 0)
-NumberOfVolumesDiscardedByScanner!(x, val) = setter!(x, :NumberOfVolumesDiscardedByScanner, Int, val)
+number_of_volumes_discarded_by_scanner(x) = getter(x, :number_of_volumes_discarded_by_scanner, Int, i -> 0)
+number_of_volumes_discarded_by_scanner!(x, val) = setter!(x, :number_of_volumes_discarded_by_scanner, Int, val)
 
 """
-    NumberOfVolumesDiscardedByUser(x) -> Int
+    number_of_volumes_discarded_by_user(x) -> Int
 
 Returns the  number of volumes ("dummy scans") discarded by the user before
 including the file in the dataset. If possible, including all of the volumes is
 strongly recommended. Please note that the onsets recorded in the _event.tsv file
 should always refer to the beginning of the acquisition of the first volume in
 the corresponding imaging file - independent of the value of
-NumberOfVolumesDiscardedByUser field.
+number_of_volumes_discarded_by_user field.
+
+Corresponds to BIDS "NumberOfVolumesDiscardedByUser".
 """
-NumberOfVolumesDiscardedByUser(x) = getter(x, :NumberOfVolumesDiscardedByUser, Int, i -> 0)
-NumberOfVolumesDiscardedByUser!(x, val) = setter!(x, :NumberOfVolumesDiscardedByUser, Int, val)
+number_of_volumes_discarded_by_user(x) = getter(x, :number_of_volumes_discarded_by_user, Int, i -> 0)
+number_of_volumes_discarded_by_user!(x, val) = setter!(x, :number_of_volumes_discarded_by_user, Int, val)
 
 """
-    NumberShots(x) -> Int
+    number_shots(x) -> Int
 
 Returns the number of RF excitations needed to reconstruct a slice or volume.
 Please mind that this is not the same as Echo Train Length which denotes the
 number of lines of k-space collected after an excitation.
+
+Corresponds to BIDS "NumberShots".
 """
-NumberShots(x) = getter(x, :NumberShots, Int, i -> 0)
-NumberShots!(x, val) = setter!(x,  :NumberShots, Int, val)
+number_shots(x) = getter(x, :number_shots, Int, i -> 0)
+number_shots!(x, val) = setter!(x,  :number_shots, Int, val)
 
 """
-    ParallelAcquisitionTechnique(x) -> String
+    parallel_acquisition_technique(x) -> String
 
 Returns the type of parallel imaging used (e.g. GRAPPA, SENSE).
+
+Corresponds to BIDS "ParallelAcquisitionTechnique".
 """
-ParallelAcquisitionTechnique(x) = getter(x, :ParallelAcquisitionTechnique, String, i -> "")
-ParallelAcquisitionTechnique!(x, val) = setter!(x, :ParallelAcquisitionTechnique, String, val)
+parallel_acquisition_technique(x) = getter(x, :parallel_acquisition_technique, String, i -> "")
+parallel_acquisition_technique!(x, val) = setter!(x, :parallel_acquisition_technique, String, val)
 
 """
-    ParallelReductionFactor(x) -> Int
+    parallel_reduction_factor(x) -> Int
 
 The parallel imaging (e.g, GRAPPA) factor. Use the denominator of the fraction
 of k-space encoded for each slice. For example, 2 means half of k-space is
 encoded.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+
+Corresponds to BIDS "ParallelReductionFactor".
 """
-ParallelReductionFactor(x) = getter(x, :ParallelReductionFactor, Int, i -> 0)
-ParallelReductionFactor!(x, val) = setter!(x, :ParallelReductionFactor, Int, val)
+parallel_reduction_factor(x) = getter(x, :parallel_reduction_factor, Int, i -> 0)
+parallel_reduction_factor!(x, val) = setter!(x, :parallel_reduction_factor, Int, val)
 
 """
-    PartialFourier(x) -> Float64
+    partial_fourier(x) -> Float64
 
 Returns the fraction of partial Fourier information collected.
+
+Corresponds to BIDS "PartialFourier".
 """
-PartialFourier(x) = getter(x, :PartialFourier, Float64, i -> 1.0)
-PartialFourier!(x, val) = setter!(x, :PartialFourier, Float64, val)
+partial_fourier(x) = getter(x, :partial_fourier, Float64, i -> 1.0)
+partial_fourier!(x, val) = setter!(x, :partial_fourier, Float64, val)
 
 """
-    PartialFourierDirection(x) -> String
+    partial_fourier_direction(x) -> String
 
 Returns the direction where only partial Fourier information was collected.
+
+Corresponds to BIDS "PartialFourierDirection".
 """
-PartialFourierDirection(x) = getter(x, :PartialFourierDirection, String, i -> "")
-PartialFourierDirection!(x, val) = setter!(x, :PartialFourierDirection, String, val)
+partial_fourier_direction(x) = getter(x, :partial_fourier_direction, String, i -> "")
+partial_fourier_direction!(x, val) = setter!(x, :partial_fourier_direction, String, val)
 
 """
-    PhaseEncodingDirection(x) -> EncodingDirection
+    phase_encoding_direction(x) -> EncodingDirection
 
 Returns the phase encoding direction.
 
-`PhaseEncodingDirection` is defined as the direction along which phase is was
+`phase_encoding_direction` is defined as the direction along which phase is was
 modulated which may result in visible distortions. Note that this is not the
-same as the DICOM term `InPlanePhaseEncodingDirectiong` which can have `ROW` or
+same as the DICOM term `InPlanephase_encoding_directiong` which can have `ROW` or
 `COL` values. This parameter is REQUIRED if corresponding fieldmap data is present
 or when using multiple runs with different phase encoding directions (which can
 be later used for field inhomogeneity correction).
+
+Corresponds to BIDS "PhaseEncodingDirection".
 """
-PhaseEncodingDirection(x) = EncodingDirection(phasedim(x))
-PhaseEncodingDirection!(x, val) = phasedim!(x, val)
+phase_encoding_direction(x) = EncodingDirection(phasedim(x))
+phase_encoding_direction!(x, val) = phasedim!(x, val)
 
 """
-    PowerLineFrequency(x) -> F64Hz
+    power_line_frequency(x) -> F64Hz
 
 Frequency (in Hz) of the power grid at the geographical location of the EEG
 instrument (i.e., 50 or 60).
+
+Corresponds to BIDS "PowerLineFrequency".
 """
-PowerLineFrequency(x) = getter(x, :PowerLineFrequency, F64Hz, i -> 1.0u"Hz")
-PowerLineFrequency!(x, val) = setter!(x, :PowerLineFrequency, F64Hz, val)
+power_line_frequency(x) = getter(x, :power_line_frequency, F64Hz, i -> 1.0u"Hz")
+power_line_frequency!(x, val) = setter!(x, :power_line_frequency, F64Hz, val)
 
 """
-    PulseSequence(x) -> String
+    pulse_sequence(x) -> String
 
 General description of the pulse sequence used for the scan (i.e. MPRAGE,
 Gradient Echo EPI, Spin Echo EPI, Multiband gradient echo EPI).
+
+Corresponds to BIDS "PulseSequence".
 """
-PulseSequence(x) = getter(x, :PulseSequence, String, i -> "")
-PulseSequence!(x, val) = setter!(x, :PulseSequence, String, val)
+pulse_sequence(x) = getter(x, :pulse_sequence, String, i -> "")
+pulse_sequence!(x, val) = setter!(x, :pulse_sequence, String, val)
 
 """
-    PulseSequenceDetails(x) -> String
+    pulse_sequence_details(x) -> String
 
 Information beyond pulse sequence type that identifies the specific pulse
 sequence used (i.e. "Standard Siemens Sequence distributed with the VB17
 software," "Siemens WIP ### version #.##," or "Sequence written by X using a
 version compiled on MM/DD/YYYY").
+
+Corresponds to BIDS "PulseSequenceDetails".
 """
-PulseSequenceDetails(x) = getter(x, :PulseSequenceDetails, String, i -> "")
-PulseSequenceDetails!(x, val) = setter!(x, :PulseSequenceDetails, String, val)
+pulse_sequence_details(x) = getter(x, :pulse_sequence_details, String, i -> "")
+pulse_sequence_details!(x, val) = setter!(x, :pulse_sequence_details, String, val)
 
 """
-    PulseSequenceType(x) -> String
+    pulse_sequence_type(x) -> String
 
 A general description of the pulse sequence used for the scan (i.e. MPRAGE,
 Gradient Echo EPI, Spin Echo EPI, Multiband gradient echo EPI).
+
+Corresponds to BIDS "PulseSequenceType".
 """
-PulseSequenceType(x) = getter(x, :PulseSequenceType, String, i -> "")
-PulseSequenceType!(x, val) = setter!(x, :PulseSequenceType, String, val)
+pulse_sequence_type(x) = getter(x, :pulse_sequence_type, String, i -> "")
+pulse_sequence_type!(x, val) = setter!(x, :pulse_sequence_type, String, val)
 
 """
-    ReceiveCoilName(x) -> String
+    receive_coil_name(x) -> String
 
 The information describing the receiver coil. Corresponds to DICOM Tag
 Receive Coil Name, although not all vendors populate that DICOM Tag, in which
 case this field can be derived from an appropriate private DICOM field.
+
+Corresponds to BIDS "ReceiveCoilName".
 """
-ReceiveCoilName(x) = getter(x, :ReceiveCoilName, String, i -> "")
-ReceiveCoilName!(x, val) = setter!(x, :ReceiveCoilName, String, val)
+receive_coil_name(x) = getter(x, :receive_coil_name, String, i -> "")
+receive_coil_name!(x, val) = setter!(x, :receive_coil_name, String, val)
 
 """
-    ReceiveCoilActiveElements(x) -> String
+    receive_coil_active_elements(x) -> String
 
 Information describing the active/selected elements of the receiver coil. This
 doesn’t correspond to a tag in the DICOM ontology. The vendor-defined
@@ -585,189 +689,219 @@ individual scans can sometimes not have the intended coil elements selected, it
 is preferable for this field to be populated directly from the DICOM for each
 individual scan, so that it can be used as a mechanism for checking that a
 given scan was collected with the intended coil elements selected.
+
+Corresponds to BIDS "ReceiveCoilActiveElements".
 """
-ReceiveCoilActiveElements(x) = getter(x, :ReceiveCoilActiveElements, String, i -> "")
-ReceiveCoilActiveElements!(x, val) = setter!(x, :ReceiveCoilActiveElements, String, val)
+receive_coil_active_elements(x) = getter(x, :receive_coil_active_elements, String, i -> "")
+receive_coil_active_elements!(x, val) = setter!(x, :receive_coil_active_elements, String, val)
 
 """
-    RecordingDuration(x) -> F64Sec
+    recording_duration(x) -> F64Sec
 
 Length of the recording in seconds (e.g., 3600)
-"""
-RecordingDuration(x) = getter(x, :RecordingDuration, F64Sec, OneF64Sec)
-RecordingDuration!(x, val) = setter!(x, :RecordingDuration, F64Sec, val)
 
-# TODO: should this return and enumerable
+Corresponds to BIDS "RecordingDuration".
 """
-    RecordingType(x) -> String
+recording_duration(x) = getter(x, :recording_duration, F64Sec, OneF64Sec)
+recording_duration!(x, val) = setter!(x, :recording_duration, F64Sec, val)
+
+# TODO: should this return an enumerable
+"""
+    recording_type(x) -> String
 
 Defines whether the recording is "continuous", "discontinuous" or "epoched";
 this latter limited to time windows about events of interest (e.g., stimulus
 presentations, subject responses etc.)
+
+Corresponds to BIDS "RecordingType".
 """
-RecordingType(x) = getter(x, :RecordingType, String, i -> "")
-RecordingType!(x, val) = setter!(x, :RecordingType, String, val)
+recording_type(x) = getter(x, :recording_type, String, i -> "")
+recording_type!(x, val) = setter!(x, :recording_type, String, val)
 
 """
-    RepetitionTime(x) -> F64Sec
+    repetition_time(x) -> F64Sec
 
 Returns the time in seconds between the beginning of an acquisition of one volume
 and the beginning of acquisition of the volume following it (TR). Please note that
 this definition includes time between scans (when no data has been acquired) in
 case of sparse acquisition schemes. This value needs to be consistent with the
 pixdim[4] field (after accounting for units stored in xyzt_units field) in the
-NIfTI header. This field is mutually exclusive with VolumeTiming and is derived
+NIfTI header. This field is mutually exclusive with volume_timing and is derived
 from DICOM Tag 0018, 0080 and converted to seconds.
+
+Corresponds to BIDS "RepetitionTime".
 """
-RepetitionTime(x) = getter(x, :RepetitionTime, F64Sec, i -> 1.0u"s")
-RepetitionTime!(x, val) = setter!(x, :RepetitionTime, F64Sec, val)
+repetition_time(x) = getter(x, :repetition_time, F64Sec, i -> 1.0u"s")
+repetition_time!(x, val) = setter!(x, :repetition_time, F64Sec, val)
 
 """
-    SamplingFrequency -> F64Hz
+    sampling_frequency -> F64Hz
 
 Sampling frequency (in Hz) of all the data in the recording, regardless of their
 type (e.g., 2400).
+
+Corresponds to BIDS "SamplingFrequency".
 """
-SamplingFrequency(x) = getter(x, :SamplingFrequency, F64Hz, i -> 1.0u"Hz")
-SamplingFrequency!(x, val) = setter!(x, :SamplingFrequency, F64Hz, val)
+sampling_frequency(x) = getter(x, :sampling_frequency, F64Hz, i -> 1.0u"Hz")
+sampling_frequency!(x, val) = setter!(x, :sampling_frequency, F64Hz, val)
 
 """
-    ScanOptions(x)
+    scan_options(x)
 
-Parameters of ScanningSequence. Corresponds to DICOM  `Scan Options`.
+Parameters of scanning_sequence. Corresponds to DICOM  `Scan Options`.
+
+Corresponds to BIDS "ScanOptions".
 """
-ScanOptions(x) = getter(x, :ScanOptions, Dict{Symbol,Any}, i -> Dict{Symbol,Any}())
-ScanOptions!(x, val) = setter!(x, :ScanOptions, Dict{Symbol,Any}, val)
+scan_options(x) = getter(x, :scan_options, Dict{Symbol,Any}, i -> Dict{Symbol,Any}())
+scan_options!(x, val) = setter!(x, :scan_options, Dict{Symbol,Any}, val)
 
 # TODO enumerable for bolus ingredient
 """
-    ScanningSequence(x) -> String
+    scanning_sequence(x) -> String
 
 Returns the description of the type of sequence data acquired.
+
+Corresponds to BIDS "ScanningSequence".
 """
-ScanningSequence(x) = getter(x, :ScanningSequence, String, i -> "")
-ScanningSequence!(x, val) = setter!(x, :ScanningSequence, String, val)
+scanning_sequence(x) = getter(x, :scanning_sequence, String, i -> "")
+scanning_sequence!(x, val) = setter!(x, :scanning_sequence, String, val)
 
 """
-    SequenceName(x) -> String
+    sequence_name(x) -> String
 
 Returns the manufacturer’s designation of the sequence name.
+
+Corresponds to BIDS "SequenceName".
 """
-SequenceName(x) = getter(x, :SequenceName, String, i -> "")
-SequenceName!(x, val) = setter!(x, :SequenceName, String, val)
+sequence_name(x) = getter(x, :sequence_name, String, i -> "")
+sequence_name!(x, val) = setter!(x, :sequence_name, String, val)
 
 """
-    SequenceVarient(x) -> String
+    sequence_varient(x) -> String
 
-Returns the variant of the `ScanningSequence` property.
+Returns the variant of the `scanning_sequence` property.
+
+Corresponds to BIDS "SequenceVarient".
 """
-SequenceVarient(x) = getter(x, :SequenceVarient, String, i -> "")
-SequenceVarient!(x, val) = setter!(x, :SequenceVarient, String, val)
+sequence_varient(x) = getter(x, :sequence_varient, String, i -> "")
+sequence_varient!(x, val) = setter!(x, :sequence_varient, String, val)
 
 """
-    SliceEncodingDirection(x) -> EncodingDirection
+    slice_encoding_direction(x) -> EncodingDirection
 
 Possible values: `i`, `j`, `k`, `ineg, `jneg`, `kneg` (the axis of the NIfTI data along which
-slices were acquired, and the direction in which SliceTiming is defined with
+slices were acquired, and the direction in which slice_timing is defined with
 respect to). `i`, `j`, `k` identifiers correspond to the first, second and third axis
 of the data in the NIfTI file. `*neg` indicates that the contents of
-SliceTiming are defined in reverse order - that is, the first entry corresponds
+slice_timing are defined in reverse order - that is, the first entry corresponds
 to the slice with the largest index, and the final entry corresponds to slice
-index zero. When present, the axis defined by SliceEncodingDirection needs to be
+index zero. When present, the axis defined by slice_encoding_direction needs to be
 consistent with the ‘slicedim’ field in the NIfTI header. When absent, the
-entries in SliceTiming must be in the order of increasing slice index as defined
+entries in slice_timing must be in the order of increasing slice index as defined
 by the NIfTI header.
+
+Corresponds to BIDS "SliceEncodingDirection".
 """
-SliceEncodingDirection(x) = EncodingDirection(slicedim(x))
-SliceEncodingDirection!(x, val) = slicedim!(x, val)
+slice_encoding_direction(x) = EncodingDirection(slicedim(x))
+slice_encoding_direction!(x, val) = slicedim!(x, val)
 
 """
-    SliceTiming(x) -> Vector{F64Sec}
+    slice_timing(x) -> Vector{F64Sec}
 
 The time at which each slice was acquired within each volume (frame) of the
 acquisition. Slice timing is not slice order -- rather, it is a list of times
 (in JSON format) containing the time (in seconds) of each slice acquisition in
 relation to the beginning of volume acquisition. The list goes through the
 slices along the slice axis in the slice encoding dimension (see below). Note
-that to ensure the proper interpretation of the `SliceTiming` field, it is
-important to check if the OPTIONAL `SliceEncodingDirection` exists. In
-particular, if `SliceEncodingDirection` is negative, the entries in
-`SliceTiming` are defined in reverse order with respect to the slice axis
-(i.e., the final entry in the `SliceTiming` list is the time of acquisition of
+that to ensure the proper interpretation of the `slice_timing` field, it is
+important to check if the OPTIONAL `slice_encoding_direction` exists. In
+particular, if `slice_encoding_direction` is negative, the entries in
+`slice_timing` are defined in reverse order with respect to the slice axis
+(i.e., the final entry in the `slice_timing` list is the time of acquisition of
 slice 0). This parameter is REQUIRED for sparse sequences that do not have the
-`DelayTime` field set. In addition without this parameter slice time correction
+`delay_time` field set. In addition without this parameter slice time correction
 will not be possible.
+
+Corresponds to BIDS "SliceTiming".
 """
-SliceTiming(x) = getter(x, :SliceTiming, Vector{F64Sec}, i -> F64Sec[])
-SliceTiming!(x, val) = setter!(x, :SliceTiming, Vector{F64Sec}, val)
+slice_timing(x) = getter(x, :slice_timing, Vector{F64Sec}, i -> F64Sec[])
+slice_timing!(x, val) = setter!(x, :slice_timing, Vector{F64Sec}, val)
 
 """
-    SoftwareVersions(x) -> String
+    software_versions(x) -> String
 
 The manufacturer’s designation of software version of the equipment
 that produced the composite instances.
+
+Corresponds to BIDS "SoftwareVersions".
 """
-SoftwareVersions(x) = getter(x, :SoftwareVersions, String, i -> "")
-SoftwareVersions!(x, val) = setter!(x, :SoftwareVersions, String, val)
+software_versions(x) = getter(x, :software_versions, String, i -> "")
+software_versions!(x, val) = setter!(x, :software_versions, String, val)
 
 """
-    StartTime(x) -> F64Sec
+    start_time(x) -> F64Sec
 
 Start time in seconds in relation to the start of acquisition of the first data
 sample in the corresponding neural dataset (negative values are allowed).
-"""
-StartTime(x) = getter(x, :StartTime, F64Sec, i -> 1.0u"s")
-StartTime!(x, val) = setter!(x, :StartTime, F64Sec, val)
 
-
+Corresponds to BIDS "StartTime".
 """
-    StationName(x) -> String
-
-Returns the institution defined name of the machine that produced the composite instances.
-"""
-StationName(x) = getter(x, :StationName, String, i -> "")
-StationName!(x, val) = setter!(x, :StationName, String, val)
+start_time(x) = first(timaxis(x))
 
 """
-    SubjectArtefactDescription(x) -> String
+    station_name(x) -> String
+
+Institution defined name of the machine that produced the composite instances.
+
+Corresponds to BIDS "StationName".
+"""
+station_name(x) = getter(x, :station_name, String, i -> "")
+station_name!(x, val) = setter!(x, :station_name, String, val)
+
+"""
+    subject_artefact_description(x) -> String
 
 Freeform description of the observed subject artefact and its possible cause (e.g.,
 "door open", "nurse walked into room at 2 min", "seizure at 10 min"). If this
 field is left empty, it will be interpreted as absence of artifacts.
+
+Corresponds to BIDS "SubjectArtefactDescription".
 """
-SubjectArtefactDescription(x) = getter(x, :SubjectArtefactDescription, String, i -> "")
-SubjectArtefactDescription!(x, val) = setter!(x, :SubjectArtefactDescription, String, val)
+subject_artefact_description(x) = getter(x, :subject_artefact_description, String, i -> "")
+subject_artefact_description!(x, val) = setter!(x, :subject_artefact_description, String, val)
 
 """
-    TaskDescription(x) -> String
+    task_description(x) -> String
 
 Longer description of the task.
+
+Corresponds to BIDS "TaskDescription".
 """
-TaskDescription(x) = getter(x, :TaskDescription, String, i -> "")
-TaskDescription!(x, val) = setter!(x, :TaskDescription, String, val)
+task_description(x) = getter(x, :task_description, String, i -> "")
+task_description!(x, val) = setter!(x, :task_description, String, val)
 
 """
-    TaskName(x) -> String
+    task_name(x) -> String
 
 Name of the task. No two tasks should have the same name. Task label (task-) included
 in the file name is derived from this field by removing all non alphanumeric
 ([a-zA-Z0-9]) characters. For example task name faces n-back will corresponds to
 task label facesnback. A RECOMMENDED convention is to name resting state task using
 labels beginning with rest.
+
+Corresponds to BIDS "TaskName".
 """
-TaskName(x) = getter(x, :TaskName, String, i -> "")
-TaskName!(x, val) = setter!(x, :TaskName, String, val)
+task_name(x) = getter(x, :task_name, String, i -> "")
+task_name!(x, val) = setter!(x, :task_name, String, val)
 
 """
-    TotalReadoutTime(x) -> F64Sec
+    total_readout_time(x) -> F64Sec
 
-Returns the total readout time.
-
-This is actually the "effective" total readout time , defined as the readout
-duration, specified in seconds, that would have generated data with the given
-level of distortion. It is NOT the actual, physical duration of the readout
-train. If `EffectiveEchoSpacing` has been properly computed, it is just
-`EffectiveEchoSpacing * (ReconMatrixPE - 1)`.<sup>3</sup> .
+The total readout time. This is actually the "effective" total readout time ,
+defined as the readout duration, specified in seconds, that would have generated
+data with the given level of distortion. It is NOT the actual, physical duration
+of the readout train. If `effective_echo_spacing` has been properly computed, it
+is just `effective_echo_spacing * (ReconMatrixPE - 1)`.<sup>3</sup> .
 
 * This parameter is
 REQUIRED if corresponding "field/distortion" maps acquired with opposing phase
@@ -775,20 +909,24 @@ encoding directions are present.
 
 <sup>3</sup>We use the "FSL definition", i.e, the time between the center of the
 first "effective" echo and the center of the last "effective" echo.
+
+Corresponds to BIDS "TotalReadoutTime".
 """
-TotalReadoutTime(x) = getter(x, :TotalReadoutTime, F64Sec, i -> 1.0u"s")
-TotalReadoutTime!(x, val) = setter!(x, :TotalReadoutTime, F64Sec, val)
+total_readout_time(x) = getter(x, :total_readout_time, F64Sec, i -> 1.0u"s")
+total_readout_time!(x, val) = setter!(x, :total_readout_time, F64Sec, val)
 
 """
-    VolumeTiming(x) -> Vector{F64Sec}
+    volume_timing(x) -> Vector{F64Sec}
 
 Returns the time at which each volume was acquired during the acquisition. It is
 described using a list of times (in JSON format) referring to the onset of each
 volume in the BOLD series. The list must have the same length as the BOLD
 series, and the values must be non-negative and monotonically increasing. This
-field is mutually exclusive with RepetitionTime and DelayTime. If defined, this
-requires acquisition time (TA) be defined via either SliceTiming or
-AcquisitionDuration be defined.
+field is mutually exclusive with repetition_time and delay_time. If defined, this
+requires acquisition time (TA) be defined via either slice_timing or
+acquisition_duration be defined.
+
+Corresponds to BIDS "VolumeTiming".
 """
-VolumeTiming(x) = getter(x, :VolumeTiming, Vector{F64Sec}, i -> F64Sec[])
-VolumeTiming!(x, val) = setter!(x, :VolumeTiming, Vector{F64Sec}, val)
+volume_timing(x) = getter(x, :volume_timing, Vector{F64Sec}, i -> F64Sec[])
+volume_timing!(x, val) = setter!(x, :volume_timing, Vector{F64Sec}, val)

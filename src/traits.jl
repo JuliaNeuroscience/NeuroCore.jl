@@ -121,14 +121,6 @@ Returns the units (i.e. Unitful.unit) the time axis is measured in. If not avail
 time_units(x) = unit(eltype(timeaxis(x)))
 
 """
-    start_time(x)
-
-Returns start time in seconds in relation to the start of acquisition of the first
-data sample in the corresponding neural dataset (negative values are allowed).
-"""
-start_time(x) = first(timeaxis(x))
-
-"""
     stop_time(x)
 
 Returns start time in seconds in relation to the stop of acquisition of the first
