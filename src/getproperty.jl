@@ -67,6 +67,7 @@ const PROPERTIES = [
     :SliceEncodingDirection,
     :SliceTiming,
     :SoftwareVersions,
+    :StartTime,
     :StationName,
     :TaskDescription,
     :TotalReadoutTime,

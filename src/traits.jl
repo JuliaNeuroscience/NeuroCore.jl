@@ -96,15 +96,16 @@ Which slice corresponds to the last slice acquired during MRI acquisition
 slice_end(x) = getter(x, :slice_end, Int, i -> 1)
 slice_end!(x, val) = setter!(x, :slice_end, Int, val)
 
+### TODO: should these go in ImageCore.jl ? 
 """
-    spatial_offset(img)
+    spatial_offset(x)
 
 Provides the offset of each dimension (i.e., where each spatial axis starts).
 """
 spatial_offset(x) = first.(coords_indices(x))
 
 """
-    spatial_units(img)
+    spatial_units(x)
 
 Returns the units (i.e. Unitful.unit) that each spatial axis is measured in. If not
 available `nothing` is returned for each spatial axis.
@@ -112,7 +113,15 @@ available `nothing` is returned for each spatial axis.
 spatial_units(x) = unit.(eltype.(spatial_indices(x)))
 
 """
-    start_time(x) -> F64Sec
+    time_units(x)
+
+Returns the units (i.e. Unitful.unit) the time axis is measured in. If not available
+`nothing` is returned.
+"""
+time_units(x) = unit(eltype(timeaxis(x)))
+
+"""
+    start_time(x)
 
 Returns start time in seconds in relation to the start of acquisition of the first
 data sample in the corresponding neural dataset (negative values are allowed).
@@ -120,9 +129,17 @@ data sample in the corresponding neural dataset (negative values are allowed).
 start_time(x) = first(timeaxis(x))
 
 """
-    time_units(img)
+    stop_time(x)
 
-Returns the units (i.e. Unitful.unit) the time axis is measured in. If not available
-`nothing` is returned.
+Returns start time in seconds in relation to the stop of acquisition of the first
+data sample in the corresponding neural dataset.
 """
-time_units(x) = unit(eltype(timeaxis(x)))
+stop_time(x) = last(timeaxis(x))
+
+""""
+    duration(x)
+
+Duration of the event along the time axis in seconds. 
+"""
+duration(x) = stop_time(x) - start_time(x)
+

@@ -75,6 +75,7 @@ for (property, default, valin, valout) in (
     (:SliceEncodingDirection, ipos, 2, jpos),
     (:SliceTiming, F64Sec[], [2u"s"], [2u"s"]),
     (:SoftwareVersions, "", "x", "x"),
+    (:StartTime, 1u"s", 2u"s", 2u"s"),
     (:StationName, "", "x", "x"),
     (:TaskDescription, "", "x", "x"),
     (:TotalReadoutTime, 1u"s", 2u"s", 2u"s"),

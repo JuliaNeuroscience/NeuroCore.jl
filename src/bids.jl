@@ -711,6 +711,16 @@ SoftwareVersions(x) = getter(x, :SoftwareVersions, String, i -> "")
 SoftwareVersions!(x, val) = setter!(x, :SoftwareVersions, String, val)
 
 """
+    StartTime(x) -> F64Sec
+
+Start time in seconds in relation to the start of acquisition of the first data
+sample in the corresponding neural dataset (negative values are allowed).
+"""
+StartTime(x) = getter(x, :StartTime, F64Sec, i -> 1.0u"s")
+StartTime!(x, val) = setter!(x, :StartTime, F64Sec, val)
+
+
+"""
     StationName(x) -> String
 
 Returns the institution defined name of the machine that produced the composite instances.
