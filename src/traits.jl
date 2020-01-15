@@ -1,36 +1,4 @@
 """
-    calmax(x)
-
-Specifies maximum element for display purposes. Defaults to the maximum of `x`.
-"""
-calmax(x::Any) = getter(x, :calmax, i -> _caltype(x), i -> _calmax(i))
-calmax!(x::Any, val::Any) = setter!(x, :calmax, val, i -> _caltype(i))
-
-"""
-    calmin(x)
-
-Specifies minimum element for display purposes. Defaults to the minimum of `x`.
-"""
-calmin(x) = getter(x, :calmin, i -> _caltype(i), i -> _calmin(i))
-calmin!(x, val) = setter!(x, :calmin, val, i -> _caltype(i))
-
-###
-_caltype(x::AbstractArray{T}) where {T} = T
-_caltype(x::Any) = Float64
-_calmax(x::AbstractArray) = maximum(x)
-_calmax(x::Any) = one(Float64)
-_calmin(x::AbstractArray) = minimum(x)
-_calmin(x::Any) = one(Float64)
-
-"""
-    description(x) -> String
-
-Retrieves description field that may say whatever you like.
-"""
-description(x) = getter(x, "description", String, i -> "")
-description!(x, val) = setter!(x, "description", String, val)
-
-"""
     freqdim(x) -> Int
 
 Which spatial dimension (1, 2, or 3) corresponds to phase acquisition. If not

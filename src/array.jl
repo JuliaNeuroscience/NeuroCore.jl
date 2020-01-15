@@ -1,4 +1,3 @@
-
 const NeuroMetaArray{T,N,A<:AbstractArray{T,N},D} = ImageMeta{T,N,A,<:NeuroMetadata{D}}
 
 NeuroMetaArray(x::AbstractArray) = ImageMeta(x, NeuroMetadata())

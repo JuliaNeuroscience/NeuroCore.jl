@@ -36,7 +36,6 @@ function EncodingDirection(e::Symbol)
         error("$e is not a supported encoding direction.")
     end
 end
-
 Base.String(e::EncodingDirection) = String(Symbol(e))
 
 """
