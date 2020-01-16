@@ -1,45 +1,38 @@
-struct CoordinateSystem{S} end
+# TODO Does it make sense ot separate out CoordinateMetadata with name/indices/etc?
+"""
+    CoordinateList
+
+Consists of three fields:
+* `coordinates::AbstractVector`:
+* `spatial_indices::Tuple`:
+* `properteis::AbstractMetadata`:
 
 """
-    UnkownSpace
-"""
-const UnknownSpace = CoordinateSystem{:unknown}()
-
-"""
-    ScannerSpace
-
-In scanner space.
-"""
-const ScannerSpace = CoordinateSystem{:scanner}()
-
-"""
-    AnatomicalSpace
-
-equivalent of 'aligned' space in NIfTI standard.
-"""
-const AnatomicalSpace = CoordinateSystem{:anatomical}()
-
-"""
-    TailarachSpace
-
-Tailarach space
-"""
-const TailarachSpace = CoordinateSystem{:tailarach}()
-
-"""
-    MNI152Space
-
-MNI152 space
-"""
-const MNI152Space = CoordinateSystem{:MNI152}()
-
-"""
-    coordinate_system(x)
-
-Return the coordinate space that `x` is in.
-"""
-coordinate_system(x::Any) = getter(x, "coordinatespace", CoordinateSystem, UnkownSpace)
-# TODO : This probably shouldn't be mutable
-function coordinate_system!(x::Any, val::CoordinateSystem)
-    return setter!(x, "coordinate_system", val, CoordinateSystem)
+struct CoordinateList{T<:AbstractPoint,C<:AbstractVector{T},Ax<:Tuple,M<:AbstractDict{Symbol,Any}} <: AbstractVector{T}
+    name::Symbol
+    coordinates::C
+    indices_spatial::Ax
+    metadata::M
 end
+
+ImageCore.indices_spatial(cs::CoordinateList) = getfield(cs, :indices_spatial)
+
+"""
+    coordinates(cs::CoordinateList)
+
+Corresponds to BIDS "*Coordinates" fields.
+"""
+GeometryBasics.coordinates(cs::CoordinateList) = getfield(cs, :coordinates)
+
+"""
+    spatial_units(cs::CoordinateList)
+
+Corresponds to BIDS "*CoordinateUnits" fields.
+"""
+spatial_units(cs::CoordinateList) = spatial_units(indices_spatial(cs))
+
+@assignprops(
+    NeuroCoordinates,
+    name => Name,
+    metadata => DictExtension(Description)
+)

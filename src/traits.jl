@@ -81,25 +81,9 @@ available `nothing` is returned for each spatial axis.
 spatial_units(x) = unit.(eltype.(spatial_indices(x)))
 
 """
-    time_units(x)
-
-Returns the units (i.e. Unitful.unit) the time axis is measured in. If not available
-`nothing` is returned.
-"""
-time_units(x) = unit(eltype(timeaxis(x)))
-
-"""
     stop_time(x)
 
 Returns start time in seconds in relation to the stop of acquisition of the first
 data sample in the corresponding neural dataset.
 """
 stop_time(x) = last(timeaxis(x))
-
-""""
-    duration(x)
-
-Duration of the event along the time axis in seconds. 
-"""
-duration(x) = stop_time(x) - start_time(x)
-
