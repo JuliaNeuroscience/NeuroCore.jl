@@ -76,7 +76,7 @@ This field is mutually exclusive with `repetition_time`.
 """
 Returns duration (in seconds) from trigger delivery to scan onset. This delay is
 commonly caused by adjustments and loading times. This specification is entirely
-independent of number_of_volumes_discarded_by_scanner or number_of_volumes_discarded_by_user,
+independent of `nvol_discarded_by_scanner` or `nvol_discarded_by_user`,
 as the delay precedes the acquisition.
 """
 @defprop DelayAfterTrigger{:delay_after_trigger}::F64Sec
@@ -98,7 +98,7 @@ and the beginning of acquisition of the volume following it (TR). Please note th
 this definition includes time between scans (when no data has been acquired) in
 case of sparse acquisition schemes. This value needs to be consistent with the
 pixdim[4] field (after accounting for units stored in xyzt_units field) in the
-NIfTI header. This field is mutually exclusive with volume_timing and is derived
+NIfTI header. This field is mutually exclusive with `volume_timing` and is derived
 from DICOM Tag 0018, 0080 and converted to seconds.
 """
 @defprop RepetitionTime{:repetition_time}::F64Sec

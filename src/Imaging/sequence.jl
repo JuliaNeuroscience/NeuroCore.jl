@@ -24,17 +24,11 @@ Gradient Echo EPI, Spin Echo EPI, Multiband gradient echo EPI).
 """
 @defprop PulseSequenceType{:pulse_sequence_type}::String
 
-"""
-Description of the type of sequence data acquired.
-"""
+"Description of the type of sequence data acquired."
 @defprop ScanningSequence{:scanning_sequence}::String
 
-"""
-Manufacturer’s designation of the sequence name.
-"""
+"Manufacturer’s designation of the sequence name."
 @defprop SequenceName{:sequence_name}::String
 
-"""
-Variant of the `scanning_sequence` property.
-"""
+"Variant of the `scanning_sequence` property."
 @defprop SequenceVarient{:sequence_varient}::String

@@ -13,9 +13,7 @@ set, then the specifications of the actual gradient coil should be reported inde
 """
 @defprop GradientSetType{:gradient_set_type}::String
 
-"""
-The nominal field strength of MR magnet in Tesla.
-"""
+"The nominal field strength of MR magnet in Tesla."
 @defprop MagneticFieldStrength{:magnetic_field_strength}::F64Tesla
 
 """
@@ -41,8 +39,8 @@ case this field can be derived from an appropriate private DICOM field.
 
 """
 Information describing the active/selected elements of the receiver coil. This
-doesn’t correspond to a tag in the DICOM ontology. The vendor-defined
-terminology for active coil elements can go in this field. As an example, for
+doesn’t correspond to a tag in the DICOM ontology. The vendor-defined terminology
+for active coil elements can go in this field. As an example, for
 Siemens, coil channels are typically not activated/selected individually, but
 rather in pre-defined selectable "groups" of individual channels, and the list
 of the "groups" of elements that are active/selected in any given scan
@@ -57,15 +55,10 @@ given scan was collected with the intended coil elements selected.
 """
 @defprop ReceiveCoilActiveElements{:receive_coil_active_elements}::String
 
-"""
-Returns the flip angle for the acquisition in degrees.
-Corresponds to BIDS "".
-"""
+"Returns the flip angle for the acquisition in degrees."
 @defprop FlipAngle{:flip_angle}::IntDeg
 
-"""
-Returns the multiband factor, for multiband acquisitions.
-"""
+"Returns the multiband factor, for multiband acquisitions."
 @defprop MultibandAccelerationFactor{:multiband_acceleration_factor}::String
 
 """
@@ -76,10 +69,7 @@ in conjunction with a T2* weighted acquisition protocol.
 """
 @defprop NegativeContrast{:negative_contrast}::Bool
 
-"""
-Return active ingredient of constrast agent. See [`ContrastIngrediant`](@ref) for
-more details.
-"""
+"Return active ingredient of constrast agent. See [`ContrastIngrediant`](@ref) for more details."
 @defprop ContrastBolusIngredient{:contrast_bolus_ingredient}::ContrastIngrediant
 
 """

@@ -28,23 +28,14 @@ function _spacedirection_to_rotation(::Type{R}, sd::NTuple{3,NTuple{3,T}}) where
         sd[1][3], sd[2][3], sd[3][3]))
 end
 
-"""
-Affine map relative to anatomical space.
-"""
+"Affine map relative to anatomical space."
 @defprop AnatomicalAffine{:anataffine}::((x::Type{<:AbstractArray}) -> _affine_type(x))=(x::AbstractArray) -> _affine_default(x)
 
-"""
-Affine map relative to acquisition space.
-"""
+"Affine map relative to acquisition space."
 @defprop AcquisitionAffine{:acqaffine}::((x::Type{<:AbstractArray}) -> _affine_type(x))=(x::AbstractArray) -> _affine_default(x)
 
-"""
-The anatomical coordinate system.
-"""
+"The anatomical coordinate system."
 @defprop AnatomicalSystem{:anatsystem}
 
-"""
-The acquisition coordinate system.
-"""
+"The acquisition coordinate system."
 @defprop AcquisitionSystem{:acqsystem}
-

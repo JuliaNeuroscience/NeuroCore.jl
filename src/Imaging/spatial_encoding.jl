@@ -1,3 +1,17 @@
+"Which spatial dimension (1, 2, or 3) corresponds to phase acquisition."
+@defprop FrequencyDimension{:freqdim}::Int
+
+"Which spatial dimension (1, 2, or 3) corresponds to phase acquisition."
+@defprop PhaseDimension{:phasedim}::Int
+
+"Which slice corresponds to the first slice acquired during MRI acquisition (i.e. not padded slices)."
+@defprop SliceStart{:slice_start}::Int
+
+"Which slice corresponds to the last slice acquired during MRI acquisition (i.e. not padded slices)."
+@defprop SliceEnd{:slice_end}::Int
+
+"Which dimension slices where acquired at throughout MRI acquisition."
+@defprop SliceDim{:slicedim}::Int
 
 """
 The number of RF excitations needed to reconstruct a slice or volume.
@@ -27,10 +41,7 @@ manipulations). See [here](https://lcni.uoregon.edu/kb-articles/kb-0003) and
 """
 @defprop EffectiveEchoSpacing{:effective_echo_spacing}::F64Sec
 
-"""
-Returns the type of parallel imaging used (e.g. GRAPPA, SENSE).
-Corresponds to BIDS "".
-"""
+"The type of parallel imaging used (e.g. GRAPPA, SENSE)."
 @defprop ParallelAcquisitionTechnique{:parallel_acquisition_technique}::String
 
 """
@@ -39,14 +50,10 @@ of k-space encoded for each slice. For example, 2 means half of k-space is encod
 """
 @defprop ParallelReductionFactor{:parallel_reduction_factor_in_plane}::Int
 
-"""
-Returns the fraction of partial Fourier information collected.
-"""
+"The fraction of partial Fourier information collected."
 @defprop PartialFourier{:partial_fourier}::Float64
 
-"""
-The direction where only partial Fourier information was collected.
-"""
+"The direction where only partial Fourier information was collected."
 @defprop PartialFourierDirection{:partial_fourier_direction}::String
 
 """
@@ -72,8 +79,7 @@ same as the DICOM term `in_plane_phase_encoding_direction` which can have `ROW` 
 `COL` values. This parameter is REQUIRED if corresponding fieldmap data is present
 or when using multiple runs with different phase encoding directions (which can
 be later used for field inhomogeneity correction).
-
-Corresponds to BIDS "".
 """
 @defprop PhaseEncodingDirection{:phase_encoding_direction}::EncodingDirection=x -> phasedim(x)
 phase_encoding_direction!(x::AbstractArray, val) = phasedim!(x, val)
+

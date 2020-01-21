@@ -1,5 +1,4 @@
 
-include("diminfo.jl")
 include("mri.jl")
 include("magnetization_transfer.jl")
 include("sequence.jl")

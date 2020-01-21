@@ -29,14 +29,24 @@ const F64kOhm = typeof(OnekOhm)
 
 const NeuroArray{T,N,A<:AbstractArray{T,N},M<:AbstractMetadata,Ax} = AxisArray{T,N,ImageMeta{T,N,A,M},Ax}
 
+function NeuroArray(a::AbstractArray, axs::NamedTuple; kwargs...)
+    return NeuroArray(a, axs, Metadata(; kwargs...))
+end
+function NeuroArray(a::AbstractArray, axs::NamedTuple, m::AbstractMetadata)
+    return AxisArray(ImageMeta(a, m), nt2axis(axs))
+end
+
+nt2axis(axs::NamedTuple{name}) where {name} = (Axis{first(name)}(first(axs)), tail(axs)...)
+nt2axis(axs::NamedTuple{(),Tuple{}}) = ()
+
+
 @assignprops(NeuroArray, properties => nested_property)
 
 include("enums.jl")
 include("traits.jl")
 include("./Imaging/Imaging.jl")
 include("./Electrophysiology/Electrophysiology.jl")
-include("coordinates.jl")
 include("axes.jl")
-include("neuroarray.jl")
+include("orientation.jl")
 
 end
