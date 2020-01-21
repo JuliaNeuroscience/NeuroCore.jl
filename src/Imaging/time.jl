@@ -40,9 +40,7 @@ consistent with the ‘slicedim’ field in the NIfTI header. When absent, the
 entries in slice_timing must be in the order of increasing slice index as defined
 by the NIfTI header.
 """
-@defprop SliceEncodingDirection{:slice_encoding_direction}::EncodingDirection
-
-slice_encoding_direction(x::AbstractArray) = EncodingDirection(slicedim(x))
+@defprop SliceEncodingDirection{:slice_encoding_direction}::EncodingDirection=x -> slicedim(x)
 slice_encoding_direction!(x::AbstractArray, val) = slicedim!(x, val)
 
 """
@@ -104,10 +102,3 @@ NIfTI header. This field is mutually exclusive with volume_timing and is derived
 from DICOM Tag 0018, 0080 and converted to seconds.
 """
 @defprop RepetitionTime{:repetition_time}::F64Sec
-
-"""
-Returns the inversion time (TI) for the acquisition, specified in seconds.
-Inversion time is the time after the middle of inverting RF pulse to middle of
-excitation pulse to detect the amount of longitudinal magnetization.
-"""
-@defprop InversionTime{:inversion_time}::F64Sec

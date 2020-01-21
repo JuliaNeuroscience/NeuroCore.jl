@@ -1,13 +1,4 @@
 """
-    freqdim(x) -> Int
-
-Which spatial dimension (1, 2, or 3) corresponds to phase acquisition. If not
-applicable to scan type defaults to `1`.
-"""
-freqdim(x) = getter(x, :freqdim, Int, 1)
-freqdim!(x, val) = setter!(x, :freqdim, Int, val)
-
-"""
     is_anatomical(::T) -> Bool
 
 Returns `true` if `T` represents anatomical data.
@@ -21,7 +12,7 @@ is_anatomical(::Type{T}) where {T} = false
 Returns `true` if `T` represents electrophysiology data.
 """
 is_electrophysiology(::T) where {T} = is_electrophysiology(T)
-is_electrophysiology(::Type{T}) where {T} = false
+is_electrophysiology(::Type{T}) where {T} = has_channel_axis(T) & has_time_axis(T)
 
 """
     is_functional(::T) -> Bool
@@ -30,60 +21,81 @@ Returns `true` if `T` represents functional data.
 """
 is_functional(::T) where {T} = is_functional(T)
 is_functional(::Type{T}) where {T} = false
-"""
-    phasedim(x) -> Int
-
-Which spatial dimension (1, 2, or 3) corresponds to phase acquisition.
-"""
-phasedim(x) = getter(x, :phasedim, Int, i -> 1)
-phasedim!(x, val) = setter!(x, :phasedim, Int, val)
 
 """
-    slicedim(x) -> Int
-
-Which dimension slices where acquired at throughout MRI acquisition.
+The manufacturer of the equipment that produced the composite instances.
 """
-slicedim(x) = getter(x, :slicedim, Int, i -> 1)
-slicedim!(x, val) = setter!(x, :slicedim, Int, val)
+@defprop Manufacturer{:manufacturer}::String
 
 """
-    slice_start(x) -> Int
-
-Which slice corresponds to the first slice acquired during MRI acquisition
-(i.e. not padded slices). Defaults to `1`.
+The manufacturer's model name of the equipment that produced the composite instances.
 """
-slice_start(x) = getter(x, :slice_start, Int, i -> 1)
-slice_start!(x, val) = setter!(x, :slice_start, Int, val)
+@defprop ManufacturerModelName{:manufacturer_model_name}::String
 
 """
-    slice_end(x) -> Int
-
-Which slice corresponds to the last slice acquired during MRI acquisition
-(i.e. not padded slices).
+The serial number of the equipment that produced the composite instances. A
+pseudonym can also be used to prevent the equipment from being identifiable,
+so long as each pseudonym is unique within the dataset.
 """
-slice_end(x) = getter(x, :slice_end, Int, i -> 1)
-slice_end!(x, val) = setter!(x, :slice_end, Int, val)
-
-### TODO: should these go in ImageCore.jl ? 
-"""
-    spatial_offset(x)
-
-Provides the offset of each dimension (i.e., where each spatial axis starts).
-"""
-spatial_offset(x) = first.(coords_indices(x))
+@defprop DeviceSerialNumber{:device_serial_number}::String
 
 """
-    spatial_units(x)
-
-Returns the units (i.e. Unitful.unit) that each spatial axis is measured in. If not
-available `nothing` is returned for each spatial axis.
+The manufacturer’s designation of software version of the equipment that
+produced the composite instances.
 """
-spatial_units(x) = unit.(eltype.(spatial_indices(x)))
+@defprop SoftwareVersions{:software_versions}::String
 
 """
-    stop_time(x)
-
-Returns start time in seconds in relation to the stop of acquisition of the first
-data sample in the corresponding neural dataset.
+Name of the institution in charge of the equipment that produced the composite
+instances.
 """
-stop_time(x) = last(timeaxis(x))
+@defprop InstitutionName{:institution_name}::String
+
+"""
+The department in the institution in charge of the equipment that produced
+the composite instances.
+"""
+@defprop InstitutionalDepartmentName{:institutional_department_name}::String
+
+"""
+The address of the institution in charge of the equipment that produced the
+composite instances.
+"""
+@defprop InstitutionAddress{:institution_address}::String
+
+"""
+Institution defined name of the machine that produced the composite instances.
+"""
+@defprop StationName{:station_name}::String
+
+"""
+Freeform description of the observed subject artefact and its possible cause (e.g.,
+"door open", "nurse walked into room at 2 min", "seizure at 10 min"). If this
+field is left empty, it will be interpreted as absence of artifacts.
+"""
+@defprop ArtefactDescription{:artefact_description}::String
+
+"""
+`Path or list of path relative to the subject subfolder pointing to the structural
+MRI, possibly of different types if a list is specified, to be used with the MEG
+recording. The path(s) need(s) to use forward slashes instead of backward slashes
+(e.g. ses-/anat/sub-01_T1w.nii.gz).
+"""
+@defprop IntendedFor{:intended_for}::AbstractVector{String}
+
+"""
+Text of the instructions given to participants before the scan. This is especially
+important in context of resting state fMRI and distinguishing between eyes open and
+eyes closed paradigms.
+"""
+@defprop Instructions{:instructions}::String
+
+"""
+URL of the corresponding [Cognitive Atlas Task](https://www.cognitiveatlas.org/) term.
+"""
+@defprop CogAtlasID{:cog_atlas_id}::String
+
+"""
+URL of the corresponding [CogPO](http://www.cogpo.org/) term.
+"""
+@defprop CogPOID{:cog_poid}::String

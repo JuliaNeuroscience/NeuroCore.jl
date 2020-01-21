@@ -4,7 +4,7 @@ using phased-array coils use root-sum-of-squares (rSOS) combination, but other
 methods exist. The image reconstruction is changed by the coil combination method
 (as for the matrix coil mode above), so anything non-standard should be reported.
 """
-@defprop CoilCombinationMethod{:coil_combination_method}String
+@defprop CoilCombinationMethod{:coil_combination_method}::String
 
 """
 The gradient set type. It should be possible to infer the gradient coil from the

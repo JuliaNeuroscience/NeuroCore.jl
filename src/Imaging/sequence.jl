@@ -32,7 +32,7 @@ Description of the type of sequence data acquired.
 """
 Manufacturer’s designation of the sequence name.
 """
-@property SequenceName{:sequence_name}::String
+@defprop SequenceName{:sequence_name}::String
 
 """
 Variant of the `scanning_sequence` property.

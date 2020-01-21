@@ -14,7 +14,7 @@ The amount of incrementation described in degrees, which is applied to the
 phase of the excitation pulse at each TR period for achieving RF spoiling.
 Corresponds to BIDS 
 """
-@deprop SpoilingRFPhaseIncrement{:spoiling_rf_phase_increment}::IntDeg
+@defprop SpoilingRFPhaseIncrement{:spoiling_rf_phase_increment}::IntDeg
 
 """
 Zeroth moment of the spoiler gradient lobe in militesla times second per meter (mT.s/m).

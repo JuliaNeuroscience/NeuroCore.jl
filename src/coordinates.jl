@@ -1,3 +1,11 @@
+# TODO document coordinates
+"""
+
+"""
+@defprop Coordinates{:coordinates}
+
+const NeuroCoordinates{T<:AbstractPoint,A<:AbstractVector{T},M} = NeuroArray{T,1,A,M}
+
 # TODO Does it make sense ot separate out CoordinateMetadata with name/indices/etc?
 """
     CoordinateList
@@ -5,17 +13,14 @@
 Consists of three fields:
 * `coordinates::AbstractVector`:
 * `spatial_indices::Tuple`:
-* `properteis::AbstractMetadata`:
+* `meta::AbstractMetadata`:
 
 """
-struct CoordinateList{T<:AbstractPoint,C<:AbstractVector{T},Ax<:Tuple,M<:AbstractDict{Symbol,Any}} <: AbstractVector{T}
-    name::Symbol
+struct CoordinateList{T<:AbstractPoint,C<:AbstractVector{T},Ax<:Tuple,M<:AbstractMetadata} <: AbstractVector{T}
     coordinates::C
     indices_spatial::Ax
-    metadata::M
+    meta::M
 end
-
-ImageCore.indices_spatial(cs::CoordinateList) = getfield(cs, :indices_spatial)
 
 """
     coordinates(cs::CoordinateList)
@@ -24,15 +29,9 @@ Corresponds to BIDS "*Coordinates" fields.
 """
 GeometryBasics.coordinates(cs::CoordinateList) = getfield(cs, :coordinates)
 
-"""
-    spatial_units(cs::CoordinateList)
-
-Corresponds to BIDS "*CoordinateUnits" fields.
-"""
-spatial_units(cs::CoordinateList) = spatial_units(indices_spatial(cs))
-
 @assignprops(
     NeuroCoordinates,
-    name => Name,
-    metadata => DictExtension(Description)
+    :name => name,
+    :indices_spatial => indices_spatial,
+    :meta => dictextension
 )

@@ -75,7 +75,5 @@ be later used for field inhomogeneity correction).
 
 Corresponds to BIDS "".
 """
-@defprop PhaseEncodingDirection{:phase_encoding_direction}::EncodingDirection
-
-phase_encoding_direction(x::AbstractArray) = EncodingDirection(phasedim(x))
+@defprop PhaseEncodingDirection{:phase_encoding_direction}::EncodingDirection=x -> phasedim(x)
 phase_encoding_direction!(x::AbstractArray, val) = phasedim!(x, val)
