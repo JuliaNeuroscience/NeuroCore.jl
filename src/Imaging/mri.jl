@@ -14,7 +14,7 @@ set, then the specifications of the actual gradient coil should be reported inde
 @defprop GradientSetType{:gradient_set_type}::String
 
 "The nominal field strength of MR magnet in Tesla."
-@defprop MagneticFieldStrength{:magnetic_field_strength}::F64Tesla
+@defprop MagneticFieldStrength{:magnetic_field_strength}::(x -> tesla_type(x))
 
 """
 Returns the matrix coil mode. A method for reducing the number of independent
@@ -56,7 +56,7 @@ given scan was collected with the intended coil elements selected.
 @defprop ReceiveCoilActiveElements{:receive_coil_active_elements}::String
 
 "Returns the flip angle for the acquisition in degrees."
-@defprop FlipAngle{:flip_angle}::IntDeg
+@defprop FlipAngle{:flip_angle}::(x -> degree_type(x))
 
 "Returns the multiband factor, for multiband acquisitions."
 @defprop MultibandAccelerationFactor{:multiband_acceleration_factor}::String

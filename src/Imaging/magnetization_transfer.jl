@@ -9,10 +9,10 @@ is REQUIRED by all the anatomical images grouped by MTR, MTS and MPM suffixes.
 The frequency offset of the magnetization transfer pulse with respect to the
 central H1 Larmor frequency in Hertz (Hz).
 """
-@defprop MTOffsetFrequency{:mt_offset_frequency}::F64Hertz
+@defprop MTOffsetFrequency{:mt_offset_frequency}::(x -> hertz_type(x))
 
 "The excitation bandwidth of the magnetization transfer pulse in Hertz (Hz)."
-@defprop MTPulseBandwidth{:mt_pulse_bandwidth}::F64Hertz
+@defprop MTPulseBandwidth{:mt_pulse_bandwidth}::(x -> hertz_type(x))
 
 "Number of magnetization transfer RF pulses applied before the readout."
 @defprop MTNumberOfPulses{:mt_npulses}::Int
@@ -31,5 +31,5 @@ Shape of the magnetization transfer RF pulse waveform. Accepted values:
 @defprop MTPulseShape{:mt_pulse_shape}
 
 "Duration of the magnetization transfer RF pulse in seconds."
-@defprop MTPulseDuration{:mt_pulse_duration}::F64Sec
+@defprop MTPulseDuration{:mt_pulse_duration}::(x -> second_type(x))
 

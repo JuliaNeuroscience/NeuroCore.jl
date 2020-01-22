@@ -39,7 +39,7 @@ reflected in a single DICOM tag for all possible aforementioned scan
 manipulations). See [here](https://lcni.uoregon.edu/kb-articles/kb-0003) and
 [here](https://github.com/neurolabusc/dcm_qa/tree/master/In/total_readout_time)
 """
-@defprop EffectiveEchoSpacing{:effective_echo_spacing}::F64Sec
+@defprop EffectiveEchoSpacing{:effective_echo_spacing}::(x -> second_type(x))
 
 "The type of parallel imaging used (e.g. GRAPPA, SENSE)."
 @defprop ParallelAcquisitionTechnique{:parallel_acquisition_technique}::String
@@ -70,7 +70,7 @@ encoding directions are present.
 <sup>3</sup>We use the "FSL definition", i.e, the time between the center of the
 first "effective" echo and the center of the last "effective" echo.
 """
-@defprop TotalReadoutTime{:total_readout_time}::F64Sec
+@defprop TotalReadoutTime{:total_readout_time}::(x -> second_type(x))
 
 """
 The phase encoding direction is defined as the direction along which phase is was

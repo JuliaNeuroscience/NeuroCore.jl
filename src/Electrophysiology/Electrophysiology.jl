@@ -3,7 +3,7 @@
 @defprop NumberOfChannels{:nchannels}::Int
 
 "Frequencies used for the high-pass filter applied to the channel in Hz."
-@defprop HighCutOff{:high_cutoff}::F64Hz
+@defprop HighCutOff{:high_cutoff}::(x -> hertz_type(x))
 
 """
 Frequencies used for the low-pass filter applied to the channel in Hz.
@@ -11,13 +11,13 @@ If no low-pass filter applied, use n/a. Note that hardware anti-aliasing in A/D
 conversion of all MEG/EEG electronics applies a low-pass filter; specify its
 frequency here if applicable.
 """
-@defprop LowCutOff{:low_cutoff}::F64Hz
+@defprop LowCutOff{:low_cutoff}::(x -> hertz_type(x))
 
 "Frequencies used for the notch filter applied to the channel, in Hz."
-@defprop Notch{:notch}::F64Hz
+@defprop Notch{:notch}::(x -> hertz_type(x))
 
 "Temporal software filters applied."
-@defprop SoftwareFilters{:software_filterssoftware_filters}
+@defprop SoftwareFilters{:software_filters}
 
 """
 Field to describe the way electrodes are grouped into strips, grids or depth probes
@@ -39,13 +39,13 @@ bitemporal, bilateral temporal strips and left grid").
 """
 `power_line_frequency::F64Hz`: Frequency (in Hz) of the power grid at the geographical location of the EEG instrument (i.e., 50 or 60).
 """
-@defprop PowerlineFrequency{:power_line_frequency}::F64Hz
+@defprop PowerlineFrequency{:power_line_frequency}::(x -> hertz_type(x))
 
 """
 Position of the dewar during the MEG scan: upright, supine or degrees of angle
 from vertical: for example on CTF systems, upright=15°, supine = 90°.
 """
-@defprop DewarPosition{:dwar_position}::IntDeg
+@defprop DewarPosition{:dwar_position}::(x -> degree_type(x))
 
 #### iEEG
 """
@@ -66,4 +66,4 @@ described here in freeform text.
 Duration of individual epochs in seconds (e.g., 1) in case of epoched data. If
 recording was continuous or discontinuous, leave out the field.
 """
-@defprop EpochLength{:epoch_length}::F64Sec
+@defprop EpochLength{:epoch_length}::(x -> second_type(x))

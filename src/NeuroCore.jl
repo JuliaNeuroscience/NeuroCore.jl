@@ -8,24 +8,20 @@ using FieldProperties
 
 export NeuroArray
 
-const OneF64Sec = 1.0u"s"
-"F64Sec - A `Float64` type with seconds units."
-const F64Sec = typeof(OneF64Sec)
+"second_type(x) - Returns the type used for seconds given `x`."
+second_type(x) = typeof(one(Float64) * Unitful.s)
 
-const OneF64Tesla = 1.0u"T"
-"F64Tesla - A `Float64` type with tesla units."
-const F64Tesla = typeof(OneF64Tesla)
+"tesla_type(x) - Returns the type used for tesla given `x`."
+tesla_type(x) = typeof(one(Float64) * Unitful.T)
 
-const OneF64Hz = 1.0u"Hz"
-"F64Hertz - A `Float64` type with hertz units."
-const F64Hz = typeof(OneF64Hz)
+"hertz_type(x) - Returns the type used for hertz given `x`."
+hertz_type(x) = typeof(one(Float64) * Unitful.Hz)
 
-const OneIntDeg = 1.0u"°"
-"IntDeg - A `Float64` type with degree units."
-const IntDeg = typeof(OneIntDeg)
+"degree_type(x) - Returns the type used for hertz given `x`."
+degree_type(x) = typeof(1 * Unitful.°)
 
-const OnekOhm = 1.0u"kΩ"
-const F64kOhm = typeof(OnekOhm)
+"ohms_type(x) - Returns the type used for ohms given `x`."
+ohms_type(x) = typeof(1.0u"kΩ")
 
 const NeuroArray{T,N,A<:AbstractArray{T,N},M<:AbstractMetadata,Ax} = AxisArray{T,N,ImageMeta{T,N,A,M},Ax}
 
@@ -39,14 +35,13 @@ end
 nt2axis(axs::NamedTuple{name}) where {name} = (Axis{first(name)}(first(axs)), tail(axs)...)
 nt2axis(axs::NamedTuple{(),Tuple{}}) = ()
 
-
 @assignprops(NeuroArray, properties => nested_property)
 
+include("axes.jl")
 include("enums.jl")
 include("traits.jl")
 include("./Imaging/Imaging.jl")
 include("./Electrophysiology/Electrophysiology.jl")
-include("axes.jl")
 include("orientation.jl")
 
 end
