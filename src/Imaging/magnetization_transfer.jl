@@ -33,3 +33,34 @@ Shape of the magnetization transfer RF pulse waveform. Accepted values:
 "Duration of the magnetization transfer RF pulse in seconds."
 @defprop MTPulseDuration{:mt_pulse_duration}::(x -> second_type(x))
 
+
+struct MagnetizationTransferMetadata{H,S}
+    mt_state::Bool
+    mt_offset_frequency::H
+    mt_pulse_bandwidth::H
+    mt_npulses::Int
+    mt_pulse_shape::Symbol
+    mt_pulse_duration::S
+end
+
+@assignprops(
+    MagnetizationTransferMetadata,
+    :mt_state => mt_state,
+    :mt_offset_frequency => mt_offset_frequency,
+    :mt_pulse_bandwidth => mt_pulse_bandwidth,
+    :mt_npulses => mt_npulses,
+    :mt_pulse_shape => mt_pulse_shape,
+    :mt_pulse_duration => mt_pulse_duration
+)
+
+"""
+    MagnetizationTransferMetadata 
+
+
+Metadata structure for information concerning MRI magnetization transfer pulse.
+
+## Properties
+$(propdoclist(MagnetizationTransferMetadata))
+"""
+MagnetizationTransferMetadata
+

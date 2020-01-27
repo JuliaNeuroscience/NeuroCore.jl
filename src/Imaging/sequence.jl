@@ -32,3 +32,35 @@ Gradient Echo EPI, Spin Echo EPI, Multiband gradient echo EPI).
 
 "Variant of the `scanning_sequence` property."
 @defprop SequenceVarient{:sequence_varient}::String
+
+struct SequenceMetadata
+    nonlinear_gradient_correction::Bool
+    pulse_sequence::String
+    pulse_sequence_details::String
+    pulse_sequence_type::String
+    scanning_sequence::String
+    sequence_name::String
+    sequence_varient::String
+end
+
+@assignprops(
+    SequenceMetadata,
+    :nonlinear_gradient_correction => nonlinear_gradient_correction,
+    :pulse_sequence => pulse_sequence,
+    :pulse_sequence_details => pulse_sequence_details,
+    :pulse_sequence_type => pulse_sequence_type,
+    :scanning_sequence => scanning_sequence,
+    :sequence_name => sequence_name,
+    :sequence_varient => sequence_varient
+)
+
+"""
+    SequenceMetadata 
+
+
+Metadata structure for general MRI sequence information.
+
+## Properties
+$(propdoclist(SequenceMetadata))
+"""
+SequenceMetadata

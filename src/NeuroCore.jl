@@ -8,6 +8,17 @@ using FieldProperties
 
 export NeuroArray
 
+
+# TODO: move this to FieldProperties.jl
+# makes markdown list for documenting properties
+function propdoclist(x)
+    out = ""
+    for (p, d) in pairs(propdoc(x))
+        out = out * "* $p: $d\n"
+    end
+    return out
+end
+
 "second_type(x) - Returns the type used for seconds given `x`."
 second_type(x) = typeof(one(Float64) * Unitful.s)
 
@@ -38,6 +49,8 @@ nt2axis(axs::NamedTuple{(),Tuple{}}) = ()
 @assignprops(NeuroArray, properties => nested_property)
 
 include("axes.jl")
+include("hardware.jl")
+include("institution.jl")
 include("enums.jl")
 include("traits.jl")
 include("./Imaging/Imaging.jl")

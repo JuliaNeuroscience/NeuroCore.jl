@@ -1,18 +1,3 @@
-"Which spatial dimension (1, 2, or 3) corresponds to phase acquisition."
-@defprop FrequencyDimension{:freqdim}::Int
-
-"Which spatial dimension (1, 2, or 3) corresponds to phase acquisition."
-@defprop PhaseDimension{:phasedim}::Int
-
-"Which slice corresponds to the first slice acquired during MRI acquisition (i.e. not padded slices)."
-@defprop SliceStart{:slice_start}::Int
-
-"Which slice corresponds to the last slice acquired during MRI acquisition (i.e. not padded slices)."
-@defprop SliceEnd{:slice_end}::Int
-
-"Which dimension slices where acquired at throughout MRI acquisition."
-@defprop SliceDim{:slicedim}::Int
-
 """
 The number of RF excitations needed to reconstruct a slice or volume.
 Please mind that this is not the same as Echo Train Length which denotes the
@@ -46,7 +31,7 @@ manipulations). See [here](https://lcni.uoregon.edu/kb-articles/kb-0003) and
 
 """
 The parallel imaging (e.g, GRAPPA) factor. Use the denominator of the fraction
-of k-space encoded for each slice. For example, 2 means half of k-space is encoded.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+of k-space encoded for each slice. For example, 2 means half of k-space is encoded.
 """
 @defprop ParallelReductionFactor{:parallel_reduction_factor_in_plane}::Int
 
@@ -71,15 +56,4 @@ encoding directions are present.
 first "effective" echo and the center of the last "effective" echo.
 """
 @defprop TotalReadoutTime{:total_readout_time}::(x -> second_type(x))
-
-"""
-The phase encoding direction is defined as the direction along which phase is was
-modulated which may result in visible distortions. Note that this is not the
-same as the DICOM term `in_plane_phase_encoding_direction` which can have `ROW` or
-`COL` values. This parameter is REQUIRED if corresponding fieldmap data is present
-or when using multiple runs with different phase encoding directions (which can
-be later used for field inhomogeneity correction).
-"""
-@defprop PhaseEncodingDirection{:phase_encoding_direction}::EncodingDirection=x -> phasedim(x)
-phase_encoding_direction!(x::AbstractArray, val) = phasedim!(x, val)
 
