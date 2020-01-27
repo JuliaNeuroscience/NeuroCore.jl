@@ -6,7 +6,11 @@ using StaticArrays, Rotations, CoordinateTransformations
 using Unitful
 using FieldProperties
 
-export NeuroArray
+export
+    NeuroArray,
+    InstitutionInformation,
+    HardwareMetadata,
+    EncodingDirectionMetadata
 
 
 # TODO: move this to FieldProperties.jl
