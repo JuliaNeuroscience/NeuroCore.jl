@@ -151,7 +151,6 @@ function _spatialorder(R::Rotation{3,T}) where {T}
             end
         end
     end
-
     # At this point ibest is 1 or 2 or 3; pbest is -1 or +1; etc.
 
     # The matrix P that corresponds is the best permutation approximation
