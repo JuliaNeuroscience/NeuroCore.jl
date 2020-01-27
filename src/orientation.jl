@@ -38,17 +38,21 @@ end
 
 "The acquisition coordinate system."
 @defprop AcquisitionSystem{:acqsystem}
-function affine2orientation(R::AffineMap)
+
+_spatialorder(R::AffineMap) = _spatialorder(R.linear)
+function _spatialorder(R::Rotation{3,T}) where {T}
     # load column vectors for each (i,j,k) direction from matrix
-    xi = R.linear[1,1]
-    xj = R.linear[1,2]
-    xk = R.linear[1,3]
-    yi = R.linear[2,1]
-    yj = R.linear[2,2]
-    yk = R.linear[2,3]
-    zi = R.linear[3,1]
-    zj = R.linear[3,2]
-    zk = R.linear[3,3]
+    @inbounds begin
+        xi = R[1,1]
+        xj = R[1,2]
+        xk = R[1,3]
+        yi = R[2,1]
+        yj = R[2,2]
+        yk = R[2,3]
+        zi = R[3,1]
+        zj = R[3,2]
+        zk = R[3,3]
+    end
 
     # Normalize column vectors to get unit vectors along each ijk-axis
     # normalize i axis

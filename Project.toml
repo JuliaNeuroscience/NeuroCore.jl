@@ -14,8 +14,8 @@ Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 
 [compat]
 CoordinateTransformations = "0.5.0"
-FieldProperties = "0.3.3"
-Images="0.20.2"
+FieldProperties = "0.3.4"
+Images = "0.20.2"
 NamedDims = "0.2.14"
 Rotations = "0.13.0"
 StaticArrays = "0.12.1"

@@ -2,7 +2,7 @@ module NeuroCore
 
 using Images
 using NamedDims
-using StaticArrays, Rotations, CoordinateTransformations
+using StaticArrays, Rotations, CoordinateTransformations, LinearAlgebra
 using Unitful
 using FieldProperties
 

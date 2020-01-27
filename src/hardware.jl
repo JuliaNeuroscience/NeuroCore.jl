@@ -25,6 +25,10 @@ struct HardwareMetadata{M} <: AbstractMetadata{M}
     extension::M
 end
 
+function HardwareMetadata(manufacturer, model, serial_number; kwargs...)
+    return HardwareMetadata(manufacturer, model, serial_number, Metadata(; kwargs...))
+end
+
 @assignprops(
     HardwareMetadata,
     :manufacturer => manufacturer,

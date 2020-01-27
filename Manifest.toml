@@ -122,9 +122,9 @@ version = "3.3.9+3"
 
 [[FieldProperties]]
 deps = ["Markdown"]
-git-tree-sha1 = "609dc2c03d90421419af283587e6ed0d01128ce8"
+git-tree-sha1 = "04eb86a38af3812f54c9b1977cc309f20ac9c0ab"
 uuid = "127e4479-4c95-493a-afaa-609d38175b70"
-version = "0.2.0"
+version = "0.3.4"
 
 [[FileIO]]
 deps = ["Pkg"]
@@ -169,9 +169,9 @@ version = "0.2.7"
 
 [[ImageFiltering]]
 deps = ["CatIndices", "ColorVectorSpace", "ComputationalResources", "DataStructures", "FFTViews", "FFTW", "ImageCore", "ImageMetadata", "LinearAlgebra", "MappedArrays", "OffsetArrays", "Requires", "StaticArrays", "Statistics", "TiledIteration"]
-git-tree-sha1 = "211659cebecac11219d365854c67a5af0f11a5fc"
+git-tree-sha1 = "c8aebfbdbb2f12665448de007f635a1910b476e4"
 uuid = "6a3955dd-da59-5b1f-98d4-e7296123deb5"
-version = "0.6.10"
+version = "0.6.11"
 
 [[ImageMetadata]]
 deps = ["AxisArrays", "ColorVectorSpace", "ImageAxes", "ImageCore", "IndirectArrays"]
@@ -285,14 +285,14 @@ version = "0.3.3"
 
 [[NamedDims]]
 deps = ["LinearAlgebra", "Pkg", "Requires", "Statistics"]
-git-tree-sha1 = "9dff16e0732e6847a63010a9d4f40101a4b28b1d"
+git-tree-sha1 = "f3416c0ae5529cdcbb89b994b31d527645fe9582"
 uuid = "356022a1-0364-5f58-8944-0da4b18d706f"
-version = "0.2.13"
+version = "0.2.14"
 
 [[OffsetArrays]]
-git-tree-sha1 = "fcfb0d1acd89dd37bbfce2873c8401713a855f80"
+git-tree-sha1 = "707e34562700b81e8aa13548eb6b23b18112e49b"
 uuid = "6fe1bfb0-de20-5000-8ca7-80f57d26f881"
-version = "1.0.1"
+version = "1.0.2"
 
 [[OpenSpecFun_jll]]
 deps = ["Libdl", "Pkg"]
@@ -353,9 +353,9 @@ version = "1.0.0"
 
 [[Rotations]]
 deps = ["LinearAlgebra", "StaticArrays", "Statistics"]
-git-tree-sha1 = "cb70e13ed3d4b37caf93960676ef415da5979a93"
+git-tree-sha1 = "d5f83867093db7319a9366d55f29280ecae9bcda"
 uuid = "6038ab10-8711-5258-84ad-4b1120ba62dc"
-version = "0.12.1"
+version = "0.13.0"
 
 [[SHA]]
 uuid = "ea8e919c-243c-51af-8825-aaa63cd721ce"
@@ -393,10 +393,10 @@ uuid = "276daf66-3868-5448-9aa4-cd146d93841b"
 version = "0.9.0"
 
 [[StaticArrays]]
-deps = ["InteractiveUtils", "LinearAlgebra", "Random", "Statistics", "Test"]
-git-tree-sha1 = "3841b39ed5f047db1162627bf5f80a9cd3e39ae2"
+deps = ["LinearAlgebra", "Random", "Statistics"]
+git-tree-sha1 = "5a3bcb6233adabde68ebc97be66e95dcb787424c"
 uuid = "90137ffa-7385-5640-81b9-e52037218182"
-version = "0.10.3"
+version = "0.12.1"
 
 [[Statistics]]
 deps = ["LinearAlgebra", "SparseArrays"]
@@ -427,9 +427,9 @@ uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
 
 [[Unitful]]
 deps = ["ConstructionBase", "LinearAlgebra", "Random"]
-git-tree-sha1 = "c1ba76e3ca74a838e221e69b0ff8429226c5826a"
+git-tree-sha1 = "0b95bcc0745541528ff3a95b722367e6cc12f43e"
 uuid = "1986cc42-f94f-5a68-af5c-568840ba703d"
-version = "0.18.0"
+version = "1.0.0"
 
 [[WoodburyMatrices]]
 deps = ["LinearAlgebra", "SparseArrays"]
