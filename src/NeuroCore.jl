@@ -7,7 +7,7 @@ using Unitful
 using FieldProperties
 
 using CoordinateTransformations: Rotations
-using Rotations: SPQuat, Rotation
+using CoordinateTransformations.Rotations: SPQuat, Rotation
 
 export
     NeuroArray,

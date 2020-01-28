@@ -10,6 +10,8 @@ end
 
 """
     CoordinateMetadata
+
+Metadata for a set of coordinates.
 """
 struct CoordinateMetadata{CS<:CoordinateSystemName,U,M} <: AbstractMetadata{M}
     coordinate_system::CS
