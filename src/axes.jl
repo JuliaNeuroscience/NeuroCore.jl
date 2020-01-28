@@ -3,6 +3,10 @@
 # pretty brittle code
 # There's also some type piracy to get things working here.
 
+
+_values(x::AbstractArray) = x
+_values(x::Axis) = x.val
+
 NamedDims.dimnames(::Type{T}) where {T<:AxisArray} = axisnames(T)
 NamedDims.dimnames(::Type{T}) where {T<:Axis} = axisnames(T)
 
@@ -85,14 +89,17 @@ indices_unit(x) = unit(indices_eltype(x))
 "First time point along the time axis."
 @defprop Onset{:onset}=x -> first(_values(timeaxis(x)))
 
+sampling_rate_type(x) = typeof(1.0 / s)
+
 "Number of samples per second."
-@defprop SamplingRate{:sampling_rate}::(x -> time_type(x))=x -> 1/step(timeaxis(x))
+@defprop SamplingRate{:sampling_rate}::(x -> sampling_rate_type(x))=x -> 1/step(_values(timeaxis(x)))
+
 
 "Last time point along the time axis."
-@defprop StopTime{:stop_time}::(x -> time_type(x))=x -> last(timeaxis(x))
+@defprop StopTime{:stop_time}::(x -> second_type(x))=x -> last(_values(timeaxis(x)))
 
 "Duration of the event along the time axis."
-@defprop Duration{:duration}::(x -> time_type(x))=(x -> stop_time(x) - onset(x))
+@defprop Duration{:duration}::(x -> second_type(x))=(x -> stop_time(x) - onset(x))
 
 """
 Defines whether the recording is "continuous", "discontinuous" or "epoched";
@@ -114,4 +121,3 @@ Returns the units (i.e. Unitful.unit) that each spatial axis is measured in. If 
 available `nothing` is returned for each spatial axis.
 """
 spatial_units(x) = unit.(spatial_eltype(x))
-

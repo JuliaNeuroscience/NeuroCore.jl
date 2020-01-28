@@ -2,8 +2,10 @@ using NeuroCore, Test, Unitful, CoordinateTransformations
 
 using NeuroCore: SPQuat, RotMatrix
 
+include("semantic_positions.jl")
 include("orientation.jl")
 include("encoding_directions.jl")
+include("time_tests.jl")
 
 @testset "InstitutionInformation" begin
     m = InstitutionInformation("", "", "")
