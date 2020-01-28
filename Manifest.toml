@@ -102,6 +102,11 @@ version = "0.8.2"
 deps = ["Random", "Serialization", "Sockets"]
 uuid = "8ba89e20-285c-5b6f-9357-94700520ee1b"
 
+[[EllipsisNotation]]
+git-tree-sha1 = "65dad386e877850e6fce4fc77f60fe75a468ce9d"
+uuid = "da5c29d0-fa7d-589e-88eb-ea29b0a81949"
+version = "0.4.0"
+
 [[FFTViews]]
 deps = ["CustomUnitRanges", "FFTW"]
 git-tree-sha1 = "70a0cfd9b1c86b0209e38fbfe6d8231fd606eeaf"
@@ -122,9 +127,9 @@ version = "3.3.9+3"
 
 [[FieldProperties]]
 deps = ["Markdown"]
-git-tree-sha1 = "04eb86a38af3812f54c9b1977cc309f20ac9c0ab"
+git-tree-sha1 = "0f5353553daf055b8a2be06fc44895b857009bd5"
 uuid = "127e4479-4c95-493a-afaa-609d38175b70"
-version = "0.3.4"
+version = "0.3.5"
 
 [[FileIO]]
 deps = ["Pkg"]
@@ -220,15 +225,15 @@ uuid = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
 
 [[Interpolations]]
 deps = ["AxisAlgorithms", "LinearAlgebra", "OffsetArrays", "Random", "Ratios", "SharedArrays", "SparseArrays", "StaticArrays", "WoodburyMatrices"]
-git-tree-sha1 = "96b16bb44b1037f42a50e3fa9ba38dd78c9c1a3e"
+git-tree-sha1 = "c7579b2617b513d8e6eb9f4b91837eefe7080af8"
 uuid = "a98d9a8b-a2ab-59e6-89dd-64a1c18fca59"
-version = "0.12.7"
+version = "0.12.8"
 
 [[IntervalSets]]
-deps = ["Dates", "Statistics"]
-git-tree-sha1 = "4214b48a62eb8f2c292b2ee34a508c256c0cdbc9"
+deps = ["Dates", "EllipsisNotation", "Statistics"]
+git-tree-sha1 = "8a83c4788fdc2e32d08d90214834ec2dc1a54f57"
 uuid = "8197267c-284f-5f27-9208-e0e47529a953"
-version = "0.3.2"
+version = "0.4.0"
 
 [[IterTools]]
 git-tree-sha1 = "05110a2ab1fc5f932622ffea2a003221f4782c18"
@@ -313,7 +318,7 @@ uuid = "5432bcbf-9aad-5242-b902-cca2824c8663"
 version = "0.5.1"
 
 [[Pkg]]
-deps = ["Dates", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "UUIDs"]
+deps = ["Dates", "LibGit2", "Libdl", "Logging", "Markdown", "Printf", "REPL", "Random", "SHA", "Test", "UUIDs"]
 uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 
 [[Printf]]
