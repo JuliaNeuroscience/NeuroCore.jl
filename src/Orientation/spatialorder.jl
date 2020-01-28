@@ -1,3 +1,39 @@
+function dimname2number(x::Symbol)
+    if is_left(x)
+        return 1
+    elseif is_right(x)
+        return -1
+    elseif is_posterior(x)
+        return 1
+    elseif is_anterior(x)
+        return -1
+    elseif is_inferior(x)
+        return 1
+    elseif is_superior(x)
+        return -1
+    else
+        error("$x is not a supported dimension.")
+    end
+end
+
+function number2dimname(n::Int)
+    if n === 1
+        return :left
+    elseif n === -1
+        return :right
+    elseif n === 2
+        return :posterior
+    elseif n === -2
+        return :anterior
+    elseif n === 3
+        return :inferior
+    elseif n === -3
+        return :superior
+    else
+        error("$n does not map to a dimension name.")
+    end
+end
+
 _spatialorder(R::AffineMap) = _spatialorder(R.linear)
 function _spatialorder(R::Rotation{3,T}) where {T}
     # load column vectors for each (i,j,k) direction from matrix

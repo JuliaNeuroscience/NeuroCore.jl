@@ -44,6 +44,9 @@ nt2axis(axs::NamedTuple{(),Tuple{}}) = ()
 
 @assignprops(NeuroArray, properties => nested_property)
 
+include("./SemanticPositions/SemanticPositions.jl")
+using .SemanticPositions
+
 include("axes.jl")
 include("./Orientation/Orientation.jl")
 include("hardware.jl")

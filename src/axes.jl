@@ -22,6 +22,58 @@ indices(x, d::Symbol) = indices(x, dim(dimnames(x), d))
 indices(x, d::Int) = indices(x)[d]
 indices(x, f::Function) = indices(x, finddim(f, x))
 
+for name in (:sagittal,
+             :axial,
+             :coronal,
+             :frequency,
+             :channel)
+    sym_name = QuoteNode(name)
+    indices_name = Symbol(:indices_, name)
+    is_name = Symbol(:is_, name)
+    namedim = Symbol(name, :dim)
+
+    namedim_doc = """
+        $namedim(x) -> Int
+
+    Return the dimension of the array used for $name time.
+    """
+
+    indices_name_doc = """
+        $indices_name(x)
+
+    Return the indices of the $name dimension.
+    """
+    @eval begin
+        @doc $namedim_doc
+        $namedim(x) = NamedDims.dim(dimnames(x), $sym_name)
+
+        @doc $indices_name_doc
+        $indices_name(x) = indices(x, $is_name)
+    end
+end
+
+"""
+    is_radiologic(x) -> Bool
+
+Test to see if `x` is in radiological orientation.
+"""
+is_radiologic(x) = is_radiologic(spatialorder(x))
+function is_radiologic(x::NTuple{3,Symbol})
+    return is_left(first(x)) & is_anterior(x[2]) & is_superior(last(x))
+end
+
+"""
+    is_neurologic(x) -> Bool
+
+Test to see if `x` is in neurological orientation.
+"""
+is_neurologic(x) = is_neurologic(spatialorder(x))
+function is_neurologic(x::NTuple{3,Symbol})
+    return is_right(first(x)) & is_anterior(x[2]) & is_superior(last(x))
+end
+
+
+
 """
     indices_unit(x, name)
 

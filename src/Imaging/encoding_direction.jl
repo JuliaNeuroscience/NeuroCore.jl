@@ -19,17 +19,17 @@ index zero.
 end
 EncodingDirection(e::AbstractString) = EncodingDirection(Symbol(e))
 function EncodingDirection(e::Symbol)
-    if e === Symbol("i")
+    if  (e === Symbol("i")) | (e === Symbol("ipos"))
         return ipos
-    elseif e === Symbol("i-")
+    elseif (e === Symbol("i-")) | (e === Symbol("ineg"))
         return ineg
-    elseif e === Symbol("j")
+    elseif  (e === Symbol("j")) | (e === Symbol("jpos"))
         return jpos
-    elseif e === Symbol("j-")
+    elseif (e === Symbol("j-")) | (e === Symbol("jneg"))
         return jneg
-    elseif e === Symbol("k")
+    elseif  (e === Symbol("k")) | (e === Symbol("kpos"))
         return kpos
-    elseif e === Symbol("k-")
+    elseif (e === Symbol("k-")) | (e === Symbol("kneg"))
         return kneg
     else
         error("$e is not a supported encoding direction.")

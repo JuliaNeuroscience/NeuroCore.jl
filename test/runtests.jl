@@ -3,6 +3,7 @@ using NeuroCore, Test, Unitful, CoordinateTransformations
 using NeuroCore: SPQuat, RotMatrix
 
 include("orientation.jl")
+include("encoding_directions.jl")
 
 @testset "InstitutionInformation" begin
     m = InstitutionInformation("", "", "")
