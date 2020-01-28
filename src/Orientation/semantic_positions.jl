@@ -64,13 +64,13 @@ function dimname2number(x::Symbol)
     elseif is_right(x)
         return -1
     elseif is_posterior(x)
-        return 2
+        return 1
     elseif is_anterior(x)
-        return -2
+        return -1
     elseif is_inferior(x)
-        return 3
+        return 1
     elseif is_superior(x)
-        return -3
+        return -1
     else
         error("$x is not a supported dimension.")
     end
@@ -99,7 +99,7 @@ end
 
 Test to see if `x` is in radiological orientation.
 """
-is_radiologic(x) = is_radiologic(([dimnames(x, i) for i in coords_spatial(x)]...))
+is_radiologic(x) = is_radiologic(spatialorder(x))
 function is_radiologic(x::NTuple{3,Symbol})
     return is_left(first(x)) & is_anterior(x[2]) & is_superior(last(x))
 end
@@ -109,7 +109,7 @@ end
 
 Test to see if `x` is in neurological orientation.
 """
-is_neurologic(x) = is_neurologic(([dimnames(x, i) for i in coords_spatial(x)]...))
+is_neurologic(x) = is_neurologic(spatialorder(x))
 function is_neurologic(x::NTuple{3,Symbol})
     return is_right(first(x)) & is_anterior(x[2]) & is_superior(last(x))
 end

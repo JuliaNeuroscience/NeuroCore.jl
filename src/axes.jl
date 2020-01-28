@@ -3,9 +3,6 @@
 # pretty brittle code
 # There's also some type piracy to get things working here.
 
-_values(x::NamedTuple) = first(x)
-_values(x::Axis) = x.val
-
 NamedDims.dimnames(::Type{T}) where {T<:AxisArray} = axisnames(T)
 NamedDims.dimnames(::Type{T}) where {T<:Axis} = axisnames(T)
 
@@ -37,10 +34,10 @@ indices_unit(x) = unit(indices_eltype(x))
 @defprop Onset{:onset}=x -> first(_values(timeaxis(x)))
 
 "Number of samples per second."
-@defprop SamplingRate{:sampling_rate}::(x -> time_type(x))=x -> 1/step(_values(timeaxis(x)))
+@defprop SamplingRate{:sampling_rate}::(x -> time_type(x))=x -> 1/step(timeaxis(x))
 
 "Last time point along the time axis."
-@defprop StopTime{:stop_time}::(x -> time_type(x))=x -> last(_values(timeaxis(x)))
+@defprop StopTime{:stop_time}::(x -> time_type(x))=x -> last(timeaxis(x))
 
 "Duration of the event along the time axis."
 @defprop Duration{:duration}::(x -> time_type(x))=(x -> stop_time(x) - onset(x))

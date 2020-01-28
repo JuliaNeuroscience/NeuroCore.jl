@@ -1,8 +1,9 @@
-using NeuroCore, Test, Unitful, Rotations
+using NeuroCore, Test, Unitful, CoordinateTransformations
+
+using NeuroCore: SPQuat, RotMatrix
 
 include("orientation.jl")
 
-#=
 @testset "InstitutionInformation" begin
     m = InstitutionInformation("", "", "")
     @test m.institution_name == ""
@@ -16,5 +17,4 @@ end
     @test m.manufacturer_model_name == ""
     @test m.manufacturer == ""
 end
-=#
 

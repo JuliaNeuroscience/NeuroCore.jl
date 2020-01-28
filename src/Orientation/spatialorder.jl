@@ -170,12 +170,15 @@ function _spatialorder(R::Rotation{3,T}) where {T}
             number2dimname(kbest*rbest))
 end
 
+function spatialorder2rotation(x::NTuple{3,Symbol})
+    @inbounds spatialorder2rotation(first(x), x[2], last(x))
+end
+
 function spatialorder2rotation(x::Symbol, y::Symbol, z::Symbol)
     return RotMatrix{3}([
-        dimname2number(x) 0             0             0
-        0             dimname2number(y) 0             0
-        0             0             dimname2number(z) 0
-        0             0             0                 1
+        dimname2number(x) 0                 0
+        0                 dimname2number(y) 0
+        0                 0                 dimname2number(z)
    ])
 end
 

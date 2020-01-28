@@ -2,9 +2,12 @@ module NeuroCore
 
 using Images
 using NamedDims
-using StaticArrays, Rotations, CoordinateTransformations, LinearAlgebra
+using StaticArrays, CoordinateTransformations, LinearAlgebra
 using Unitful
 using FieldProperties
+
+using CoordinateTransformations: Rotations
+using Rotations: SPQuat, Rotation
 
 export
     NeuroArray,
@@ -49,5 +52,6 @@ include("enums.jl")
 include("traits.jl")
 include("./Imaging/Imaging.jl")
 include("./Electrophysiology/Electrophysiology.jl")
+include("coordinates.jl")
 
 end

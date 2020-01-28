@@ -40,6 +40,7 @@ function mat2quat(x)
              Float64.(ustrip.(pixelspaceing(x)...)),
              Float64.(spatial_offset(x))...,)
 end
+
 function mat2quat(R::AffineMap;
                   qb::Union{T,Nothing}=nothing,
                   qc::Union{T,Nothing}=nothing,
