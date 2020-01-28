@@ -1,45 +1,31 @@
-struct CoordinateSystem{S} end
+@enum CoordinateSystemName begin
+    Acquisition
+    Anatomical
+    ICBM
+    IXI
+    MNI152
+    NIHPD
+    Tailarach
+end
 
 """
-    UnkownSpace
+    CoordinateMetadata
 """
-const UnknownSpace = CoordinateSystem{:unknown}()
+struct CoordinateMetadata{CS<:CoordinateSystemName,U,M} <: AbstractMetadata{M}
+    coordinate_system::CS
+    units::U
+    meta::M
+end
 
 """
-    ScannerSpace
-
-In scanner space.
+    NeuroCoordinates
 """
-const ScannerSpace = CoordinateSystem{:scanner}()
+const NeuroCoordinates{T,A<:AbstractVector{T},ROIS,M<:CoordinateMetadata} = AxisArray{T,1,ImageMeta{T,1,A,M},Tuple{ROIS}}
 
-"""
-    AnatomicalSpace
-
-equivalent of 'aligned' space in NIfTI standard.
-"""
-const AnatomicalSpace = CoordinateSystem{:anatomical}()
-
-"""
-    TailarachSpace
-
-Tailarach space
-"""
-const TailarachSpace = CoordinateSystem{:tailarach}()
-
-"""
-    MNI152Space
-
-MNI152 space
-"""
-const MNI152Space = CoordinateSystem{:MNI152}()
-
-"""
-    coordinate_system(x)
-
-Return the coordinate space that `x` is in.
-"""
-coordinate_system(x::Any) = getter(x, "coordinatespace", CoordinateSystem, UnkownSpace)
-# TODO : This probably shouldn't be mutable
-function coordinate_system!(x::Any, val::CoordinateSystem)
-    return setter!(x, "coordinate_system", val, CoordinateSystem)
+function NeuroCoordinates(
+    coordinates::AbstractVector{NTuple{3}},
+    rois::AbstractVector{Symbol},
+    meta::CoordinateMetadata
+)
+    return AxisArray(ImageMeta(coordinates, meta), Axis{:rois}(rois))
 end

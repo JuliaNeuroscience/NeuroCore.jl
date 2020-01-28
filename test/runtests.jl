@@ -1,19 +1,20 @@
-using NeuroCore, Test, Unitful
+using NeuroCore, Test, Unitful, CoordinateTransformations
 
-using NeuroCore: F64Sec, F64Tesla, F64Hz, IntDeg, OneF64Sec, OneF64Tesla, OneF64Hz, OneIntDeg
-using NeuroCore: UnkownContrast, IODINE, ipos, jpos
+using NeuroCore: SPQuat, RotMatrix
 
+include("orientation.jl")
 
-include("bids_tests.jl")
+@testset "InstitutionInformation" begin
+    m = InstitutionInformation("", "", "")
+    @test m.institution_name == ""
+    @test m.institution_address == ""
+    @test m.institutional_department_name == ""
+end
 
-#= TODO
-    :stream_offset,
-    :auxfiles,
-    :srcfile,
-    :calmax,
-    :calmin,
-    :freqdim,
-    :phasedim,
-    :slicedim,
-    :slice_start,
-=#
+@testset "HardwareMetadata" begin
+    m = HardwareMetadata("", "", "")
+    @test m.device_serial_number == ""
+    @test m.manufacturer_model_name == ""
+    @test m.manufacturer == ""
+end
+

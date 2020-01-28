@@ -1,45 +1,4 @@
 """
-    calmax(x)
-
-Specifies maximum element for display purposes. Defaults to the maximum of `x`.
-"""
-calmax(x::Any) = getter(x, :calmax, i -> _caltype(x), i -> _calmax(i))
-calmax!(x::Any, val::Any) = setter!(x, :calmax, val, i -> _caltype(i))
-
-"""
-    calmin(x)
-
-Specifies minimum element for display purposes. Defaults to the minimum of `x`.
-"""
-calmin(x) = getter(x, :calmin, i -> _caltype(i), i -> _calmin(i))
-calmin!(x, val) = setter!(x, :calmin, val, i -> _caltype(i))
-
-###
-_caltype(x::AbstractArray{T}) where {T} = T
-_caltype(x::Any) = Float64
-_calmax(x::AbstractArray) = maximum(x)
-_calmax(x::Any) = one(Float64)
-_calmin(x::AbstractArray) = minimum(x)
-_calmin(x::Any) = one(Float64)
-
-"""
-    description(x) -> String
-
-Retrieves description field that may say whatever you like.
-"""
-description(x) = getter(x, "description", String, i -> "")
-description!(x, val) = setter!(x, "description", String, val)
-
-"""
-    freqdim(x) -> Int
-
-Which spatial dimension (1, 2, or 3) corresponds to phase acquisition. If not
-applicable to scan type defaults to `1`.
-"""
-freqdim(x) = getter(x, :freqdim, Int, 1)
-freqdim!(x, val) = setter!(x, :freqdim, Int, val)
-
-"""
     is_anatomical(::T) -> Bool
 
 Returns `true` if `T` represents anatomical data.
@@ -53,7 +12,7 @@ is_anatomical(::Type{T}) where {T} = false
 Returns `true` if `T` represents electrophysiology data.
 """
 is_electrophysiology(::T) where {T} = is_electrophysiology(T)
-is_electrophysiology(::Type{T}) where {T} = false
+is_electrophysiology(::Type{T}) where {T} = has_channel_axis(T) & has_time_axis(T)
 
 """
     is_functional(::T) -> Bool
@@ -62,76 +21,31 @@ Returns `true` if `T` represents functional data.
 """
 is_functional(::T) where {T} = is_functional(T)
 is_functional(::Type{T}) where {T} = false
-"""
-    phasedim(x) -> Int
-
-Which spatial dimension (1, 2, or 3) corresponds to phase acquisition.
-"""
-phasedim(x) = getter(x, :phasedim, Int, i -> 1)
-phasedim!(x, val) = setter!(x, :phasedim, Int, val)
 
 """
-    slicedim(x) -> Int
-
-Which dimension slices where acquired at throughout MRI acquisition.
+Freeform description of the observed subject artefact and its possible cause (e.g.,
+"door open", "nurse walked into room at 2 min", "seizure at 10 min"). If this
+field is left empty, it will be interpreted as absence of artifacts.
 """
-slicedim(x) = getter(x, :slicedim, Int, i -> 1)
-slicedim!(x, val) = setter!(x, :slicedim, Int, val)
-
-"""
-    slice_start(x) -> Int
-
-Which slice corresponds to the first slice acquired during MRI acquisition
-(i.e. not padded slices). Defaults to `1`.
-"""
-slice_start(x) = getter(x, :slice_start, Int, i -> 1)
-slice_start!(x, val) = setter!(x, :slice_start, Int, val)
+@defprop ArtefactDescription{:artefact_description}::String
 
 """
-    slice_end(x) -> Int
-
-Which slice corresponds to the last slice acquired during MRI acquisition
-(i.e. not padded slices).
+`Path or list of path relative to the subject subfolder pointing to the structural
+MRI, possibly of different types if a list is specified, to be used with the MEG
+recording. The path(s) need(s) to use forward slashes instead of backward slashes
+(e.g. ses-/anat/sub-01_T1w.nii.gz).
 """
-slice_end(x) = getter(x, :slice_end, Int, i -> 1)
-slice_end!(x, val) = setter!(x, :slice_end, Int, val)
-
-### TODO: should these go in ImageCore.jl ? 
-"""
-    spatial_offset(x)
-
-Provides the offset of each dimension (i.e., where each spatial axis starts).
-"""
-spatial_offset(x) = first.(coords_indices(x))
+@defprop IntendedFor{:intended_for}::Vector{String}
 
 """
-    spatial_units(x)
-
-Returns the units (i.e. Unitful.unit) that each spatial axis is measured in. If not
-available `nothing` is returned for each spatial axis.
+Text of the instructions given to participants before the scan. This is especially
+important in context of resting state fMRI and distinguishing between eyes open and
+eyes closed paradigms.
 """
-spatial_units(x) = unit.(eltype.(spatial_indices(x)))
+@defprop Instructions{:instructions}::String
 
-"""
-    time_units(x)
+"URL of the corresponding [Cognitive Atlas Task](https://www.cognitiveatlas.org/) term."
+@defprop CogAtlasID{:cog_atlas_id}::String
 
-Returns the units (i.e. Unitful.unit) the time axis is measured in. If not available
-`nothing` is returned.
-"""
-time_units(x) = unit(eltype(timeaxis(x)))
-
-"""
-    stop_time(x)
-
-Returns start time in seconds in relation to the stop of acquisition of the first
-data sample in the corresponding neural dataset.
-"""
-stop_time(x) = last(timeaxis(x))
-
-""""
-    duration(x)
-
-Duration of the event along the time axis in seconds. 
-"""
-duration(x) = stop_time(x) - start_time(x)
-
+"URL of the corresponding [CogPO](http://www.cogpo.org/) term."
+@defprop CogPOID{:cog_poid}::String

@@ -1,81 +1,57 @@
 module NeuroCore
 
-using ImageCore, ImageAxes, Unitful, ImageMetadata, Markdown
-using StaticArrays, Rotations, CoordinateTransformations
+using Images
+using NamedDims
+using StaticArrays, CoordinateTransformations, LinearAlgebra
+using Unitful
+using FieldProperties
 
-export CoordinateList,
-       NeuroMetadata,
-       NeuroMetaArray,
-       BIDSMetadata,
-       # methods
-       calmax,
-       calmax!,
-       calmin,
-       calmin!,
-       description,
-       description!,
-       freqdim,
-       freqdim!,
-       is_anatomical,
-       is_functional,
-       is_electrophysiology,
-       neurohelp,
-       phasedim,
-       phasedim!,
-       stream_offset,
-       slicedim,
-       slicedim!,
-       slice_end,
-       slice_start,
-       spatial_offset,
-       spatial_units,
-       time_units
+using CoordinateTransformations: Rotations
+using Rotations: SPQuat, Rotation
 
-const OneF64Sec = 1.0u"s"
+export
+    NeuroArray,
+    InstitutionInformation,
+    HardwareMetadata,
+    EncodingDirectionMetadata
 
-"F64Sec - A `Float64` type with seconds units."
-const F64Sec = typeof(OneF64Sec)
+"second_type(x) - Returns the type used for seconds given `x`."
+second_type(x) = typeof(one(Float64) * Unitful.s)
 
-const OneF64Tesla = 1.0u"T"
+"tesla_type(x) - Returns the type used for tesla given `x`."
+tesla_type(x) = typeof(one(Float64) * Unitful.T)
 
-"F64Tesla - A `Float64` type with tesla units."
-const F64Tesla = typeof(OneF64Tesla)
+"hertz_type(x) - Returns the type used for hertz given `x`."
+hertz_type(x) = typeof(one(Float64) * Unitful.Hz)
 
+"degree_type(x) - Returns the type used for hertz given `x`."
+degree_type(x) = typeof(1 * Unitful.°)
 
-"F64Hertz - A `Float64` type with hertz units."
-const OneF64Hz = 1.0u"Hz"
-const F64Hz = typeof(OneF64Hz)
+"ohms_type(x) - Returns the type used for ohms given `x`."
+ohms_type(x) = typeof(1.0u"kΩ")
 
-"IntHertz - A `Float64` type with degree units."
-const OneIntDeg = 1.0u"°"
-const IntDeg = typeof(OneIntDeg)
+const NeuroArray{T,N,A<:AbstractArray{T,N},M<:AbstractMetadata,Ax} = AxisArray{T,N,ImageMeta{T,N,A,M},Ax}
 
-const OnekOhm = 1.0u"kΩ"
-const F64kOhm = typeof(OnekOhm)
-
-const CoordinateList = Dict{Symbol,NTuple{3,Float64}}
-
-const NeuroAffine{R} = AffineMap{R,SArray{Tuple{3},Float64,1,3}}
-
-include("enums.jl")
-include("properties.jl")
-include("coordinates.jl")
-include("bids.jl")
-include("getproperty.jl")
-include("metadata.jl")
-include("array.jl")
-include("traits.jl")
-
-"""
-    neurohelp(func[;])
-
-"""
-neurohelp(func) = neurohelp(stdout, func)
-neurohelp(io::IO, input::Symbol) = neurohelp(io, getproperty(NeuroCore, input))
-function neurohelp(io::IO, input)
-    buffer = IOBuffer()
-    println(buffer, Base.Docs.doc(input))
-    Markdown.parse(String(take!(buffer)))
+function NeuroArray(a::AbstractArray, axs::NamedTuple; kwargs...)
+    return NeuroArray(a, axs, Metadata(; kwargs...))
 end
+function NeuroArray(a::AbstractArray, axs::NamedTuple, m::AbstractMetadata)
+    return AxisArray(ImageMeta(a, m), nt2axis(axs))
+end
+
+nt2axis(axs::NamedTuple{name}) where {name} = (Axis{first(name)}(first(axs)), tail(axs)...)
+nt2axis(axs::NamedTuple{(),Tuple{}}) = ()
+
+@assignprops(NeuroArray, properties => nested_property)
+
+include("axes.jl")
+include("./Orientation/Orientation.jl")
+include("hardware.jl")
+include("institution.jl")
+include("enums.jl")
+include("traits.jl")
+include("./Imaging/Imaging.jl")
+include("./Electrophysiology/Electrophysiology.jl")
+include("coordinates.jl")
 
 end
