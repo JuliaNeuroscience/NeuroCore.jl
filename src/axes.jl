@@ -8,6 +8,7 @@ _values(x::AbstractArray) = x
 _values(x::Axis) = x.val
 
 NamedDims.dimnames(::Type{T}) where {T<:AxisArray} = axisnames(T)
+NamedDims.dimnames(::Type{<:ImageMeta{T,N,A}}) where {T,N,A} = dimnames(A)
 NamedDims.dimnames(::Type{T}) where {T<:Axis} = axisnames(T)
 
 NamedDims.dim(x::AbstractArray, name) = dim(dimnames(x), name)
@@ -52,7 +53,7 @@ for name in (:sagittal,
         $namedim(x) = NamedDims.dim(dimnames(x), $sym_name)
 
         @doc $indices_name_doc
-        $indices_name(x) = indices(x, $is_name)
+        $indices_name(x) = indices(x, NamedDims.dim(x, $sym_name))
     end
 end
 

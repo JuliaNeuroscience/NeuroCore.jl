@@ -14,7 +14,19 @@ export
     NeuroArray,
     InstitutionInformation,
     HardwareMetadata,
-    EncodingDirectionMetadata
+    EncodingDirectionMetadata,
+    # methods
+    sagittaldim,
+    coronaldim,
+    axialdim,
+    indices_sagittal,
+    indices_axial,
+    indices_coronal,
+    is_radiologic,
+    is_neurologic,
+    # reexprots
+    dimnames,
+    dim
 
 "second_type(x) - Returns the type used for seconds given `x`."
 second_type(x) = typeof(one(Float64) * s)
@@ -36,7 +48,7 @@ const NeuroArray{T,N,A<:AbstractArray{T,N},M<:AbstractMetadata,Ax} = ImageMeta{T
 NeuroArray(a::AbstractArray, axs; kwargs...) = NeuroArray(a, axs, Metadata(; kwargs...))
 NeuroArray(a::AbstractArray, axs, m::AbstractMetadata) = ImageMeta(AxisArray(a, nt2axis(axs)), m)
 
-nt2axis(axs::NamedTuple{name}) where {name} = (Axis{first(name)}(first(axs)), tail(axs)...)
+nt2axis(axs::NamedTuple{name}) where {name} = (Axis{first(name)}(first(axs)), nt2axis(Base.tail(axs))...)
 nt2axis(axs::NamedTuple{(),Tuple{}}) = ()
 nt2axis(axs::Tuple{Vararg{<:Axis}}) = axs
 
