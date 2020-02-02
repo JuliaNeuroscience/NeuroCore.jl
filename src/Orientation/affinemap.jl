@@ -28,7 +28,11 @@ function _spacedirection_to_rotation(::Type{R}, sd::NTuple{3,NTuple{3,T}}) where
 end
 
 "Affine map relative to anatomical space."
-@defprop AnatomicalAffine{:anataffine}::((x::Type{<:AbstractArray}) -> _affine_type(x))=(x::AbstractArray) -> _affine_default(x)
+@defprop AnatomicalAffine{:anataffine}::((x::Type{<:AbstractArray}) -> _affine_type(x)) begin
+    @getproperty (x::AbstractArray) -> _affine_default(x)
+end
 
 "Affine map relative to acquisition space."
-@defprop AcquisitionAffine{:acqaffine}::((x::Type{<:AbstractArray}) -> _affine_type(x))=(x::AbstractArray) -> _affine_default(x)
+@defprop AcquisitionAffine{:acqaffine}::((x::Type{<:AbstractArray}) -> _affine_type(x)) begin
+    @getproperty (x::AbstractArray) -> _affine_default(x)
+end

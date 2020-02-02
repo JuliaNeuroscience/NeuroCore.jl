@@ -14,20 +14,15 @@ struct InstitutionInformation
     address::String
 end
 
-@assignprops(
-    InstitutionInformation,
-    :name => institution_name,
-    :department => institutional_department_name,
-    :address => institution_address
-)
+@properties InstitutionInformation begin
+    institution_name(self) => :name
+    institutional_department_name(self) => :department
+    institution_address(self) => :address
+end
 
 """
     InstitutionInformation 
 
-
 Metadata structure for general MRI sequence information.
-
-## Properties
-$(propdoclist(InstitutionInformation))
 """
 InstitutionInformation

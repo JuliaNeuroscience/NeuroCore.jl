@@ -38,21 +38,16 @@ struct SpoilingMetadata{D,S}
     spoiling_gradient_duration::S
 end
 
-@assignprops(
-    SpoilingMetadata,
-    :spoiling_state => spoiling_state,
-    :spoiling_type => spoiling_type,
-    :spoiling_gradient_moment => spoiling_gradient_moment,
-    :spoiling_gradient_duration => spoiling_gradient_duration
-)
+@properties SpoilingMetadata begin
+    spoiling_state(self) => :spoiling_state
+    spoiling_type(self) => :spoiling_type
+    spoiling_gradient_moment(self) => :spoiling_gradient_moment
+    spoiling_gradient_duration(self) => :spoiling_gradient_duration
+end
 
 """
     SpoilingMetadata
 
-
 Metadata structure for information concerning MRI sequence spoiling.
-
-## Properties
-$(propdoclist(SpoilingMetadata))
 """
 SpoilingMetadata

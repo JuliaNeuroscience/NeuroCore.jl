@@ -43,24 +43,19 @@ struct SequenceMetadata
     sequence_varient::String
 end
 
-@assignprops(
-    SequenceMetadata,
-    :nonlinear_gradient_correction => nonlinear_gradient_correction,
-    :pulse_sequence => pulse_sequence,
-    :pulse_sequence_details => pulse_sequence_details,
-    :pulse_sequence_type => pulse_sequence_type,
-    :scanning_sequence => scanning_sequence,
-    :sequence_name => sequence_name,
-    :sequence_varient => sequence_varient
-)
+@properties SequenceMetadata begin
+    nonlinear_gradient_correction(self) => :nonlinear_gradient_correction
+    pulse_sequence(self) => :pulse_sequence
+    pulse_sequence_details(self) => :pulse_sequence_details
+    pulse_sequence_type(self) => :pulse_sequence_type
+    scanning_sequence(self) => :scanning_sequence
+    sequence_name(self) => :sequence_name
+    sequence_varient(self) => :sequence_varient
+end
 
 """
     SequenceMetadata 
 
-
 Metadata structure for general MRI sequence information.
-
-## Properties
-$(propdoclist(SequenceMetadata))
 """
 SequenceMetadata

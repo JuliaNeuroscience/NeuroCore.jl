@@ -88,19 +88,27 @@ are not defined `nothing` is returned.
 indices_unit(x) = unit(indices_eltype(x))
 
 "First time point along the time axis."
-@defprop Onset{:onset}=x -> first(_values(timeaxis(x)))
+@defprop Onset{:onset} begin
+    @getproperty x::AbstractArray -> first(_values(timeaxis(x)))
+end
 
 sampling_rate_type(x) = typeof(1.0 / s)
 
 "Number of samples per second."
-@defprop SamplingRate{:sampling_rate}::(x -> sampling_rate_type(x))=x -> 1/step(_values(timeaxis(x)))
+@defprop SamplingRate{:sampling_rate}::(x -> sampling_rate_type(x)) begin
+    @getproperty x::AbstractArray -> 1/step(_values(timeaxis(x)))
+end
 
 
 "Last time point along the time axis."
-@defprop StopTime{:stop_time}::(x -> second_type(x))=x -> last(_values(timeaxis(x)))
+@defprop StopTime{:stop_time}::(x -> second_type(x)) begin
+    @getproperty x::AbstractArray -> last(_values(timeaxis(x)))
+end
 
 "Duration of the event along the time axis."
-@defprop Duration{:duration}::(x -> second_type(x))=(x -> stop_time(x) - onset(x))
+@defprop Duration{:duration}::(x -> second_type(x)) begin
+    @getproperty x::AbstractArray -> stop_time(x) - onset(x)
+end
 
 """
 Defines whether the recording is "continuous", "discontinuous" or "epoched";
@@ -113,7 +121,9 @@ presentations, subject responses etc.)
 spatial_eltype(x) = eltype.(indices_spatial(x))
 
 "Provides the offset of each dimension (i.e., where each spatial axis starts)."
-@defprop SpatialOffset{:spatial_offset}::(x -> spatial_eltype(x))=x -> first.(coords_indices(x))
+@defprop SpatialOffset{:spatial_offset}::(x -> spatial_eltype(x)) begin
+    @getproperty x::AbstractArray -> first.(coords_indices(x))
+end
 
 """
     spatial_units(x)

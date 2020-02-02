@@ -52,8 +52,6 @@ nt2axis(axs::NamedTuple{name}) where {name} = (Axis{first(name)}(first(axs)), nt
 nt2axis(axs::NamedTuple{(),Tuple{}}) = ()
 nt2axis(axs::Tuple{Vararg{<:Axis}}) = axs
 
-@assignprops(NeuroArray, properties => nested)
-
 include("./SemanticPositions/SemanticPositions.jl")
 using .SemanticPositions
 

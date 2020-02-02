@@ -29,21 +29,17 @@ function HardwareMetadata(manufacturer, model, serial_number; kwargs...)
     return HardwareMetadata(manufacturer, model, serial_number, Metadata(; kwargs...))
 end
 
-@assignprops(
-    HardwareMetadata,
-    :manufacturer => manufacturer,
-    :model => manufacturer_model_name,
-    :serial_number => device_serial_number,
-    :extension => dictextension(software_versions,station_name)
-)
+@properties HardwareMetadata begin
+    manufacturer(self) => :manufacturer
+    manufacturer_model_name(self) => :model
+    device_serial_number(self) => :serial_number
+    Any(self) => :extension
+    Any!(self, val) => :extension
+end
 
 """
     HardwareMetadata 
 
-
 Metadata structure for general MRI sequence information.
-
-## Properties
-$(propdoclist(HardwareMetadata))
 """
 HardwareMetadata

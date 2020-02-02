@@ -55,7 +55,6 @@ Base.String(e::EncodingDirection) = String(Symbol(e))
 "Time to acquire one slice"
 @defprop SliceDuration{:slice_duration}::Float64
 
-
 """
 The phase encoding direction is defined as the direction along which phase is was
 modulated which may result in visible distortions. Note that this is not the
@@ -64,8 +63,10 @@ same as the DICOM term `in_plane_phase_encoding_direction` which can have `ROW` 
 or when using multiple runs with different phase encoding directions (which can
 be later used for field inhomogeneity correction).
 """
-@defprop PhaseEncodingDirection{:phase_encoding_direction}::EncodingDirection=x -> phasedim(x)
-phase_encoding_direction!(x::AbstractArray, val) = phasedim!(x, val)
+@defprop PhaseEncodingDirection{:phase_encoding_direction}::EncodingDirection begin
+    @getproperty self::AbstractArray -> phasedim(self)
+    @setproperty! (self::AbstractArray, val) -> phasedim!(self, val)
+end
 
 """
 Possible values: `i`, `j`, `k`, `ineg, `jneg`, `kneg` (the axis of the NIfTI data along which
@@ -79,8 +80,10 @@ consistent with the ‘slicedim’ field in the NIfTI header. When absent, the
 entries in slice_timing must be in the order of increasing slice index as defined
 by the NIfTI header.
 """
-@defprop SliceEncodingDirection{:slice_encoding_direction}::EncodingDirection=x -> slicedim(x)
-slice_encoding_direction!(x::AbstractArray, val) = slicedim!(x, val)
+@defprop SliceEncodingDirection{:slice_encoding_direction}::EncodingDirection begin
+    @getproperty self::AbstractArray -> slicedim(self)
+    @setproperty! (self::AbstractArray, val) -> slicedim!(self, val)
+end
 
 struct EncodingDirectionMetadata
     freqdim::Int
@@ -91,22 +94,18 @@ struct EncodingDirectionMetadata
     slice_duration::Float64
 end
 
-@assignprops(
-    EncodingDirectionMetadata,
-    :freqdim => freqdim,
-    :phasedim => phasedim,
-    :slicedim => slicedim,
-    :slice_start => slice_start,
-    :slice_end => slice_end,
-    :slice_duration => slice_duration
-)
+@properties EncodingDirectionMetadata begin
+    freqdim(self) => :freqdim
+    phasedim(self) => :phasedim
+    slicedim(self) => :slicedim
+    slice_start(self) => :slice_start
+    slice_end(self) => :slice_end
+    slice_duration(self) => :slice_duration
+end
 
 """
     EncodingDirectionMetadata 
 
 Metadata structure for general MRI sequence information.
-
-## Properties
-$(propdoclist(EncodingDirectionMetadata))
 """
 EncodingDirectionMetadata

@@ -43,24 +43,19 @@ struct MagnetizationTransferMetadata{H,S}
     mt_pulse_duration::S
 end
 
-@assignprops(
-    MagnetizationTransferMetadata,
-    :mt_state => mt_state,
-    :mt_offset_frequency => mt_offset_frequency,
-    :mt_pulse_bandwidth => mt_pulse_bandwidth,
-    :mt_npulses => mt_npulses,
-    :mt_pulse_shape => mt_pulse_shape,
-    :mt_pulse_duration => mt_pulse_duration
-)
+@properties MagnetizationTransferMetadata begin
+    mt_state(self) => :mt_state
+    mt_offset_frequency(self) => :mt_offset_frequency
+    mt_pulse_bandwidth(self) => :mt_pulse_bandwidth
+    mt_npulses(self) => :mt_npulses
+    mt_pulse_shape(self) => :mt_pulse_shape
+    mt_pulse_duration(self) => :mt_pulse_duration
+end
 
 """
     MagnetizationTransferMetadata 
 
-
 Metadata structure for information concerning MRI magnetization transfer pulse.
-
-## Properties
-$(propdoclist(MagnetizationTransferMetadata))
 """
 MagnetizationTransferMetadata
 
