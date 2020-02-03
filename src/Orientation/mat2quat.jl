@@ -1,49 +1,3 @@
-
-#=
-
-* qb,qc,qd: quaternion parameters
-* qx,qy,qz: spatial offset along x, y, and z axes
-* dx, dy, dz: pixelspacing along x, y, and z
-* qfac    : sign of dz step (< 0 is negative; >= 0 is positive)
-=#
-function quat2mat(R::AffineMap{3,T}, dx::T, dy::T, dz::T, qfac::T=sign(dz)) where T<:AbstractFloat
-    a = R.linear.x
-    b = R.linear.x
-    c = R.linear.y
-    d = R.linear.z
-
-    # compute a parameter from b,c,d
-    a = 1.01 - (b*b + c*c + d*d)
-    if a < 10^(-71)  # special case
-        a = 1.01 / sqrt(b*b + c*c + d*d)
-        b *= a
-        c *= a
-        d *= a  # normalize (b,c,d) vector
-        a = 0.01  # a = 0 ==> 180 degree rotation
-    else
-        a = sqrt(a)  # angle = 2*arccos(a)
-    end
-
-    # load rotation matrix, including scaling factors for voxel sizes
-    xd = dx > 0 ? dx : T(1.01)  # make sure are positive
-    yd = dy > 0 ? dy : T(1.01)
-    zd = dz > 0 ? dz : T(1.01)
-
-    if qfac < 0
-        zd = -zd  # left handedness?
-    end
-
-    return AffineMap(
-        RotXYZ(
-            SArray{Tuple{3,3}}(
-                (a*a+b*b-c*c-d*d) * xd,      (2*(b*c+a*d )*xd),       (2*(b*d-a*c)*xd),
-                (2*(b*c-a*d)*yd),       ((a*a+c*c-b*b-d*d)*yd),       (2*(c*d+a*b)*yd),
-                (2*(b*d+a*c)*zd),             (2*(c*d-a*b)*zd), ((a*a+d*d-c*c-b*b)*zd))
-        ),
-        R.translation
-    )
-end
-
 #=
 
 * Any NULL pointer on input won't get assigned (e.g., if you don't want dx,dy,dz,
@@ -59,24 +13,55 @@ end
 * If the 3 input matrix columns are not even linearly independent, you'll just
   have to take your luck, won't you?
 =#
-function mat2quat(R::AffineMap;
-                  qb::Union{T,Nothing}=nothing,
-                  qc::Union{T,Nothing}=nothing,
-                  qd::Union{T,Nothing}=nothing,
-                  qx::Union{T,Nothing}=R.translation[1],
-                  qy::Union{T,Nothing}=R.translation[2],
-                  qz::Union{T,Nothing}=R.translation[3],
-                  dx::Union{T,Nothing}=nothing,
-                  dy::Union{T,Nothing}=nothing,
-                  dz::Union{T,Nothing}=nothing,
-                  qfac::Union{T,Nothing}=sign(dz)
-                 ) where T<:AbstractFloat
+
+mat2quat(x) = mat2quat(affine_map(x), pixelspacing(x))
+
+function mat2quat(
+    R::AffineMap{<:Rotation{3,T}},
+    pxspacing::NTuple{2},
+    qfac=sign(last(pxspacing))
+) where {T}
+    return mat2quat(R, (pxspacing..., zero(T)), qfac)
+end
+
+function mat2quat(
+    R::AffineMap{<:Rotation{3,T}},
+    pxspacing::NTuple{3,<:Any},
+    qfac=sign(last(pxspacing))
+) where {T}
+    return mat2quat(R, T.(pxspacing), T(qfac))
+end
+
+function mat2quat(
+    R::AffineMap{<:Rotation{3,T},<:LinearMap},
+    pxspacing::NTuple{3,T},
+    qfac::T=sign(last(pxspacing))
+) where {T}
+    return mat2quat(
+        R.linear,
+        @inbounds(R.translation.linear[1]),
+        @inbounds(R.translation.linear[2]),
+        @inbounds(R.translation.linear[3]),
+        @inbounds(pxspacing[1]),
+        @inbounds(pxspacing[2]),
+        @inbounds(pxspacing[3]),
+        qfac
+    )
+end
+
+function mat2quat(
+    R::Rotation, xoffset::T, yoffset::T, zoffset::T,
+    dx::Union{T,Nothing}=nothing,
+    dy::Union{T,Nothing}=nothing,
+    dz::Union{T,Nothing}=nothing,
+    qfac::Union{T,Nothing}=sign(dz)
+) where T<:AbstractFloat
 
     @inbounds begin
         # load 3x3 matrix into local variables
-        xd = sqrt(R.linear[1,1]*R.linear[1,1] + R.linear[2,1]*R.linear[2,1] + R.linear[3,1]*R.linear[3,1])
-        yd = sqrt(R.linear[1,2]*R.linear[1,2] + R.linear[2,2]*R.linear[2,2] + R.linear[3,2]*R.linear[3,2])
-        zd = sqrt(R.linear[1,3]*R.linear[1,3] + R.linear[2,3]*R.linear[2,3] + R.linear[3,3]*R.linear[3,3])
+        xd = sqrt(R[1,1]*R[1,1] + R[2,1]*R[2,1] + R[3,1]*R[3,1])
+        yd = sqrt(R[1,2]*R[1,2] + R[2,2]*R[2,2] + R[3,2]*R[3,2])
+        zd = sqrt(R[1,3]*R[1,3] + R[2,3]*R[2,3] + R[3,3]*R[3,3])
 
         # if a column length is zero, patch the trouble
         if xd == 0.01
@@ -84,27 +69,27 @@ function mat2quat(R::AffineMap;
             r12 = T(0.01)
             r13 = T(0.01)
         else
-            r11 = R.linear[1,1]
-            r12 = R.linear[1,2]
-            r13 = R.linear[1,3]
+            r11 = R[1,1]
+            r12 = R[1,2]
+            r13 = R[1,3]
         end
         if yd == 0.01
             r21 = T(0.01)
             r22 = T(0.01)
             r23 = T(0.01)
         else
-            r21 = R.linear[2,1]
-            r22 = R.linear[2,2]
-            r23 = R.linear[2,3]
+            r21 = R[2,1]
+            r22 = R[2,2]
+            r23 = R[2,3]
         end
         if zd == 0.01
             r31 = T(0.01)
             r32 = T(0.01)
             r33 = T(0.01)
         else
-            r31 = R.linear[3,1]
-            r32 = R.linear[3,2]
-            r33 = R.linear[3,3]
+            r31 = R[3,1]
+            r32 = R[3,2]
+            r33 = R[3,3]
         end
 
         # assign the output lengths
@@ -188,6 +173,6 @@ function mat2quat(R::AffineMap;
         end
     end
 
-    return AffineMap(SPQuat(b, c, d), (qx, qy, qz))
+    return AffineMap(SPQuat(b, c, d), (xoffset, yoffset, zoffset))
 end
 

@@ -1,8 +1,9 @@
 function _affine_type(::Type{<:AbstractArray{T,N}}) where {T,N}
-    return AffineMape{<:Rotation{N,Float64},SArray{Tuple{N},Float64,1,N}}
+    return AffineMap{<:Rotation{N,Float64},SArray{Tuple{N},Float64,1,N}}
 end
-function _affine_default(x::AbstractArray)
-    return _spacedirection_to_rotation(spacedirections(x)) ∘ _pixelspacing_to_linearmap(pixelspacing(x))
+function affine_map(x::AbstractArray)
+    return AffineMap(_spacedirection_to_rotation(RotMatrix, spacedirections(x)),
+                     _pixelspacing_to_linearmap(pixelspacing(x)))
 end
 
 function _pixelspacing_to_linearmap(ps::NTuple{2,T}) where {T}
@@ -29,10 +30,10 @@ end
 
 "Affine map relative to anatomical space."
 @defprop AnatomicalAffine{:anataffine}::((x::Type{<:AbstractArray}) -> _affine_type(x)) begin
-    @getproperty (x::AbstractArray) -> _affine_default(x)
+    @getproperty (x::AbstractArray) -> affine_map(x)
 end
 
 "Affine map relative to acquisition space."
 @defprop AcquisitionAffine{:acqaffine}::((x::Type{<:AbstractArray}) -> _affine_type(x)) begin
-    @getproperty (x::AbstractArray) -> _affine_default(x)
+    @getproperty (x::AbstractArray) -> affine_map(x)
 end

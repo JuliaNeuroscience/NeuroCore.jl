@@ -15,6 +15,9 @@ export
     InstitutionInformation,
     HardwareMetadata,
     EncodingDirectionMetadata,
+    OrientationMetadata,
+    # Orientation
+    affine_map,
     # methods
     sagittaldim,
     coronaldim,

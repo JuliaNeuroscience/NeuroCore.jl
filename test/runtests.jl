@@ -1,6 +1,6 @@
 using NeuroCore, Test, Unitful, CoordinateTransformations
 
-using NeuroCore: SPQuat, RotMatrix
+using NeuroCore: SPQuat, RotMatrix, quat2mat, mat2quat, pixelspacing
 
 include("semantic_positions.jl")
 include("orientation.jl")

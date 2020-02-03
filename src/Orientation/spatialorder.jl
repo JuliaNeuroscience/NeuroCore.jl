@@ -34,8 +34,9 @@ function number2dimname(n::Int)
     end
 end
 
-_spatialorder(R::AffineMap) = _spatialorder(R.linear)
-function _spatialorder(R::Rotation{3,T}) where {T}
+rotation2spatialorder(x) = rotation2spatialorder(affine_map(x))
+rotation2spatialorder(x::AffineMap) = rotation2spatialorder(x.linear)
+function rotation2spatialorder(R::Rotation{3,T}) where {T}
     # load column vectors for each (i,j,k) direction from matrix
     @inbounds begin
         xi = R[1,1]
