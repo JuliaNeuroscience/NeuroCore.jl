@@ -41,25 +41,39 @@ end
     r1 = abs(A[1,1]) + abs(A[2,1]) + abs(A[3,1])
     r2 = abs(A[1,2]) + abs(A[2,2]) + abs(A[3,2])
     r3 = abs(A[1,3]) + abs(A[2,3]) + abs(A[3,3])
+
     if r1 < r2
-        r1 = r2
+        if r2 < r3
+            return r3
+        else
+            return r2
+        end
+    else
+        if r1 < r3
+            return r3
+        else
+            return r1
+        end
     end
-    if r1 < r3
-        r1 = r3
-    end
-    return r1
 end
 
 @inline function rownorm(A::StaticMatrix{3,3,Float64})
     r1 = abs(A[1,1]) + abs(A[1,2]) + abs(A[1,3])
     r2 = abs(A[2,1]) + abs(A[2,2]) + abs(A[2,3])
     r3 = abs(A[3,1]) + abs(A[3,2]) + abs(A[3,3])
+
     if r1 < r2
-        r1 = r2
+        if r2 < r3
+            return r3
+        else
+            return r2
+        end
+    else
+        if r1 < r3
+            return r3
+        else
+            return r1
+        end
     end
-    if r1 < r3
-        r1 = r3
-    end
-    return r1
 end
 

@@ -7,7 +7,7 @@ import NeuroCore: EncodingDirection
     @test EncodingDirection(-2) == EncodingDirection("jneg") == EncodingDirection("j-")
     @test EncodingDirection(3) == EncodingDirection("kpos") == EncodingDirection("k")
     @test EncodingDirection(-3) == EncodingDirection("kneg") == EncodingDirection("k-")
-    @test string(EncodingDirection(-3)) == "kneg"
+    @test String(EncodingDirection(-3)) == "kneg"
 
     @test_throws ErrorException EncodingDirection(:xyz)
 end

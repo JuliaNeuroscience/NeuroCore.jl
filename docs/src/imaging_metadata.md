@@ -21,24 +21,9 @@ NeuroCore.SequenceMetadata
 
 ## Encoding Direction
 
-### Properties
-
-```@docs
-NeuroCore.EncodingDirection
-NeuroCore.PhaseEncodingDirection
-NeuroCore.SliceEncodingDirection
-NeuroCore.FrequencyDimension
-NeuroCore.PhaseDimension
-NeuroCore.SliceStart
-NeuroCore.SliceEnd
-NeuroCore.SliceDim
-NeuroCore.SliceDuration
-```
-
-### Metadata
-
-```@docs
-NeuroCore.EncodingDirectionMetadata
+```@autodocs
+Modules = [NeuroCore.EncodingDirections]
+Order   = [:function, :type]
 ```
 
 ## Spatial Encoding

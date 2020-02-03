@@ -100,4 +100,4 @@ end
     @test Q.linear.y == 0
     @test Q.linear.z == 0
 end
-
+NeuroCore.mat2quat(AffineMap(RotMatrix{3}(zeros(3,3)),LinearMap((0.0, 0.0, 0.0))), (0.0, 0.0, 0.0))

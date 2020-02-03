@@ -77,8 +77,6 @@ function is_neurologic(x::NTuple{3,Symbol})
     return is_right(first(x)) & is_anterior(x[2]) & is_superior(last(x))
 end
 
-
-
 """
     indices_unit(x, name)
 

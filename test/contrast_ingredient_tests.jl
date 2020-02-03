@@ -8,6 +8,6 @@ using NeuroCore: ContrastIngredient
     @test ContrastIngredient(4) == ContrastIngredient("BARIUM")
     @test ContrastIngredient(5) == ContrastIngredient("XENON")
     @test ContrastIngredient(6) == ContrastIngredient("UnkownContrast")
-    @test Symbol(string(ContrastIngredient(6))) == Symbol(ContrastIngredient("PLUTIONIUM"))
+    @test Symbol(String(ContrastIngredient(6))) == Symbol(ContrastIngredient("PLUTIONIUM"))
 end
 

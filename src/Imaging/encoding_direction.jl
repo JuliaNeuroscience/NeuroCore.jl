@@ -1,3 +1,36 @@
+module EncodingDirections
+
+using FieldProperties
+
+export
+    EncodingDirection,
+    FrequencyDimension,
+    freqdim,
+    freqdim!,
+    PhaseDimension,
+    phasedim,
+    phasedim!,
+    SliceStart,
+    slice_start,
+    slice_start!,
+    SliceEnd,
+    slice_end,
+    slice_end!,
+    SliceDimension,
+    slicedim,
+    slicedim!,
+    SliceDuration,
+    slice_duration,
+    slice_duration!,
+    PhaseEncodingDirection,
+    phase_encoding_direction,
+    phase_encoding_direction!,
+    SliceEncodingDirection,
+    slice_encoding_direction,
+    slice_encoding_direction!,
+    EncodingDirectionMetadata
+
+
 """
     EncodingDirection
 
@@ -50,13 +83,13 @@ Base.String(e::EncodingDirection) = String(Symbol(e))
 @defprop SliceEnd{:slice_end}::Int
 
 "Which dimension slices where acquired at throughout MRI acquisition."
-@defprop SliceDim{:slicedim}::Int
+@defprop SliceDimension{:slicedim}::Int
 
 "Time to acquire one slice"
 @defprop SliceDuration{:slice_duration}::Float64
 
 """
-The phase encoding direction is defined as the direction along which phase is was
+The phase encoding direction is defined as the direction along which phase was
 modulated which may result in visible distortions. Note that this is not the
 same as the DICOM term `in_plane_phase_encoding_direction` which can have `ROW` or
 `COL` values. This parameter is REQUIRED if corresponding fieldmap data is present
@@ -64,8 +97,8 @@ or when using multiple runs with different phase encoding directions (which can
 be later used for field inhomogeneity correction).
 """
 @defprop PhaseEncodingDirection{:phase_encoding_direction}::EncodingDirection begin
-    @getproperty self::AbstractArray -> phasedim(self)
-    @setproperty! (self::AbstractArray, val) -> phasedim!(self, val)
+    @getproperty self -> EncodingDirection(phasedim(self))
+    @setproperty! (self, val) -> phasedim!(self, val)
 end
 
 """
@@ -81,8 +114,8 @@ entries in slice_timing must be in the order of increasing slice index as define
 by the NIfTI header.
 """
 @defprop SliceEncodingDirection{:slice_encoding_direction}::EncodingDirection begin
-    @getproperty self::AbstractArray -> slicedim(self)
-    @setproperty! (self::AbstractArray, val) -> slicedim!(self, val)
+    @getproperty self -> EncodingDirection(slicedim(self))
+    @setproperty! (self, val) -> slicedim!(self, val)
 end
 
 struct EncodingDirectionMetadata
@@ -101,6 +134,8 @@ end
     slice_start(self) => :slice_start
     slice_end(self) => :slice_end
     slice_duration(self) => :slice_duration
+    slice_encoding_direction(self) -> slice_encoding_direction(self)
+    phase_encoding_direction(self) -> phase_encoding_direction(self)
 end
 
 """
@@ -109,6 +144,41 @@ end
 Metadata structure for general MRI sequence information.
 
 ## Properties
-$(propdoclist(freqdim, phasedim, slicedim, slice_start, slice_end, slice_duration))
+$(propdoclist(freqdim, phasedim, slicedim, slice_start, slice_end, slice_duration,slice_encoding_direction,phase_encoding_direction))
+
+## Examples
+
+```jldoctest
+julia> using NeuroCore.EncodingDirections
+
+julia> m = EncodingDirectionMetadata(1, 2, 3, 4, 5, 6)
+EncodingDirectionMetadata(1, 2, 3, 4, 5, 6.0)
+
+julia> m.slice_encoding_direction
+kpos::EncodingDirection = 3
+
+julia> m.phase_encoding_direction
+jpos::EncodingDirection = 2
+
+julia> m.freqdim
+1
+
+julia> m.phasedim
+2
+
+julia> m.slicedim
+3
+
+julia> m.slice_start
+4
+
+julia> m.slice_end
+5
+
+julia> m.slice_duration
+6.0
+```
 """
 EncodingDirectionMetadata
+
+end
