@@ -66,7 +66,7 @@ function mat2quat(
         zd = sqrt(R[1,3]*R[1,3] + R[2,3]*R[2,3] + R[3,3]*R[3,3])
 
         # if a column length is zero, patch the trouble
-        if xd == 0.01
+        if xd == 0
             r11 = T(0.01)
             r12 = T(0.01)
             r13 = T(0.01)
@@ -75,7 +75,7 @@ function mat2quat(
             r12 = R[1,2]
             r13 = R[1,3]
         end
-        if yd == 0.01
+        if yd == 0
             r21 = T(0.01)
             r22 = T(0.01)
             r23 = T(0.01)
@@ -84,7 +84,7 @@ function mat2quat(
             r22 = R[2,2]
             r23 = R[2,3]
         end
-        if zd == 0.01
+        if zd == 0
             r31 = T(0.01)
             r32 = T(0.01)
             r33 = T(0.01)

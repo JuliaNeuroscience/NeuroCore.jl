@@ -1,4 +1,4 @@
-using NeuroCore, Test, Unitful, CoordinateTransformations
+using NeuroCore, Test, Unitful, CoordinateTransformations, Documenter
 
 using NeuroCore: SPQuat, RotMatrix, quat2mat, mat2quat, pixelspacing
 
@@ -9,17 +9,7 @@ include("axes_tests.jl")
 include("time_tests.jl")
 include("contrast_ingredient_tests.jl")
 
-@testset "InstitutionInformation" begin
-    m = InstitutionInformation("", "", "")
-    @test m.institution_name == ""
-    @test m.institution_address == ""
-    @test m.institutional_department_name == ""
-end
-
-@testset "HardwareMetadata" begin
-    m = HardwareMetadata("", "", "")
-    @test m.device_serial_number == ""
-    @test m.manufacturer_model_name == ""
-    @test m.manufacturer == ""
+@testset "FieldProperties docs" begin
+    doctest(NeuroCore; manual=false)
 end
 

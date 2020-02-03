@@ -24,6 +24,7 @@ struct HardwareMetadata{M} <: AbstractMetadata{M}
     serial_number::String
     extension::M
 end
+FieldProperties.dictextension(m::HardwareMetadata) = getfield(m, :extension)
 
 function HardwareMetadata(manufacturer, model, serial_number; kwargs...)
     return HardwareMetadata(manufacturer, model, serial_number, Metadata(; kwargs...))
@@ -41,5 +42,22 @@ end
     HardwareMetadata 
 
 Metadata structure for general MRI sequence information.
+
+## Examples
+```jldoctest
+julia> using NeuroCore
+
+julia> m = HardwareMetadata("a", "b", "c")
+HardwareMetadata{FieldProperties.Metadata{Dict{Symbol,Any}}} with 0 entries
+
+julia> m.device_serial_number
+"c"
+
+julia> m.manufacturer_model_name
+"b"
+
+julia> m.manufacturer
+"a"
+```
 """
 HardwareMetadata

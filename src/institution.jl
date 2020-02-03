@@ -24,5 +24,22 @@ end
     InstitutionInformation 
 
 Metadata structure for general MRI sequence information.
+
+## Examples
+``jldoctest
+julia> using NeuroCore
+
+julia> m = InstitutionInformation("a", "b", "c")
+InstitutionInformation("a", "b", "c")
+
+julia> m.institution_name
+"a"
+
+julia> m.institution_address
+"c"
+
+julia> m.institutional_department_name
+"b"
+```
 """
 InstitutionInformation
