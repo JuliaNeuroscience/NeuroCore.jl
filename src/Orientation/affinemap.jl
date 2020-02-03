@@ -18,7 +18,7 @@ function _spacedirection_to_rotation(::Type{R}, sd::NTuple{2,NTuple{2,T}}) where
     return @inbounds R(SMatrix{3,3,Float64,9}(
         sd[1][1], sd[2][1], 0,
         sd[1][2], sd[2][2], 0,
-               0,        0, 0))
+               0,        0, 1))
 end
 
 function _spacedirection_to_rotation(::Type{R}, sd::NTuple{3,NTuple{3,T}}) where {R,T}

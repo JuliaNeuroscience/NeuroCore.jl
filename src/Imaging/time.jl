@@ -87,3 +87,4 @@ NIfTI header. This field is mutually exclusive with `volume_timing` and is deriv
 from DICOM Tag 0018, 0080 and converted to seconds.
 """
 @defprop RepetitionTime{:repetition_time}::(x -> second_type(x))
+

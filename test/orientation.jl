@@ -94,4 +94,10 @@ end
     @test R.linear == R2.linear
 end
 
+@testset "2D orientation" begin
+    Q = NeuroCore.mat2quat(rand(2,2))
+    @test Q.linear.x == 0
+    @test Q.linear.y == 0
+    @test Q.linear.z == 0
+end
 

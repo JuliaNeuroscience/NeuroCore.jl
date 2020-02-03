@@ -18,12 +18,12 @@ function quat2mat(
     pxspacing::NTuple{2},
     qfac
 ) where {T}
-    return quat2mat(R, (pxspacing..., zero(T)), qfac)
+    return quat2mat(R, (pxspacing..., one(T)), qfac)
 end
 
 function quat2mat(
     R::AffineMap{<:Rotation{3,T}},
-    pxspacing::NTuple{3,<:Any},
+    pxspacing::Tuple{Any,Any,Any},
     qfac
 ) where {T}
     return quat2mat(R, T.(pxspacing), T(qfac))

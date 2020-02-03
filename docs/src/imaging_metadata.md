@@ -1,6 +1,5 @@
 # Imaging Metadata
 
-
 ## Sequence Metadata
 
 ### Properties
@@ -42,6 +41,19 @@ NeuroCore.SliceDuration
 NeuroCore.EncodingDirectionMetadata
 ```
 
+## Spatial Encoding
+
+### Properties
+
+```@docs
+NeuroCore.NumberShots
+NeuroCore.EffectiveEchoSpacing
+NeuroCore.ParallelAcquisitionTechnique
+NeuroCore.ParallelReductionFactor
+NeuroCore.PartialFourier
+NeuroCore.PartialFourierDirection
+NeuroCore.TotalReadoutTime
+```
 
 ## Magentization Transfer
 
@@ -61,3 +73,32 @@ NeuroCore.MTPulseDuration
 NeuroCore.MagnetizationTransferMetadata
 ```
 
+## Spoiling
+
+### Properties
+
+```@docs
+NeuroCore.SpoilingState
+NeuroCore.SpoilingType
+NeuroCore.SpoilingGradientMoment
+NeuroCore.SpoilingGradientDuration
+```
+
+### Metadata
+
+```@docs
+NeuroCore.SpoilingMetadata
+```
+
+## Time
+
+```@docs
+NeuroCore.EchoTime
+NeuroCore.InversionTime
+NeuroCore.SliceTiming
+NeuroCore.DwellTime
+NeuroCore.DelayTime
+NeuroCore.AcquisitionDuration
+NeuroCore.VolumeTiming
+NeuroCore.RepetitionTime
+```

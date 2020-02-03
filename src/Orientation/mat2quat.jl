@@ -16,18 +16,20 @@
 
 mat2quat(x) = mat2quat(affine_map(x), pixelspacing(x))
 
+mat2quat(R::AffineMap, pxspacing::Tuple) = mat2quat(R, pxspacing, sign(last(pxspacing)))
+
 function mat2quat(
     R::AffineMap{<:Rotation{3,T}},
     pxspacing::NTuple{2},
-    qfac=sign(last(pxspacing))
+    qfac
 ) where {T}
-    return mat2quat(R, (pxspacing..., zero(T)), qfac)
+    return mat2quat(R, (pxspacing..., one(T)), qfac)
 end
 
 function mat2quat(
     R::AffineMap{<:Rotation{3,T}},
-    pxspacing::NTuple{3,<:Any},
-    qfac=sign(last(pxspacing))
+    pxspacing::Tuple{Any,Any,Any},
+    qfac
 ) where {T}
     return mat2quat(R, T.(pxspacing), T(qfac))
 end
@@ -35,7 +37,7 @@ end
 function mat2quat(
     R::AffineMap{<:Rotation{3,T},<:LinearMap},
     pxspacing::NTuple{3,T},
-    qfac::T=sign(last(pxspacing))
+    qfac::T
 ) where {T}
     return mat2quat(
         R.linear,
