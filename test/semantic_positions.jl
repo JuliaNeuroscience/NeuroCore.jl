@@ -1,14 +1,5 @@
 
-using NeuroCore:
-    is_left,
-    is_right,
-    is_anterior,
-    is_posterior,
-    is_superior,
-    is_inferior,
-    is_sagittal,
-    is_axial,
-    is_coronal
+using NeuroCore.SemanticPositions
 
 @testset "Semantic positions" begin
     for (f,vars) in ((is_left, (:left, :L)),
@@ -19,7 +10,12 @@ using NeuroCore:
                      (is_inferior, (:inferior, :I)),
                      (is_sagittal, (:sagittal, :left, :L, :right, :R)),
                      (is_coronal, (:coronal, :anterior, :A, :posterior, :P)),
-                     (is_axial, (:axial, :superior, :S, :inferior, :I))
+                     (is_axial, (:axial, :superior, :S, :inferior, :I)),
+                     (is_white_matter, (:white_matter,)),
+                     (is_gyrus, (:gyrus,)),
+                     (is_cortical, (:cortical,)),
+                     (is_sulcus, (:sulcus,)),
+                     (is_csp, (:csp,)),
                     )
         for v in vars
             @test f(v)

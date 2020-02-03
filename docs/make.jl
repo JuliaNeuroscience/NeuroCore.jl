@@ -6,6 +6,7 @@ makedocs(;
     pages=[
         "Introduction" => "index.md",
         "Imaging Metadata" => "imaging_metadata.md",
+        "Semantic Positions" => "semantic_positions.md",
     ],
     repo="https://github.com/JuliaNeuroscience/NeuroCore.jl/blob/{commit}{path}#L{line}",
     sitename="NeuroCore.jl",

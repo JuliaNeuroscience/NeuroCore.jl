@@ -107,5 +107,8 @@ end
     EncodingDirectionMetadata 
 
 Metadata structure for general MRI sequence information.
+
+## Properties
+$(propdoclist(freqdim, phasedim, slicedim, slice_start, slice_end, slice_duration))
 """
 EncodingDirectionMetadata
