@@ -1,6 +1,9 @@
 # adapted from https://nifti.nimh.nih.gov/nifti-1/data
 @testset "Orientations" begin
     @testset "Rotation matrices" begin
+        R = AffineMap(RotMatrix{3,Float64}(reshape(1:9,3,3)), LinearMap((1.0, 1.0, 1.0)))
+        @test NeuroCore.rotation2spatialorder(R.linear) == (:inferior, :posterior, :left)
+
         R = AffineMap(
             RotMatrix{3}([
                 -2.0                    6.714715653593746e-19  9.081024511081715e-18
@@ -51,6 +54,11 @@
 
         @test NeuroCore.rotation2spatialorder(R) == (:left, :anterior, :superior)
         @test NeuroCore.spatialorder2rotation((:left, :anterior, :superior)) == R.linear
+
+        @test NeuroCore.rotation2spatialorder(affine_map(rand(2,2,2))) ==
+              NeuroCore.rotation2spatialorder(affine_map(rand(2,2))) ==
+              (:left, :posterior, :inferior)
+
     end
 
     @testset "LR MNI152" begin
@@ -100,4 +108,28 @@ end
     @test Q.linear.y == 0
     @test Q.linear.z == 0
 end
-NeuroCore.mat2quat(AffineMap(RotMatrix{3}(zeros(3,3)),LinearMap((0.0, 0.0, 0.0))), (0.0, 0.0, 0.0))
+
+@testset "Orientation errors" begin
+    R = RotMatrix{3}([
+        0.000000 0.000000 0.000000
+        0.000000 -1.000000 0.000000
+        0.000000 0.000000 -1.000000])
+    @test_throws ErrorException NeuroCore.rotation2spatialorder(R)
+
+    R = RotMatrix{3}([
+        1.000000 0.000000 0.000000
+        0.000000 0.000000 0.000000
+        0.000000 0.000000 -1.000000])
+
+    @test_throws ErrorException NeuroCore.rotation2spatialorder(R)
+    R = RotMatrix{3}([
+                -2.0                    6.714715653593746e-19  9.081024511081715e-18
+                6.714715653593746e-19  1.9737114906311035    -0.35552823543548584
+                8.25548088896093e-18   0.3232076168060303     2.171081781387329
+            ])
+
+    @test_throws ErrorException NeuroCore.number2dimname(9)
+
+    @test_throws ErrorException NeuroCore.dimname2number(:foo)
+end
+

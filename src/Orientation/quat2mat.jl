@@ -80,7 +80,7 @@ function quat2mat(a::T, b::T, c::T, d::T,
                 (2*(b*c-a*d)*yd),       ((a*a+c*c-b*b-d*d)*yd),       (2*(c*d+a*b)*yd),
                 (2*(b*d+a*c)*zd),             (2*(c*d-a*b)*zd), ((a*a+d*d-c*c-b*b)*zd))
         ),
-        (xoffset, yoffset, zoffset)
+        LinearMap((xoffset, yoffset, zoffset))
     )
 end
 

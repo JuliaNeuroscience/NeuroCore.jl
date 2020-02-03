@@ -54,7 +54,7 @@ function rotation2spatialorder(R::Rotation{3,T}) where {T}
     # normalize i axis
     val = sqrt(xi*xi + yi*yi + zi*zi)
     if val == 0.0
-        return 0  # stupid input
+        error("Invalid rotation directions.")
     end
     xi /= val
     yi /= val
@@ -63,7 +63,7 @@ function rotation2spatialorder(R::Rotation{3,T}) where {T}
     # normalize j axis
     val = sqrt(xj*xj + yj*yj + zj*zj)
     if val == 0.0
-        return 0  # stupid input
+        error("Invalid rotation directions.")
     end
     xj /= val
     yj /= val
@@ -78,7 +78,7 @@ function rotation2spatialorder(R::Rotation{3,T}) where {T}
 
         val = sqrt(xj*xj + yj*yj + zj*zj)  # must renormalize
         if val == 0.0
-            return 0  # j ws parallel to i?
+            error("The first and second dimensions cannot be parallel.")
         end
         xj /= val
         yj /= val
