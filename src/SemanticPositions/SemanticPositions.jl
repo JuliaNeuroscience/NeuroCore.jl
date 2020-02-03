@@ -9,7 +9,9 @@ export
     is_inferior,
     is_sagittal,
     is_axial,
-    is_coronal
+    is_coronal,
+    is_white_matter,
+    is_csp
 
 # TODO if changes to dimnames interface gets anymore complicated this should
 # probably be generated with a macro
@@ -39,5 +41,30 @@ is_coronal(x::Symbol) = is_anterior(x) | is_posterior(x) | (x === :coronal)
 
 "`is_axial(x)`: Returns `true` if `x` represent the axial orientation."
 is_axial(x::Symbol) = is_superior(x) | is_inferior(x) | (x === :axial)
+
+"""
+    is_cortical(::T) -> Bool
+
+Returns `true` if `T` represents a cortical region.
+"""
+is_cortical(::T) where {T} = is_cortical(T)
+is_cortical(::Type{T}) where {T} = false
+
+"""
+    is_csp(::T) -> Bool
+
+Returns `true` if `T` represents a region of corticospinal fluid (CSP).
+"""
+is_csp(::T) where {T} = is_csp(T)
+is_csp(::Type{T}) where {T} = false
+
+
+"""
+    is_white_matter(::T) -> Bool
+
+Returns `true` if `T` represents white matter.
+"""
+is_white_matter(::T) where {T} = is_white_matter(T)
+is_white_matter(::Type{T}) where {T} = false
 
 end

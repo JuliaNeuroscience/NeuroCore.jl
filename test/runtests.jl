@@ -7,6 +7,7 @@ include("orientation.jl")
 include("encoding_directions.jl")
 include("axes_tests.jl")
 include("time_tests.jl")
+include("contrast_ingredient_tests.jl")
 
 @testset "InstitutionInformation" begin
     m = InstitutionInformation("", "", "")

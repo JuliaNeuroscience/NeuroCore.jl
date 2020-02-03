@@ -1,5 +1,5 @@
 """
-    ContrastIngrediant
+    ContrastIngredient
 
 An enumerable type with the following possible values:
 * `IODINE`
@@ -10,7 +10,7 @@ An enumerable type with the following possible values:
 * `XENON`
 * `UnkownContrast`
 """
-@enum ContrastIngrediant begin
+@enum ContrastIngredient begin
     IODINE
     GADOLINIUM
     CARBON
@@ -19,8 +19,8 @@ An enumerable type with the following possible values:
     XENON
     UnkownContrast
 end
-ContrastIngrediant(i::AbstractString) = ContrastIngrediant(Symbol(i))
-function ContrastIngrediant(i::Symbol)
+ContrastIngredient(i::AbstractString) = ContrastIngredient(Symbol(i))
+function ContrastIngredient(i::Symbol)
     if i === :IODINE
         return IODINE
     elseif i === :GADOLINIUM
@@ -37,4 +37,4 @@ function ContrastIngrediant(i::Symbol)
         return UnkownContrast
     end
 end
-Base.String(i::ContrastIngrediant) = String(Symbol(i))
+Base.String(i::ContrastIngredient) = String(Symbol(i))

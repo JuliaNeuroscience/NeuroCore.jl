@@ -69,8 +69,8 @@ in conjunction with a T2* weighted acquisition protocol.
 """
 @defprop NegativeContrast{:negative_contrast}::Bool
 
-"Return active ingredient of constrast agent. See [`ContrastIngrediant`](@ref) for more details."
-@defprop ContrastBolusIngredient{:contrast_bolus_ingredient}::ContrastIngrediant
+"Return active ingredient of constrast agent. See [`ContrastIngredient`](@ref) for more details."
+@defprop ContrastBolusIngredient{:contrast_bolus_ingredient}::ContrastIngredient
 
 """
 The number of volumes ("dummy scans") discarded by the scanner (as opposed
