@@ -52,11 +52,14 @@ function mat2quat(
 end
 
 function mat2quat(
-    R::Rotation, xoffset::T, yoffset::T, zoffset::T,
-    dx::Union{T,Nothing}=nothing,
-    dy::Union{T,Nothing}=nothing,
-    dz::Union{T,Nothing}=nothing,
-    qfac::Union{T,Nothing}=sign(dz)
+    R::Rotation,
+    xoffset::T,
+    yoffset::T,
+    zoffset::T,
+    dx::T,
+    dy::T,
+    dz::T,
+    qfac::T=sign(dz)
 ) where T<:AbstractFloat
 
     @inbounds begin
@@ -94,11 +97,6 @@ function mat2quat(
             r33 = R[3,3]
         end
 
-        # assign the output lengths
-        dx = isnothing(dx) ? xd : dx
-        dy = isnothing(dy) ? yd : dy
-        dz = isnothing(dz) ? zd : dz
-
         # normalize the columns
         r11 /= xd
         r21 /= xd
@@ -130,10 +128,7 @@ function mat2quat(
         # compute the determinant to determine if it is proper
         zd = r11*r22*r33-r11*r32*r23-r21*r12*r33+r21*r32*r13+r31*r12*r23-r31*r22*r13
         # TODO: double check this
-        if zd > 0
-            qfac = isnothing(qfac) ? one(T) : qfac
-        else
-            qfac = isnothing(qfac) ? -one(T) : qfac
+        if qfac < 0
             r13 = -r13
             r23 = -r23
             r33 = -r33

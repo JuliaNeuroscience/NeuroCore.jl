@@ -34,9 +34,9 @@ export
 """
     EncodingDirection
 
-Possible values: `i`, `j`, `k`, `ineg, `jneg`, `kneg` (the axis of the NIfTI data along which
+Possible values: `ipos`, `jpos`, `kpos`, `ineg, `jneg`, `kneg` (the axis of the NIfTI data along which
 slices were acquired, and the direction in which SliceTiming is defined with
-respect to). `i`, `j`, `k` identifiers correspond to the first, second and third axis
+respect to). `ipos`, `jpos`, `kpos` identifiers correspond to the first, second and third axis
 of the data in the NIfTI file. `*neg` indicates that the contents of
 SliceTiming are defined in reverse order - that is, the first entry corresponds
 to the slice with the largest index, and the final entry corresponds to slice
@@ -89,10 +89,12 @@ Base.String(e::EncodingDirection) = String(Symbol(e))
 @defprop SliceDuration{:slice_duration}::Float64
 
 """
+    phase_encoding_direction(x) -> EncodingDirection
+
 The phase encoding direction is defined as the direction along which phase was
 modulated which may result in visible distortions. Note that this is not the
-same as the DICOM term `in_plane_phase_encoding_direction` which can have `ROW` or
-`COL` values. This parameter is REQUIRED if corresponding fieldmap data is present
+same as the DICOM term "in_plane_phase_encoding_direction" which can have "ROW" or
+"COL" values. This parameter is REQUIRED if corresponding fieldmap data is present
 or when using multiple runs with different phase encoding directions (which can
 be later used for field inhomogeneity correction).
 """
@@ -102,16 +104,14 @@ be later used for field inhomogeneity correction).
 end
 
 """
-Possible values: `i`, `j`, `k`, `ineg, `jneg`, `kneg` (the axis of the NIfTI data along which
-slices were acquired, and the direction in which slice_timing is defined with
-respect to). `i`, `j`, `k` identifiers correspond to the first, second and third axis
-of the data in the NIfTI file. `*neg` indicates that the contents of
-slice_timing are defined in reverse order - that is, the first entry corresponds
-to the slice with the largest index, and the final entry corresponds to slice
-index zero. When present, the axis defined by `slice_encoding` needs to be
-consistent with the ‘slicedim’ field in the NIfTI header. When absent, the
-entries in slice_timing must be in the order of increasing slice index as defined
-by the NIfTI header.
+    slice_encoding_direction(x) -> EncodingDirection
+
+Values ending in "*neg" indicate that the contents of slice_timing are defined
+in reverse order (the first entry corresponds to the slice with the largest index,
+and the final entry corresponds to slice index zero. When present, the axis
+defined by `slice_encoding` needs to be consistent with the `slicedim` field in the
+NIfTI header. When absent, the entries in slice_timing must be in the order of increasing
+slice index as defined by the NIfTI header.
 """
 @defprop SliceEncodingDirection{:slice_encoding_direction}::EncodingDirection begin
     @getproperty self -> EncodingDirection(slicedim(self))
@@ -143,8 +143,8 @@ end
 
 Metadata structure for general MRI sequence information.
 
-## Properties
-$(propdoclist(freqdim, phasedim, slicedim, slice_start, slice_end, slice_duration,slice_encoding_direction,phase_encoding_direction))
+## Supported Properties
+$(description_list(freqdim, phasedim, slicedim, slice_start, slice_end, slice_duration,slice_encoding_direction,phase_encoding_direction))
 
 ## Examples
 

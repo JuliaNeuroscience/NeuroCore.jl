@@ -127,9 +127,9 @@ version = "3.3.9+3"
 
 [[FieldProperties]]
 deps = ["Markdown"]
-git-tree-sha1 = "c1d25d491e7b87c83bbc9499b188394446fe5396"
+git-tree-sha1 = "ab87d4131eb2a3e9eb05789b0ec6ea0b93b82249"
 uuid = "127e4479-4c95-493a-afaa-609d38175b70"
-version = "0.4.3"
+version = "0.5.0"
 
 [[FileIO]]
 deps = ["Pkg"]
@@ -261,9 +261,9 @@ version = "2019.0.117+2"
 
 [[MacroTools]]
 deps = ["DataStructures", "Markdown", "Random"]
-git-tree-sha1 = "e2fc7a55bb2224e203bbd8b59f72b91323233458"
+git-tree-sha1 = "07ee65e03e28ca88bc9a338a3726ae0c3efaa94b"
 uuid = "1914dd2f-81c6-5fcd-8719-6d5c9610ff09"
-version = "0.5.3"
+version = "0.5.4"
 
 [[MappedArrays]]
 git-tree-sha1 = "e2a02fe7ee86a10c707ff1756ab1650b40b140bb"

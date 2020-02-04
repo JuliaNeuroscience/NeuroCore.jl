@@ -14,7 +14,7 @@ frequency here if applicable.
 @defprop LowCutOff{:low_cutoff}::(x -> hertz_type(x))
 
 "Frequencies used for the notch filter applied to the channel, in Hz."
-@defprop Notch{:notch}::(x -> hertz_type(x))
+@defprop NotchFilter{:notch_filter}::(x -> hertz_type(x))
 
 "Temporal software filters applied."
 @defprop SoftwareFilters{:software_filters}
@@ -45,7 +45,7 @@ bitemporal, bilateral temporal strips and left grid").
 Position of the dewar during the MEG scan: upright, supine or degrees of angle
 from vertical: for example on CTF systems, upright=15°, supine = 90°.
 """
-@defprop DewarPosition{:dwar_position}::(x -> degree_type(x))
+@defprop DewarPosition{:dewar_position}::(x -> degree_type(x))
 
 #### iEEG
 """

@@ -1,22 +1,22 @@
 # Orientation and Dimension Names
 
-NeuroCore places a strong emphasis on arrays that with named dimensions. This allows the use of well established interfaces for arrays across the julia ecosystem while still providing meaningful information that may be specific to the type of data being worked with.
+NeuroCore places a strong emphasis on arrays with named dimensions. This allows the use of well established interfaces for arrays across the julia ecosystem while still providing meaningful information that may be specific to the type of data being worked with.
 
 ```@docs
-sagittaldim
-coronaldim
-axialdim
-indices_sagittal
-indices_axial
-indices_coronal
-indices_unit
-Onset
-StopTime
-Duration
-TimeContinuity
-SamplingRate
-SpatialOffset
-spatial_units
-is_radiologic
-is_neurologic
+NeuroCore.sagittaldim
+NeuroCore.coronaldim
+NeuroCore.axialdim
+NeuroCore.indices_sagittal
+NeuroCore.indices_axial
+NeuroCore.indices_coronal
+NeuroCore.indices_unit
+NeuroCore.onset
+NeuroCore.stop_time
+NeuroCore.duration
+NeuroCore.time_continuity
+NeuroCore.sampling_rate
+NeuroCore.spatial_offset
+NeuroCore.spatial_units
+NeuroCore.is_radiologic
+NeuroCore.is_neurologic
 ```

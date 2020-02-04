@@ -2,28 +2,40 @@
 
 ## Sequence Metadata
 
-### Properties
-
-```@docs
-NeuroCore.NonlinearGradientCorrection
-NeuroCore.PulseSequence
-NeuroCore.PulseSequenceDetails
-NeuroCore.PulseSequenceType
-NeuroCore.ScanningSequence
-NeuroCore.SequenceName
-NeuroCore.SequenceVarient
-```
-### Metadata
-
 ```@docs
 NeuroCore.SequenceMetadata
 ```
 
+### Properties
+
+```@docs
+NeuroCore.nonlinear_gradient_correction
+NeuroCore.pulse_sequence
+NeuroCore.pulse_sequence_details
+NeuroCore.pulse_sequence_type
+NeuroCore.scanning_sequence
+NeuroCore.sequence_name
+NeuroCore.sequence_varient
+```
+
 ## Encoding Direction
 
-```@autodocs
-Modules = [NeuroCore.EncodingDirections]
-Order   = [:function, :type]
+```@docs
+NeuroCore.EncodingDirectionMetadata
+```
+
+### Properties
+
+```@docs
+NeuroCore.EncodingDirection
+NeuroCore.phase_encoding_direction
+NeuroCore.slice_encoding_direction
+NeuroCore.freqdim
+NeuroCore.phasedim
+NeuroCore.slicedim
+NeuroCore.slice_start
+NeuroCore.slice_end
+NeuroCore.slice_duration
 ```
 
 ## Spatial Encoding
@@ -31,59 +43,55 @@ Order   = [:function, :type]
 ### Properties
 
 ```@docs
-NeuroCore.NumberShots
-NeuroCore.EffectiveEchoSpacing
-NeuroCore.ParallelAcquisitionTechnique
-NeuroCore.ParallelReductionFactor
-NeuroCore.PartialFourier
-NeuroCore.PartialFourierDirection
-NeuroCore.TotalReadoutTime
+NeuroCore.nshots
+NeuroCore.effective_echo_spacing
+NeuroCore.parallel_acquisition_technique
+NeuroCore.parallel_reduction_factor_in_plane
+NeuroCore.partial_fourier
+NeuroCore.partial_fourier_direction
+NeuroCore.total_readout_time
 ```
 
 ## Magentization Transfer
-
-### Properties
-```@docs
-NeuroCore.MTState
-NeuroCore.MTOffsetFrequency
-NeuroCore.MTPulseBandwidth
-NeuroCore.MTNumberOfPulses
-NeuroCore.MTPulseShape
-NeuroCore.MTPulseDuration
-```
-
-### Metadata
 
 ```@docs
 NeuroCore.MagnetizationTransferMetadata
 ```
 
-## Spoiling
-
 ### Properties
-
 ```@docs
-NeuroCore.SpoilingState
-NeuroCore.SpoilingType
-NeuroCore.SpoilingGradientMoment
-NeuroCore.SpoilingGradientDuration
+NeuroCore.mt_state
+NeuroCore.mt_offset_frequency
+NeuroCore.mt_pulse_bandwidth
+NeuroCore.mt_npulses
+NeuroCore.mt_pulse_shape
+NeuroCore.mt_pulse_duration
 ```
 
-### Metadata
+## Spoiling
 
 ```@docs
 NeuroCore.SpoilingMetadata
 ```
 
+### Properties
+
+```@docs
+NeuroCore.spoiling_state
+NeuroCore.spoiling_type
+NeuroCore.spoiling_gradient_moment
+NeuroCore.spoiling_gradient_duration
+```
+
 ## Time
 
 ```@docs
-NeuroCore.EchoTime
-NeuroCore.InversionTime
-NeuroCore.SliceTiming
-NeuroCore.DwellTime
-NeuroCore.DelayTime
-NeuroCore.AcquisitionDuration
-NeuroCore.VolumeTiming
-NeuroCore.RepetitionTime
+NeuroCore.echo_time
+NeuroCore.inversion_time
+NeuroCore.slice_timing
+NeuroCore.dwell_time
+NeuroCore.delay_time
+NeuroCore.acquisition_duration
+NeuroCore.volume_timing
+NeuroCore.repetition_time
 ```

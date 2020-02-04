@@ -5,7 +5,8 @@ makedocs(;
     format=Documenter.HTML(),
     pages=[
         "Introduction" => "index.md",
-        "Imaging Metadata" => "imaging_metadata.md",
+        "Imaging" => "imaging_metadata.md",
+        "Electrophysiology" => "electrophysiology.md",
         "Semantic Positions" => "semantic_positions.md",
         "Orientation and Dimensions" => "dimensions.md",
         "Units" => "units.md",

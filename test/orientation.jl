@@ -49,7 +49,7 @@
                 1.000000 0.000000 0.000000
                 0.000000 -1.000000 0.000000
                 0.000000 0.000000 -1.000000]),
-            [-90.0, -126.0, -72.0]
+            LinearMap((-90.0, -126.0, -72.0))
        )
 
         @test NeuroCore.rotation2spatialorder(R) == (:left, :anterior, :superior)
@@ -58,7 +58,6 @@
         @test NeuroCore.rotation2spatialorder(affine_map(rand(2,2,2))) ==
               NeuroCore.rotation2spatialorder(affine_map(rand(2,2))) ==
               (:left, :posterior, :inferior)
-
     end
 
     @testset "LR MNI152" begin

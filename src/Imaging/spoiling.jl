@@ -49,5 +49,8 @@ end
     SpoilingMetadata
 
 Metadata structure for information concerning MRI sequence spoiling.
+
+## Supported Properties
+$(description_list(spoiling_state,spoiling_type,spoiling_gradient_moment, spoiling_gradient_duration))
 """
 SpoilingMetadata

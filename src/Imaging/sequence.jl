@@ -57,5 +57,9 @@ end
     SequenceMetadata 
 
 Metadata structure for general MRI sequence information.
+
+## Supported Properties
+$(description_list(nonlinear_gradient_correction, pulse_sequence, pulse_sequence_details,
+                   pulse_sequence_type, scanning_sequence, sequence_name, sequence_varient))
 """
 SequenceMetadata
