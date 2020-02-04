@@ -127,9 +127,9 @@ version = "3.3.9+3"
 
 [[FieldProperties]]
 deps = ["Markdown"]
-git-tree-sha1 = "3255e0f35a382c14ec1d02fa8720f3aaf67474d9"
+git-tree-sha1 = "c1d25d491e7b87c83bbc9499b188394446fe5396"
 uuid = "127e4479-4c95-493a-afaa-609d38175b70"
-version = "0.4.2"
+version = "0.4.3"
 
 [[FileIO]]
 deps = ["Pkg"]

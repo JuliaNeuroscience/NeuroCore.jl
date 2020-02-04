@@ -1,7 +1,7 @@
 name = "NeuroCore"
 uuid = "d459d6fe-e785-4cae-bf87-14a4152982ff"
 authors = ["Tokazama <zchristensen7@gmail.com>"]
-version = "0.1.1"
+version = "0.1.2"
 
 [deps]
 CoordinateTransformations = "150eb455-5306-5404-9cee-2592286d6298"
@@ -14,7 +14,7 @@ Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 
 [compat]
 CoordinateTransformations = "0.5.0"
-FieldProperties = "0.4.1"
+FieldProperties = "0.4.3"
 Images = "0.20.2"
 NamedDims = "0.2.14"
 StaticArrays = "0.12.1"
