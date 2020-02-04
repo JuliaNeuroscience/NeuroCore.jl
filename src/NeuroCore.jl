@@ -50,7 +50,7 @@ nt2axis(axs::NamedTuple{name}) where {name} = (Axis{first(name)}(first(axs)), nt
 nt2axis(axs::NamedTuple{(),Tuple{}}) = ()
 nt2axis(axs::Tuple{Vararg{<:Axis}}) = axs
 
-include("axes.jl")
+include("dimensions.jl")
 include("./Orientation/Orientation.jl")
 include("hardware.jl")
 include("institution.jl")

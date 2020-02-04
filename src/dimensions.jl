@@ -3,7 +3,6 @@
 # pretty brittle code
 # There's also some type piracy to get things working here.
 
-
 _values(x::AbstractArray) = x
 _values(x::Axis) = x.val
 
@@ -97,7 +96,6 @@ sampling_rate_type(x) = typeof(1.0 / s)
     @getproperty x::AbstractArray -> 1/step(_values(timeaxis(x)))
 end
 
-
 "Last time point along the time axis."
 @defprop StopTime{:stop_time}::(x -> second_type(x)) begin
     @getproperty x::AbstractArray -> last(_values(timeaxis(x)))
@@ -130,3 +128,4 @@ Returns the units (i.e. Unitful.unit) that each spatial axis is measured in. If 
 available `nothing` is returned for each spatial axis.
 """
 spatial_units(x) = unit.(spatial_eltype(x))
+

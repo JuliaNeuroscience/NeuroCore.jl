@@ -7,6 +7,7 @@ makedocs(;
         "Introduction" => "index.md",
         "Imaging Metadata" => "imaging_metadata.md",
         "Semantic Positions" => "semantic_positions.md",
+        "Orientation and Dimensions" => "dimensions.md",
         "Units" => "units.md",
     ],
     repo="https://github.com/JuliaNeuroscience/NeuroCore.jl/blob/{commit}{path}#L{line}",
