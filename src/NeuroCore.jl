@@ -54,6 +54,4 @@ include("./Imaging/Imaging.jl")
 include("./Electrophysiology/Electrophysiology.jl")
 include("coordinates.jl")
 
-fxntmp(;kwargs...) = kwargs
-
 end

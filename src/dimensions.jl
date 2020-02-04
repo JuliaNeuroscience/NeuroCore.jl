@@ -10,14 +10,7 @@
 ```jldoctest
 julia> using NeuroCore
 
-julia> x = NeuroArray(rand(2,3,4); left = 1:2, anterior = 1:3, superior=1:4)
-Float64 ImageMeta with:
-  data: 3-dimensional AxisArray{Float64,3,...} with axes:
-    :left, 1:2
-    :anterior, 1:3
-    :superior, 1:4
-And data, a 2×3×4 Array{Float64,3}
-  properties:
+julia> x = NeuroArray(rand(2,3,4); left = 1:2, anterior = 1:3, superior=1:4);
 
 julia> dimnames(x)
 (:left, :anterior, :superior)

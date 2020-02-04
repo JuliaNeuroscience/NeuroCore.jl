@@ -32,13 +32,7 @@ end
 ```jldoctest
 julia> using NeuroCore
 
-julia> NeuroCoordinates([(1,2,3), (1,2,3)], [:roi1, :roi2])
-Tuple ImageMeta with:
-  data: 1-dimensional AxisArray{Tuple{Int64,Int64,Int64},1,...} with axes:
-    :rois, Symbol[:roi1, :roi2]
-And data, a 2-element Array{Tuple{Int64,Int64,Int64},1}
-  properties:
-
+julia> x = NeuroCoordinates([(1,1,1), (1,1,2)], [:roi1, :roi2]);
 ```
 """
 const NeuroCoordinates{T,A<:AbstractVector{T},ROIS,M<:CoordinateMetadata} = ImageMeta{T,1,AxisArray{T,1,A,Tuple{ROIS}},M}

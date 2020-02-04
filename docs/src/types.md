@@ -2,5 +2,4 @@
 
 ```@docs
 NeuroCore.NeuroArray
-NeuroCore.NeuroCoordinates
 ```
