@@ -5,7 +5,6 @@ using NeuroCore: SPQuat, RotMatrix, quat2mat, mat2quat, pixelspacing
 include("semantic_positions.jl")
 include("orientation.jl")
 include("encoding_directions.jl")
-include("axes_tests.jl")
 include("time_tests.jl")
 include("contrast_ingredient_tests.jl")
 
