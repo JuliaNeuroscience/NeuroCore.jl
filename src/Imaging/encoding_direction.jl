@@ -1,35 +1,3 @@
-module EncodingDirections
-
-using FieldProperties
-
-export
-    EncodingDirection,
-    FrequencyDimension,
-    freqdim,
-    freqdim!,
-    PhaseDimension,
-    phasedim,
-    phasedim!,
-    SliceStart,
-    slice_start,
-    slice_start!,
-    SliceEnd,
-    slice_end,
-    slice_end!,
-    SliceDimension,
-    slicedim,
-    slicedim!,
-    SliceDuration,
-    slice_duration,
-    slice_duration!,
-    PhaseEncodingDirection,
-    phase_encoding_direction,
-    phase_encoding_direction!,
-    SliceEncodingDirection,
-    slice_encoding_direction,
-    slice_encoding_direction!,
-    EncodingDirectionMetadata
-
 
 """
     EncodingDirection
@@ -118,6 +86,71 @@ slice index as defined by the NIfTI header.
     @setproperty! (self, val) -> slicedim!(self, val)
 end
 
+"""
+    EncodingDirectionMetadata 
+
+Metadata structure for general MRI sequence information.
+
+## Supported Properties
+$(description_list(freqdim, phasedim, slicedim, slice_start, slice_end, slice_duration,slice_encoding_direction,phase_encoding_direction))
+
+## Examples
+
+```jldoctest
+julia> using NeuroCore
+
+julia> m = EncodingDirectionMetadata(1, 2, 3, 4, 5, 6)
+EncodingDirectionMetadata(1, 2, 3, 4, 5, 6.0)
+
+julia> m.slice_encoding_direction
+kpos::EncodingDirection = 3
+
+julia> m.slice_encoding_direction == slice_encoding_direction(m)
+true
+
+julia> m.phase_encoding_direction
+jpos::EncodingDirection = 2
+
+julia> m.phase_encoding_direction == phase_encoding_direction(m)
+true
+
+julia> m.freqdim
+1
+
+julia> m.freqdim == freqdim(m)
+true
+
+julia> m.phasedim
+2
+
+julia> m.phasedim == phasedim(m)
+true
+
+julia> m.slicedim
+3
+
+julia> m.slicedim == slicedim(m)
+true
+
+julia> m.slice_start
+4
+
+julia> m.slice_start == slice_start(m)
+true
+
+julia> m.slice_end
+5
+
+julia> m.slice_end == slice_end(m)
+true
+
+julia> m.slice_duration
+6.0
+
+julia> m.slice_duration == slice_duration(m)
+true
+```
+"""
 struct EncodingDirectionMetadata
     freqdim::Int
     phasedim::Int
@@ -138,47 +171,3 @@ end
     phase_encoding_direction(self) -> phase_encoding_direction(self)
 end
 
-"""
-    EncodingDirectionMetadata 
-
-Metadata structure for general MRI sequence information.
-
-## Supported Properties
-$(description_list(freqdim, phasedim, slicedim, slice_start, slice_end, slice_duration,slice_encoding_direction,phase_encoding_direction))
-
-## Examples
-
-```jldoctest
-julia> using NeuroCore.EncodingDirections
-
-julia> m = EncodingDirectionMetadata(1, 2, 3, 4, 5, 6)
-EncodingDirectionMetadata(1, 2, 3, 4, 5, 6.0)
-
-julia> m.slice_encoding_direction
-kpos::EncodingDirection = 3
-
-julia> m.phase_encoding_direction
-jpos::EncodingDirection = 2
-
-julia> m.freqdim
-1
-
-julia> m.phasedim
-2
-
-julia> m.slicedim
-3
-
-julia> m.slice_start
-4
-
-julia> m.slice_end
-5
-
-julia> m.slice_duration
-6.0
-```
-"""
-EncodingDirectionMetadata
-
-end

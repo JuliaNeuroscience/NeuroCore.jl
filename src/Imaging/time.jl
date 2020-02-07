@@ -44,7 +44,7 @@ as "dwell time" (which is spacing in the readout direction).
 Returns the user specified time (in seconds) to delay the acquisition of data for
 the following volume. If the field is not present it is assumed to be set to zero.
 Corresponds to Siemens CSA header field ldelay_timeInTR. This field is REQUIRED
-for sparse sequences using the repetition_time field that do not have the
+for sparse sequences using the `repetition_time` field that do not have the
 slice_timing field set to allowed for accurate calculation of "acquisition time".
 This field is mutually exclusive with `volume_timing`.
 """

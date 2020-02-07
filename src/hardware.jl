@@ -47,8 +47,7 @@ Metadata structure for general MRI sequence information.
 ```jldoctest
 julia> using NeuroCore
 
-julia> m = HardwareMetadata("a", "b", "c")
-HardwareMetadata{FieldProperties.Metadata{Dict{Symbol,Any}}} with 0 entries
+julia> m = HardwareMetadata("a", "b", "c");
 
 julia> m.device_serial_number
 "c"

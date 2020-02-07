@@ -30,7 +30,14 @@ trapezoidal lobe is defined as the summation of ramp-up and plateu times.
 """
 @defprop SpoilingGradientDuration{:spoiling_gradient_duration}::(x -> second_type(x))
 
+"""
+    SpoilingMetadata
 
+Metadata structure for information concerning MRI sequence spoiling.
+
+## Supported Properties
+$(description_list(spoiling_state,spoiling_type,spoiling_gradient_moment, spoiling_gradient_duration))
+"""
 struct SpoilingMetadata{D,S}
     spoiling_state::Bool
     spoiling_type::SpoilingValues
@@ -45,12 +52,3 @@ end
     spoiling_gradient_duration(self) => :spoiling_gradient_duration
 end
 
-"""
-    SpoilingMetadata
-
-Metadata structure for information concerning MRI sequence spoiling.
-
-## Supported Properties
-$(description_list(spoiling_state,spoiling_type,spoiling_gradient_moment, spoiling_gradient_duration))
-"""
-SpoilingMetadata

@@ -10,10 +10,14 @@
 ```jldoctest
 julia> using NeuroCore
 
-julia> x = NeuroArray(rand(2,3,4); left = 1:2, anterior = 1:3, superior=1:4);
+julia> x = NeuroArray(rand(2,3,4,10);
+               left = 1:2,
+               anterior = 1:3,
+               superior=1:4,
+               time = range(1, stop=10, length=10));
 
 julia> dimnames(x)
-(:left, :anterior, :superior)
+(:left, :anterior, :superior, :time)
 
 julia> is_radiologic(x)
 true
@@ -38,6 +42,15 @@ julia> indices_coronal(x)
 
 julia> indices_axial(x)
 1:4
+
+julia> sampling_rate(x)
+1.0
+
+julia> duration(x)
+9.0
+
+julia> stop_time(x)
+10.0
 ```
 """
 const NeuroArray{T,N,A<:AbstractArray{T,N},M<:AbstractMetadata,Ax} = ImageMeta{T,N,AxisArray{T,N,A,Ax},M}
@@ -133,21 +146,23 @@ function is_neurologic(x::NTuple{3,Symbol})
 end
 
 """
-    indices_unit(x, name)
+    onset(x)
+    onset!(x, val)
 
-Returns the unit (i.e. Unitful.unit) the name dimension is measured in. If units
-are not defined `nothing` is returned.
+First time point along the time axis.
 """
-indices_unit(x) = unit(indices_eltype(x))
-
-"First time point along the time axis."
 @defprop Onset{:onset} begin
     @getproperty x::AbstractArray -> first(_values(timeaxis(x)))
 end
 
 sampling_rate_type(x) = typeof(1.0 / s)
 
-"Number of samples per second."
+"""
+    sampling_rate(x)
+    sampling_rate!(x, val)
+
+Number of samples per second.
+"""
 @defprop SamplingRate{:sampling_rate}::(x -> sampling_rate_type(x)) begin
     @getproperty x::AbstractArray -> 1/step(_values(timeaxis(x)))
 end
@@ -163,6 +178,9 @@ end
 end
 
 """
+    time_continuity(x)
+    time_continuity!(x, val)
+
 Defines whether the recording is "continuous", "discontinuous" or "epoched";
 this latter limited to time windows about events of interest (e.g., stimulus
 presentations, subject responses etc.)
@@ -172,9 +190,14 @@ presentations, subject responses etc.)
 ### Spatial traits
 spatial_eltype(x) = eltype.(indices_spatial(x))
 
-"Provides the offset of each dimension (i.e., where each spatial axis starts)."
+"""
+    spatial_offset(x)
+    spatial_offset!(x, val)
+
+The offset of each dimension (i.e., where each spatial axis starts).
+"""
 @defprop SpatialOffset{:spatial_offset}::(x -> spatial_eltype(x)) begin
-    @getproperty x::AbstractArray -> first.(coords_indices(x))
+    @getproperty x::AbstractArray -> first.(indices_spatial(x))
 end
 
 """

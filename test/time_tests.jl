@@ -7,9 +7,5 @@ time_array.volume_timing = [1s, 2s]
 
 @test volume_timing(time_array) == [1s, 2s]
 
-@test sampling_rate(time_array) == 1 / 1s
-
-@test duration(time_array) == 9s
-
 @test stop_time(time_array) == 10s
 
