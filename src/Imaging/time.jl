@@ -1,10 +1,16 @@
 """
+    echo_time(x)
+    echo_time!(x, val)
+
 The echo time (TE) for the acquisition. This parameter is REQUIRED if corresponding
 fieldmap data is present or the data comes from a multi echo sequence.
 """
 @defprop EchoTime{:echo_time}::(x -> second_type(x))
 
 """
+    inversion_time(x)
+    inversion_time!(x, val)
+
 Returns the inversion time (TI) for the acquisition, specified in seconds.
 Inversion time is the time after the middle of inverting RF pulse to middle of
 excitation pulse to detect the amount of longitudinal magnetization.
@@ -12,6 +18,9 @@ excitation pulse to detect the amount of longitudinal magnetization.
 @defprop InversionTime{:inversion_time}::(x -> second_type(x))
 
 """
+    slice_timing(x)
+    slice_timing!(x, val)
+
 The time at which each slice was acquired within each volume (frame) of the
 acquisition. Slice timing is not slice order -- rather, it is a list of times
 (in JSON format) containing the time (in seconds) of each slice acquisition in
@@ -29,6 +38,9 @@ will not be possible.
 @defprop SliceTiming{:slice_timing}::(x -> Vector{second_type(x)})
 
 """
+    dwell_time(x)
+    dwell_time!(x, val)
+
 Actual dwell time (in seconds) of the receiver per point in the readout
 direction, including any oversampling. For Siemens, this corresponds to DICOM
 field (0019,1018) (in ns). This value is necessary for the optional readout
@@ -41,6 +53,9 @@ as "dwell time" (which is spacing in the readout direction).
 @defprop DwellTime{:dwell_time}::(x -> second_type(x))
 
 """
+    delay_time(x)
+    delay_time!(x, val)
+
 Returns the user specified time (in seconds) to delay the acquisition of data for
 the following volume. If the field is not present it is assumed to be set to zero.
 Corresponds to Siemens CSA header field ldelay_timeInTR. This field is REQUIRED
@@ -51,6 +66,9 @@ This field is mutually exclusive with `volume_timing`.
 @defprop DelayTime{:delay_time}::(x -> second_type(x))
 
 """
+    acquisition_duration(x)
+    acquisition_duration!(x, val)
+
 Duration (in seconds) of volume acquisition. This field is REQUIRED for
 sequences that are described with the `volume_timingfield` and that do not have the
 `slice_timing` field set to allowed for accurate calculation of "acquisition time".
@@ -59,6 +77,9 @@ This field is mutually exclusive with `repetition_time`.
 @defprop AcquisitionDuration{:acquisition_duration}::(x -> second_type(x))
 
 """
+    delay_after_trigger(x)
+    delay_after_trigger!(x, val)
+
 Returns duration (in seconds) from trigger delivery to scan onset. This delay is
 commonly caused by adjustments and loading times. This specification is entirely
 independent of `nvol_discarded_by_scanner` or `nvol_discarded_by_user`,
@@ -67,6 +88,9 @@ as the delay precedes the acquisition.
 @defprop DelayAfterTrigger{:delay_after_trigger}::(x -> second_type(x))
 
 """
+    volume_timing(x)
+    volume_timing!(x, val)
+
 Returns the time at which each volume was acquired during the acquisition. It is
 described using a list of times (in JSON format) referring to the onset of each
 volume in the BOLD series. The list must have the same length as the BOLD
@@ -78,6 +102,9 @@ acquisition_duration be defined.
 @defprop VolumeTiming{:volume_timing}::(x -> Vector{second_type(x)})
 
 """
+    repetition_time(x)
+    repetition_time!(x, val)
+
 Returns the time in seconds between the beginning of an acquisition of one volume
 and the beginning of acquisition of the volume following it (TR). Please note that
 this definition includes time between scans (when no data has been acquired) in

@@ -1,16 +1,25 @@
 """
+    nonlinear_gradient_correction(x)
+    nonlinear_gradient_correction!(x, val)
+
 Returns `Bool` stating if the image saved has been corrected for gradient
 nonlinearities by the scanner sequence. Default is `false`.
 """
 @defprop NonlinearGradientCorrection{:nonlinear_gradient_correction}::Bool
 
 """
+    pulse_sequence(x)
+    pulse_sequence!(x, val)
+
 General description of the pulse sequence used for the scan (i.e. MPRAGE,
 Gradient Echo EPI, Spin Echo EPI, Multiband gradient echo EPI).
 """
 @defprop PulseSequence{:pulse_sequence}::String
 
 """
+    pulse_sequence_details(x)
+    pulse_sequence_details!(x, val)
+
 Information beyond pulse sequence type that identifies the specific pulse
 sequence used (i.e. "Standard Siemens Sequence distributed with the VB17
 software," "Siemens WIP ### version #.##," or "Sequence written by X using a
@@ -19,18 +28,36 @@ version compiled on MM/DD/YYYY").
 @defprop PulseSequenceDetails{:pulse_sequence_details}::String
 
 """
+    pulse_sequence_type(x)
+    pulse_sequence_type!(x, val)
+
 A general description of the pulse sequence used for the scan (i.e. MPRAGE,
 Gradient Echo EPI, Spin Echo EPI, Multiband gradient echo EPI).
 """
 @defprop PulseSequenceType{:pulse_sequence_type}::String
 
-"Description of the type of sequence data acquired."
+"""
+    scanning_sequence(x)
+    scanning_sequence!(x, val)
+
+Description of the type of sequence data acquired.
+"""
 @defprop ScanningSequence{:scanning_sequence}::String
 
-"Manufacturer’s designation of the sequence name."
+"""
+    sequence_name(x)
+    sequence_name!(x, val)
+
+Manufacturer’s designation of the sequence name.
+"""
 @defprop SequenceName{:sequence_name}::String
 
-"Variant of the `scanning_sequence` property."
+"""
+    sequence_varient(x)
+    sequence_varient!(x, val)
+
+Variant of the `scanning_sequence` property.
+"""
 @defprop SequenceVarient{:sequence_varient}::String
 
 struct SequenceMetadata

@@ -61,6 +61,7 @@ export
     slice_encoding_direction!,
     EncodingDirectionMetadata,
     # reexprots
+    Metadata,
     spatialorder,
     dimnames,
     dim

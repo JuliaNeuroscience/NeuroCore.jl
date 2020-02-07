@@ -127,9 +127,9 @@ version = "3.3.9+3"
 
 [[FieldProperties]]
 deps = ["Markdown"]
-git-tree-sha1 = "ab87d4131eb2a3e9eb05789b0ec6ea0b93b82249"
+git-tree-sha1 = "70db901db13ee73341bd43cfab7fe0e53421a50b"
 uuid = "127e4479-4c95-493a-afaa-609d38175b70"
-version = "0.5.0"
+version = "0.5.1"
 
 [[FileIO]]
 deps = ["Pkg"]
@@ -210,9 +210,9 @@ version = "0.8.3"
 
 [[Images]]
 deps = ["AxisArrays", "Base64", "ColorVectorSpace", "FileIO", "Graphics", "ImageAxes", "ImageContrastAdjustment", "ImageCore", "ImageDistances", "ImageFiltering", "ImageMetadata", "ImageMorphology", "ImageShow", "ImageTransformations", "IndirectArrays", "MappedArrays", "OffsetArrays", "Random", "Reexport", "SparseArrays", "StaticArrays", "Statistics", "StatsBase", "TiledIteration"]
-git-tree-sha1 = "fe95ef5275723f2032016c6b8e2646344ed42af1"
+git-tree-sha1 = "bb4b08db746b5f8b90d0496c160d88aa2fa5bbb8"
 uuid = "916415d5-f1e6-5110-898d-aaa5f9f070e0"
-version = "0.21.0"
+version = "0.21.1"
 
 [[IndirectArrays]]
 git-tree-sha1 = "c2a145a145dc03a7620af1444e0264ef907bd44f"

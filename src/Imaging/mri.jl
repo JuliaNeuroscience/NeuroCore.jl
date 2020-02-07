@@ -1,3 +1,4 @@
+
 """
     coil_combination_method(x)
     coil_combination_method!(x, val)
@@ -30,7 +31,6 @@ The nominal field strength of MR magnet in Tesla.
 """
     matrix_coil_mode(x)
     matrix_coil_mode!(x, val)
-
 
 Returns the matrix coil mode. A method for reducing the number of independent
 channels by combining in analog the signals from multiple coil elements. There
@@ -136,3 +136,4 @@ the corresponding imaging file - independent of the value of
 number_of_volumes_discarded_by_user field.
 """
 @defprop NumberOfVolumesDiscardedByUser{:nvol_discarded_by_user}::Int
+

@@ -38,22 +38,52 @@ function EncodingDirection(e::Symbol)
 end
 Base.String(e::EncodingDirection) = String(Symbol(e))
 
-"Which spatial dimension (1, 2, or 3) corresponds to phase acquisition."
+"""
+    freqdim(x)
+    freqdim!(x, val)
+
+Which spatial dimension (1, 2, or 3) corresponds to phase acquisition.
+"""
 @defprop FrequencyDimension{:freqdim}::Int
 
-"Which spatial dimension (1, 2, or 3) corresponds to phase acquisition."
+"""
+    phasedim(x)
+    phasedim!(x, val)
+
+Which spatial dimension (1, 2, or 3) corresponds to phase acquisition.
+"""
 @defprop PhaseDimension{:phasedim}::Int
 
-"Which slice corresponds to the first slice acquired during MRI acquisition (i.e. not padded slices)."
+"""
+    slice_start(x)
+    slice_start!(x, val)
+
+Which slice corresponds to the first slice acquired during MRI acquisition (i.e. not padded slices).
+"""
 @defprop SliceStart{:slice_start}::Int
 
-"Which slice corresponds to the last slice acquired during MRI acquisition (i.e. not padded slices)."
+"""
+    slice_end(x)
+    slice_end!(x, val)
+
+Which slice corresponds to the last slice acquired during MRI acquisition (i.e. not padded slices).
+"""
 @defprop SliceEnd{:slice_end}::Int
 
-"Which dimension slices where acquired at throughout MRI acquisition."
+"""
+    slicedim(x)
+    slicedim!(x, val)
+
+Which dimension slices where acquired at throughout MRI acquisition.
+"""
 @defprop SliceDimension{:slicedim}::Int
 
-"Time to acquire one slice"
+"""
+    slice_duration(x)
+    slice_duration!(x, val)
+
+Time to acquire one slice
+"""
 @defprop SliceDuration{:slice_duration}::Float64
 
 """

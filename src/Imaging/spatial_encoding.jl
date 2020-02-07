@@ -1,4 +1,8 @@
+
 """
+    nshots(x)
+    nshots!(x, val)
+
 The number of RF excitations needed to reconstruct a slice or volume.
 Please mind that this is not the same as Echo Train Length which denotes the
 number of lines of k-space collected after an excitation.
@@ -6,6 +10,9 @@ number of lines of k-space collected after an excitation.
 @defprop NumberShots{:nshots}::Int
 
 """
+    effective_echo_spacing(x)
+    effective_echo_spacing!(x, val)
+
 The "effective" sampling interval, specified in seconds, between lines in the
 phase-encoding direction, defined based on the size of the reconstructed image
 in the phase direction. It is frequently, but incorrectly, referred to as
@@ -26,22 +33,43 @@ manipulations). See [here](https://lcni.uoregon.edu/kb-articles/kb-0003) and
 """
 @defprop EffectiveEchoSpacing{:effective_echo_spacing}::(x -> second_type(x))
 
-"The type of parallel imaging used (e.g. GRAPPA, SENSE)."
+"""
+    parallel_acquisition_technique(x)
+    parallel_acquisition_technique!(x, val)
+
+The type of parallel imaging used (e.g. GRAPPA, SENSE).
+"""
 @defprop ParallelAcquisitionTechnique{:parallel_acquisition_technique}::String
 
 """
+    parallel_reduction_factor_in_plane(x)
+    parallel_reduction_factor_in_plane!(x, val)
+
 The parallel imaging (e.g, GRAPPA) factor. Use the denominator of the fraction
 of k-space encoded for each slice. For example, 2 means half of k-space is encoded.
 """
 @defprop ParallelReductionFactor{:parallel_reduction_factor_in_plane}::Int
 
-"The fraction of partial Fourier information collected."
+"""
+    partial_fourier(x)
+    partial_fourier!(x, val)
+
+The fraction of partial Fourier information collected.
+"""
 @defprop PartialFourier{:partial_fourier}::Float64
 
-"The direction where only partial Fourier information was collected."
+"""
+    partial_fourier_direction(x)
+    partial_fourier_direction!(x, val)
+
+The direction where only partial Fourier information was collected.
+"""
 @defprop PartialFourierDirection{:partial_fourier_direction}::String
 
 """
+    total_readout_time(x)
+    total_readout_time!(x, val)
+
 The total readout time. This is actually the "effective" total readout time ,
 defined as the readout duration, specified in seconds, that would have generated
 data with the given level of distortion. It is NOT the actual, physical duration
