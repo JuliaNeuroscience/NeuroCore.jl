@@ -155,7 +155,6 @@ First time point along the time axis.
     @getproperty x::AbstractArray -> first(_values(timeaxis(x)))
 end
 
-sampling_rate_type(x) = typeof(1.0 / s)
 
 """
     sampling_rate(x)
@@ -166,6 +165,8 @@ Number of samples per second.
 @defprop SamplingRate{:sampling_rate}::(x -> sampling_rate_type(x)) begin
     @getproperty x::AbstractArray -> 1/step(_values(timeaxis(x)))
 end
+
+sampling_rate_type(x) = typeof(1.0 / s)
 
 "Last time point along the time axis."
 @defprop StopTime{:stop_time}::(x -> second_type(x)) begin

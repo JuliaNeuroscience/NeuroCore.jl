@@ -12,7 +12,6 @@ NeuroCore.SequenceMetadata
 NeuroCore.nonlinear_gradient_correction
 NeuroCore.pulse_sequence
 NeuroCore.pulse_sequence_details
-NeuroCore.pulse_sequence_type
 NeuroCore.scanning_sequence
 NeuroCore.sequence_name
 NeuroCore.sequence_varient

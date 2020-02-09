@@ -14,9 +14,9 @@ version = "1.0.0"
 
 [[AxisArrays]]
 deps = ["Dates", "IntervalSets", "IterTools", "RangeArrays"]
-git-tree-sha1 = "d63ba0315a1d287c9467e61e932578f2fdd048e0"
+git-tree-sha1 = "04f979dd266c708f478334e0a85785eab0558740"
 uuid = "39de3d68-74b9-583c-8d2d-e117c070f3a9"
-version = "0.3.3"
+version = "0.4.2"
 
 [[Base64]]
 uuid = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
@@ -127,15 +127,15 @@ version = "3.3.9+3"
 
 [[FieldProperties]]
 deps = ["Markdown"]
-git-tree-sha1 = "70db901db13ee73341bd43cfab7fe0e53421a50b"
+git-tree-sha1 = "f73fcc11df9abfd32f753d19a7b30c88618d5687"
 uuid = "127e4479-4c95-493a-afaa-609d38175b70"
-version = "0.5.1"
+version = "0.5.2"
 
 [[FileIO]]
 deps = ["Pkg"]
-git-tree-sha1 = "74585bf1f7ed7259e166011e89f49363d7fa89a6"
+git-tree-sha1 = "2c84c57aced468fa21763c66d3bef33adcd09ec7"
 uuid = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
-version = "1.2.1"
+version = "1.2.2"
 
 [[FixedPointNumbers]]
 git-tree-sha1 = "4aaea64dd0c30ad79037084f8ca2b94348e65eaa"
@@ -156,9 +156,9 @@ version = "0.3.1"
 
 [[ImageAxes]]
 deps = ["AxisArrays", "ImageCore", "MappedArrays", "Reexport", "SimpleTraits"]
-git-tree-sha1 = "75b0225bd999c4bdd83144f4b1b2437890050892"
+git-tree-sha1 = "26163e074948735a6548cc59e750bb569a089a23"
 uuid = "2803e5a7-5153-5ecf-9a86-9b4c37f5f5ac"
-version = "0.6.2"
+version = "0.6.3"
 
 [[ImageContrastAdjustment]]
 deps = ["ColorVectorSpace", "Compat", "ImageCore", "ImageTransformations", "MappedArrays", "Parameters"]

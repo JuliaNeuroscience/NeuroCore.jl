@@ -35,6 +35,8 @@ export
     is_radiologic,
     is_neurologic,
     # time
+    onset,
+    onset!,
     sampling_rate,
     sampling_rate!,
     duration,

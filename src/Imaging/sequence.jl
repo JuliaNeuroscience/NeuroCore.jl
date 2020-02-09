@@ -28,13 +28,13 @@ version compiled on MM/DD/YYYY").
 @defprop PulseSequenceDetails{:pulse_sequence_details}::String
 
 """
-    pulse_sequence_type(x)
-    pulse_sequence_type!(x, val)
+    pulse_seqtype(x)
+    pulse_seqtype!(x, val)
 
 A general description of the pulse sequence used for the scan (i.e. MPRAGE,
 Gradient Echo EPI, Spin Echo EPI, Multiband gradient echo EPI).
 """
-@defprop PulseSequenceType{:pulse_sequence_type}::String
+@defprop PulseSequenceType{:pulse_seqtype}::String
 
 """
     scanning_sequence(x)
@@ -59,7 +59,15 @@ Manufacturer’s designation of the sequence name.
 Variant of the `scanning_sequence` property.
 """
 @defprop SequenceVarient{:sequence_varient}::String
+"""
+    SequenceMetadata 
 
+Metadata structure for general MRI sequence information.
+
+## Supported Properties
+$(description_list(nonlinear_gradient_correction, pulse_sequence, pulse_sequence_details,
+                   pulse_sequence_type, scanning_sequence, sequence_name, sequence_varient))
+"""
 struct SequenceMetadata
     nonlinear_gradient_correction::Bool
     pulse_sequence::String
@@ -74,19 +82,9 @@ end
     nonlinear_gradient_correction(self) => :nonlinear_gradient_correction
     pulse_sequence(self) => :pulse_sequence
     pulse_sequence_details(self) => :pulse_sequence_details
-    pulse_sequence_type(self) => :pulse_sequence_type
+    pulse_seqtype(self) => :pulse_sequence_type
     scanning_sequence(self) => :scanning_sequence
     sequence_name(self) => :sequence_name
     sequence_varient(self) => :sequence_varient
 end
 
-"""
-    SequenceMetadata 
-
-Metadata structure for general MRI sequence information.
-
-## Supported Properties
-$(description_list(nonlinear_gradient_correction, pulse_sequence, pulse_sequence_details,
-                   pulse_sequence_type, scanning_sequence, sequence_name, sequence_varient))
-"""
-SequenceMetadata

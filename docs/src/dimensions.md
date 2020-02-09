@@ -9,7 +9,6 @@ NeuroCore.axialdim
 NeuroCore.indices_sagittal
 NeuroCore.indices_axial
 NeuroCore.indices_coronal
-NeuroCore.indices_unit
 NeuroCore.onset
 NeuroCore.stop_time
 NeuroCore.duration
@@ -20,3 +19,4 @@ NeuroCore.spatial_units
 NeuroCore.is_radiologic
 NeuroCore.is_neurologic
 ```
+
