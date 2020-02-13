@@ -20,11 +20,11 @@ export
     # Orientation
     affine_map,
     # Units
-    second_type,
-    tesla_type,
-    hertz_type,
-    degree_type,
-    ohms_type,
+    #second_type,
+    #tesla_type,
+    #hertz_type,
+    #degree_type,
+    #ohms_type,
     # methods
     sagittaldim,
     coronaldim,
@@ -68,7 +68,12 @@ export
     dimnames,
     dim
 
-include("units.jl")
+const F64Second = typeof(one(Float64) * s)
+const F64Tesla = typeof(one(Float64) * T)
+const F64kOhms = typeof(1.0u"kΩ")
+const F64Hertz = typeof(one(Float64) * Hz)
+const IntDegree = typeof(1 * °)
+
 include("./SemanticPositions/SemanticPositions.jl")
 using .SemanticPositions
 

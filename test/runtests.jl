@@ -23,6 +23,13 @@ end
     @test @inferred(NeuroCore.mt_pulse_bandwidth(mt)) == 2.0Hz
     @test @inferred(NeuroCore.mt_npulses(mt)) == 3
     @test @inferred(NeuroCore.mt_pulse_duration(mt)) == 4.0s
+
+    #=
+    @test @inferred(mt_offset_frequency(mt)) == 1.0Hz
+    @test @inferred(mt_pulse_bandwidth(mt)) == 2.0Hz
+    @test @inferred(mt_npulses(mt)) == 3
+    @test @inferred(mt_pulse_duration(mt)) == 4.0s
+    =#
 end
 
 @testset "Spoiling Gradiant" begin

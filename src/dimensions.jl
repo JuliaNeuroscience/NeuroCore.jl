@@ -88,12 +88,8 @@ indices(x) = keys.(axes(x))
 
 #indices(x, d::Symbol) = _indices(indices(x, dim(dimnames(x), d)))
 #indices(x, d::Int) = _indices(indices(x)[d])
-indices(x, f::Function) = _indices(indices(x, finddim(f, x)))
-
 indices(x::ImageMeta, i::Int) = indices(arraydata(x), i)
 indices(x::AxisArray, i::Int) = _values(x.axes[i])
-
-_indices(x::LinearIndices{1}) = first(x.indices)
 
 for name in (:sagittal,
              :axial,
@@ -125,6 +121,16 @@ for name in (:sagittal,
     end
 end
 
+spatial_eltype(x) = eltype.(indices_spatial(x))
+
+"""
+    spatial_units(x)
+
+Returns the units (i.e. Unitful.unit) that each spatial axis is measured in. If not
+available `nothing` is returned for each spatial axis.
+"""
+spatial_units(x) = unit.(spatial_eltype(x))
+
 """
     is_radiologic(x) -> Bool
 
@@ -151,7 +157,7 @@ end
 
 First time point along the time axis.
 """
-@defprop Onset{:onset} begin
+@defprop Onset{:onset}::F64Second begin
     @getproperty x::AbstractArray -> first(_values(timeaxis(x)))
 end
 
@@ -169,12 +175,12 @@ end
 sampling_rate_type(x) = typeof(1.0 / s)
 
 "Last time point along the time axis."
-@defprop StopTime{:stop_time}::(x -> second_type(x)) begin
+@defprop StopTime{:stop_time}::F64Second begin
     @getproperty x::AbstractArray -> last(_values(timeaxis(x)))
 end
 
 "Duration of the event along the time axis."
-@defprop Duration{:duration}::(x -> second_type(x)) begin
+@defprop Duration{:duration}::F64Second begin
     @getproperty x::AbstractArray -> stop_time(x) - onset(x)
 end
 
@@ -188,9 +194,6 @@ presentations, subject responses etc.)
 """
 @defprop TimeContinuity{:time_continuity}
 
-### Spatial traits
-spatial_eltype(x) = eltype.(indices_spatial(x))
-
 """
     spatial_offset(x)
     spatial_offset!(x, val)
@@ -200,12 +203,4 @@ The offset of each dimension (i.e., where each spatial axis starts).
 @defprop SpatialOffset{:spatial_offset}::(x -> spatial_eltype(x)) begin
     @getproperty x::AbstractArray -> first.(indices_spatial(x))
 end
-
-"""
-    spatial_units(x)
-
-Returns the units (i.e. Unitful.unit) that each spatial axis is measured in. If not
-available `nothing` is returned for each spatial axis.
-"""
-spatial_units(x) = unit.(spatial_eltype(x))
 

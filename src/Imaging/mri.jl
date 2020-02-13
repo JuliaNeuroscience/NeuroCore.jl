@@ -26,7 +26,7 @@ set, then the specifications of the actual gradient coil should be reported inde
 
 The nominal field strength of MR magnet in Tesla.
 """
-@defprop MagneticFieldStrength{:magnetic_field_strength}::(x -> tesla_type(x))
+@defprop MagneticFieldStrength{:magnetic_field_strength}::F64Tesla
 
 """
     matrix_coil_mode(x)
@@ -85,7 +85,7 @@ given scan was collected with the intended coil elements selected.
 
 Returns the flip angle for the acquisition in degrees.
 """
-@defprop FlipAngle{:flip_angle}::(x -> degree_type(x))
+@defprop FlipAngle{:flip_angle}::IntDegree
 
 "Returns the multiband factor, for multiband acquisitions."
 @defprop MultibandAccelerationFactor{:multiband_acceleration_factor}::String
@@ -136,4 +136,3 @@ the corresponding imaging file - independent of the value of
 number_of_volumes_discarded_by_user field.
 """
 @defprop NumberOfVolumesDiscardedByUser{:nvol_discarded_by_user}::Int
-

@@ -1,3 +1,4 @@
+
 """
     spoiling_state(x)
     spoiling_state!(x, val)
@@ -28,7 +29,7 @@ Specifies which spoiling method(s) are used by a spoiled sequence. Accepted valu
 The amount of incrementation described in degrees, which is applied to the
 phase of the excitation pulse at each TR period for achieving RF spoiling.
 """
-@defprop SpoilingRFPhaseIncrement{:spoiling_rf_phase_increment}::(x -> degree_type(x))
+@defprop SpoilingRFPhaseIncrement{:spoiling_rf_phase_increment}::IntDegree
 
 """
     spoiling_gradient_moment(x)
@@ -45,7 +46,7 @@ Zeroth moment of the spoiler gradient lobe in militesla times second per meter (
 The duration of the spoiler gradient lobe in seconds. The duration of a
 trapezoidal lobe is defined as the summation of ramp-up and plateu times.
 """
-@defprop SpoilingGradientDuration{:spoiling_gradient_duration}::(x -> second_type(x))
+@defprop SpoilingGradientDuration{:spoiling_gradient_duration}::F64Second
 
 """
     SpoilingMetadata

@@ -5,7 +5,7 @@
 The echo time (TE) for the acquisition. This parameter is REQUIRED if corresponding
 fieldmap data is present or the data comes from a multi echo sequence.
 """
-@defprop EchoTime{:echo_time}::(x -> second_type(x))
+@defprop EchoTime{:echo_time}::F64Second
 
 """
     inversion_time(x)
@@ -15,7 +15,7 @@ Returns the inversion time (TI) for the acquisition, specified in seconds.
 Inversion time is the time after the middle of inverting RF pulse to middle of
 excitation pulse to detect the amount of longitudinal magnetization.
 """
-@defprop InversionTime{:inversion_time}::(x -> second_type(x))
+@defprop InversionTime{:inversion_time}::F64Second
 
 """
     slice_timing(x)
@@ -35,7 +35,7 @@ slice 0). This parameter is REQUIRED for sparse sequences that do not have the
 `delay_time` field set. In addition without this parameter slice time correction
 will not be possible.
 """
-@defprop SliceTiming{:slice_timing}::(x -> Vector{second_type(x)})
+@defprop SliceTiming{:slice_timing}::Vector{F64Second}
 
 """
     dwell_time(x)
@@ -50,7 +50,7 @@ metadata tags. Not to be confused with `effective_echo_spacing`, and the frequen
 mislabeling of echo spacing (which is spacing in the phase encoding direction)
 as "dwell time" (which is spacing in the readout direction).
 """
-@defprop DwellTime{:dwell_time}::(x -> second_type(x))
+@defprop DwellTime{:dwell_time}::F64Second
 
 """
     delay_time(x)
@@ -63,7 +63,7 @@ for sparse sequences using the `repetition_time` field that do not have the
 slice_timing field set to allowed for accurate calculation of "acquisition time".
 This field is mutually exclusive with `volume_timing`.
 """
-@defprop DelayTime{:delay_time}::(x -> second_type(x))
+@defprop DelayTime{:delay_time}::F64Second
 
 """
     acquisition_duration(x)
@@ -74,7 +74,7 @@ sequences that are described with the `volume_timingfield` and that do not have 
 `slice_timing` field set to allowed for accurate calculation of "acquisition time".
 This field is mutually exclusive with `repetition_time`.
 """
-@defprop AcquisitionDuration{:acquisition_duration}::(x -> second_type(x))
+@defprop AcquisitionDuration{:acquisition_duration}::F64Second
 
 """
     delay_after_trigger(x)
@@ -85,7 +85,7 @@ commonly caused by adjustments and loading times. This specification is entirely
 independent of `nvol_discarded_by_scanner` or `nvol_discarded_by_user`,
 as the delay precedes the acquisition.
 """
-@defprop DelayAfterTrigger{:delay_after_trigger}::(x -> second_type(x))
+@defprop DelayAfterTrigger{:delay_after_trigger}::F64Second
 
 """
     volume_timing(x)
@@ -99,7 +99,7 @@ field is mutually exclusive with repetition_time and delay_time. If defined, thi
 requires acquisition time (TA) be defined via either slice_timing or
 acquisition_duration be defined.
 """
-@defprop VolumeTiming{:volume_timing}::(x -> Vector{second_type(x)})
+@defprop VolumeTiming{:volume_timing}::Vector{F64Second}
 
 """
     repetition_time(x)
@@ -113,5 +113,5 @@ pixdim[4] field (after accounting for units stored in xyzt_units field) in the
 NIfTI header. This field is mutually exclusive with `volume_timing` and is derived
 from DICOM Tag 0018, 0080 and converted to seconds.
 """
-@defprop RepetitionTime{:repetition_time}::(x -> second_type(x))
+@defprop RepetitionTime{:repetition_time}::F64Second
 
