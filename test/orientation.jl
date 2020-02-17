@@ -99,6 +99,15 @@ end
     Q = NeuroCore.mat2quat(R, px)
     R2 = NeuroCore.quat2mat(Q, px)
     @test R.linear == R2.linear
+
+    R = AffineMap(
+        RotMatrix{3}([0.14 0.0 0.0
+                      0.0  0.9 0.0
+                      0.0  0.0 1.1]),
+        LinearMap((117.8551025390625, -35.72294235229492, -7.248798370361328))
+    )
+    R1 = NeuroCore.quat2mat(NeuroCore.mat2quat(R, px), px)
+    @test R1 == NeuroCore.quat2mat(NeuroCore.mat2quat(R1, px), px)
 end
 
 @testset "2D orientation" begin

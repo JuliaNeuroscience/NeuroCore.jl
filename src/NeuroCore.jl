@@ -66,7 +66,8 @@ export
     Metadata,
     spatialorder,
     dimnames,
-    dim
+    dim,
+    arraydata
 
 const F64Second = typeof(one(Float64) * s)
 const F64Tesla = typeof(one(Float64) * T)

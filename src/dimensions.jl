@@ -83,8 +83,8 @@ function finddim(f::Function, x)
     return nothing
 end
 
-indices(x::AxisArray) = getfield(x, :axes)
-indices(x) = keys.(axes(x))
+indices(x::AxisArray) = _values.(getfield(x, :axes))
+indices(x::ImageMeta) = indices(arraydata(x))
 
 #indices(x, d::Symbol) = _indices(indices(x, dim(dimnames(x), d)))
 #indices(x, d::Int) = _indices(indices(x)[d])
@@ -168,11 +168,9 @@ end
 
 Number of samples per second.
 """
-@defprop SamplingRate{:sampling_rate}::(x -> sampling_rate_type(x)) begin
+@defprop SamplingRate{:sampling_rate}::(x -> typeof(1.0 / s)) begin
     @getproperty x::AbstractArray -> 1/step(_values(timeaxis(x)))
 end
-
-sampling_rate_type(x) = typeof(1.0 / s)
 
 "Last time point along the time axis."
 @defprop StopTime{:stop_time}::F64Second begin

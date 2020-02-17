@@ -126,7 +126,7 @@ function mat2quat(
                                 r31 r32 r33]))
 
         # compute the determinant to determine if it is proper
-        zd = r11*r22*r33-r11*r32*r23-r21*r12*r33+r21*r32*r13+r31*r12*r23-r31*r22*r13
+        zd = det(Q)
         # TODO: double check this
         if qfac < 0
             r13 = -r13
@@ -170,6 +170,6 @@ function mat2quat(
         end
     end
 
-    return AffineMap(SPQuat(b, c, d), (xoffset, yoffset, zoffset))
+    return AffineMap(SPQuat(b, c, d), LinearMap((xoffset, yoffset, zoffset)))
 end
 

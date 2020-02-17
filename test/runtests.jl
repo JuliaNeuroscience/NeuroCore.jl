@@ -6,6 +6,8 @@ using NeuroCore: s, Hz, °, T
 
 using NeuroCore.FieldProperties
 
+
+
 @testset "dimensions" begin
     x = NeuroArray(rand(2,3,4,10);
                       left = 1:2,
@@ -13,8 +15,14 @@ using NeuroCore.FieldProperties
                       superior=1:4,
                       time = range(1, stop=10, length=10));
 
+    @test NeuroCore.indices(x) == (1:2, 1:3, 1:4, 1.0:1.0:10.0)
+
     @test NeuroCore.spatial_offset(x) == (1, 1, 1)
     @test NeuroCore.spatial_eltype(x) == (Int64, Int64, Int64)
+
+    # TODO get rid of once we don't need AxisArrays
+
+    @test dimnames(typeof(NeuroCore.Axis{:time}(1:2))) == (:time,)
 end
 
 @testset "Magnetization Transfer" begin
