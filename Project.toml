@@ -15,7 +15,7 @@ Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 [compat]
 CoordinateTransformations = "0.5.0"
 FieldProperties = "0.5.2"
-Images = "0.20.2, 0.21"
+Images = "0.20.2, 0.21, 0.22"
 NamedDims = "0.2.14"
 StaticArrays = "0.12.1"
 Unitful = "1"
