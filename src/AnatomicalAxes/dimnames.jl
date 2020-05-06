@@ -1,23 +1,11 @@
-module SemanticPositions
+#=
+* This is a very minimal implementation along the lines of properties from this:
+  http://bioportal.bioontology.org/ontologies/FMA. Instead of defining a complex
+  type hierarchy we need to use traits because this will invetiably evolve.
 
-export
-    is_left,
-    is_right,
-    is_anterior,
-    is_posterior,
-    is_superior,
-    is_inferior,
-    is_sagittal,
-    is_axial,
-    is_coronal,
-    is_white_matter,
-    is_csp,
-    is_cortical,
-    is_sulcus,
-    is_gyrus
-
-# TODO if changes to dimnames interface gets anymore complicated this should
-# probably be generated with a macro
+* It might be good adopt something like FilePathsBase.jl and parts of each "path"
+  could be subject to these methods/traits.
+=#
 """
     is_left(x) -> Bool
 
@@ -116,4 +104,10 @@ Returns `true` if `T` represents a gyrus.
 """
 is_sulcus(x::Symbol) = x === :sulcus
 
-end
+"""
+    is_channel(::T) -> Bool
+
+Returns `true` if `T` represents a gyrus.
+"""
+is_channel(x::Symbol) = x === :channel
+

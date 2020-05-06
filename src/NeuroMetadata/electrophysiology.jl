@@ -1,13 +1,5 @@
 
 """
-    nchannels(x) -> Int
-    nchannels!(x, val)
-
-Number of channels present
-"""
-@defprop NumberOfChannels{:nchannels}::Int
-
-"""
     high_cutoff(x) -> Hz
     high_cutoff!(x, val)
 

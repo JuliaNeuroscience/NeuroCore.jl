@@ -64,7 +64,9 @@ Duration of the magnetization transfer RF pulse in seconds.
 Metadata structure for information concerning MRI magnetization transfer pulse.
 
 ## Supported Properties
-$(description_list(mt_state, mt_offset_frequency, mt_pulse_bandwidth, mt_npulses, mt_pulse_shape, mt_pulse_duration))
+
+$(GETPROPERTY)
+
 """
 struct MagnetizationTransferMetadata{H,S}
     mt_state::Bool

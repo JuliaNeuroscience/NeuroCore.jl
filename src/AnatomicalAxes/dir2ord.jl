@@ -1,55 +1,6 @@
-function dimname2number(x::Symbol)
-    if is_left(x)
-        return 1
-    elseif is_right(x)
-        return -1
-    elseif is_posterior(x)
-        return 1
-    elseif is_anterior(x)
-        return -1
-    elseif is_inferior(x)
-        return 1
-    elseif is_superior(x)
-        return -1
-    else
-        error("$x is not a supported dimension.")
-    end
-end
+# spatial directions -> spatial order
 
-function number2dimname(n::Int)
-    if n === 1
-        return :left
-    elseif n === -1
-        return :right
-    elseif n === 2
-        return :posterior
-    elseif n === -2
-        return :anterior
-    elseif n === 3
-        return :inferior
-    elseif n === -3
-        return :superior
-    else
-        error("$n does not map to a dimension name.")
-    end
-end
-
-rotation2spatialorder(x) = rotation2spatialorder(affine_map(x))
-rotation2spatialorder(x::AffineMap) = rotation2spatialorder(x.linear)
-function rotation2spatialorder(R::Rotation{3,T}) where {T}
-    # load column vectors for each (i,j,k) direction from matrix
-    @inbounds begin
-        xi = R[1,1]
-        xj = R[1,2]
-        xk = R[1,3]
-        yi = R[2,1]
-        yj = R[2,2]
-        yk = R[2,3]
-        zi = R[3,1]
-        zj = R[3,2]
-        zk = R[3,3]
-    end
-
+function dir2ord(xi::T, xj::T, xk::T, yi::T, yj::T, yk::T, zi::T, zj::T, zk::T) where {T}
     # Normalize column vectors to get unit vectors along each ijk-axis
     # normalize i axis
     val = sqrt(xi*xi + yi*yi + zi*zi)
@@ -202,20 +153,18 @@ function rotation2spatialorder(R::Rotation{3,T}) where {T}
     # So, using ibest and pbest, we can assign the output code for
     # the i axis.  Mutatis mutandis for the j and k axes, of course.
 
-    return (number2dimname(ibest*pbest),
-            number2dimname(jbest*qbest),
-            number2dimname(kbest*rbest))
+    return (encoding_name(ibest*pbest), encoding_name(jbest*qbest), encoding_name(kbest*rbest))
 end
 
-function spatialorder2rotation(x::NTuple{3,Symbol})
-    @inbounds spatialorder2rotation(first(x), x[2], last(x))
+function dir2ord(sd::NTuple{3,NTuple{3,Any}})
+    @inbounds dir2ord(
+        ustrip(sd[1][1]), ustrip(sd[1][2]), ustrip(sd[1][3]),
+        ustrip(sd[2][1]), ustrip(sd[2][2]), ustrip(sd[2][3]),
+        ustrip(sd[3][1]), ustrip(sd[3][2]), ustrip(sd[3][3])
+    )
 end
 
-function spatialorder2rotation(x::Symbol, y::Symbol, z::Symbol)
-    return RotMatrix{3}([
-        dimname2number(x) 0                 0
-        0                 dimname2number(y) 0
-        0                 0                 dimname2number(z)
-   ])
+@inline function dir2ord(xi, xj, xk, yi, yj, yk, zi, zj, zk)
+    return dir2ord(promote(xi, xj, xk, yi, yj, yk, zi, zj, zk)...)
 end
 

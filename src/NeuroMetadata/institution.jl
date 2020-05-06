@@ -60,3 +60,4 @@ end
     institutional_department_name(self) => :department
     institution_address(self) => :address
 end
+

@@ -1,26 +1,3 @@
-"""
-    is_anatomical(::T) -> Bool
-
-Returns `true` if `T` represents anatomical data.
-"""
-is_anatomical(::T) where {T} = is_anatomical(T)
-is_anatomical(::Type{T}) where {T} = false
-
-"""
-    is_electrophysiology(::T) -> Bool
-
-Returns `true` if `T` represents electrophysiology data.
-"""
-is_electrophysiology(::T) where {T} = is_electrophysiology(T)
-is_electrophysiology(::Type{T}) where {T} = has_channel_axis(T) & has_time_axis(T)
-
-"""
-    is_functional(::T) -> Bool
-
-Returns `true` if `T` represents functional data.
-"""
-is_functional(::T) where {T} = is_functional(T)
-is_functional(::Type{T}) where {T} = false
 
 """
     artefact_description(x)
@@ -68,3 +45,4 @@ URL of the corresponding [Cognitive Atlas Task](https://www.cognitiveatlas.org/)
 URL of the corresponding [CogPO](http://www.cogpo.org/) term.
 """
 @defprop CogPOID{:cog_poid}::String
+

@@ -84,3 +84,4 @@ encoding directions are present.
 first "effective" echo and the center of the last "effective" echo.
 """
 @defprop TotalReadoutTime{:total_readout_time}::F64Second
+

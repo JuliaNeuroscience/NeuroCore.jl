@@ -1,3 +1,4 @@
+
 """
     manufacturer(x)
     manufacturer!(x, val)
@@ -65,13 +66,13 @@ julia> m.manufacturer
 "a"
 ```
 """
-struct HardwareMetadata{M} <: AbstractMetadata{M}
+struct HardwareMetadata{M} <: AbstractPropertyList{M}
     manufacturer::String
     model::String
     serial_number::String
     extension::M
 end
-FieldProperties.dictextension(m::HardwareMetadata) = getfield(m, :extension)
+FieldProperties.proplist(m::HardwareMetadata) = getfield(m, :extension)
 
 function HardwareMetadata(manufacturer, model, serial_number; kwargs...)
     return HardwareMetadata(manufacturer, model, serial_number, Metadata(; kwargs...))
@@ -84,3 +85,4 @@ end
     Any(self) => :extension
     Any!(self, val) => :extension
 end
+
