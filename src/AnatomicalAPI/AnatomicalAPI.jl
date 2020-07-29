@@ -5,13 +5,12 @@
 Defines axes specific methods related to anatomical data, including sagittal,
 axial, and coronal axes.
 """
-module AnatomicalAxes
+module AnatomicalAPI
 
 using LinearAlgebra
 using Unitful
 using AxisIndices
-using NamedDims
-using NeuroCore.SpatialAxes
+using NeuroCore.SpatialAPI
 using Base: tail
 
 export
@@ -28,6 +27,7 @@ export
     sagittal_indices,
     nsagittal,
     select_sagittaldim,
+    each_sagittal,
     # axial
     is_axial,
     axialdim,
@@ -38,6 +38,7 @@ export
     axial_indices,
     naxial,
     select_axialdim,
+    each_axial,
     # coronal
     is_coronal,
     coronaldim,
@@ -48,6 +49,7 @@ export
     coronal_indices,
     ncoronal,
     select_coronaldim,
+    each_coronal,
     # encoding directions
     EncodingDirection,
     encoding_name,
@@ -65,5 +67,40 @@ include("encoding_directions.jl")
 include("dir2ord.jl")
 include("coordinate_systems.jl")
 
+#=
+right_half(x) = select_sagittaldim(x, )
+
+function 
+    axs = ntuple(Val(N)) do i
+        dname = getfield(L, i)
+        axis = getfield(x, i)
+        if is_right(dname)
+            axis[>(div(length(axis), 2))]
+        elseif is_left(dname)
+            axis[<(div(length(axis), 2))]
+        else
+            axis
+        end
+    end
+    return NamedTuple{L,typeof(axs)}(axs)
 end
 
+function left_half(x)
+    map()
+    axs = ntuple(Val(N)) do i
+        dname = getfield(L, i)
+        axis = getfield(x, i)
+        if is_right(dname)
+            axis[<(div(length(axis), 2))]
+        elseif is_left(dname)
+            axis[>(div(length(axis), 2))]
+        else
+            axis
+        end
+    end
+    return NamedTuple{L,typeof(axs)}(axs)
+end
+=#
+
+
+end

@@ -1,6 +1,6 @@
 module NeuroMetadata
 
-using NeuroCore.AnatomicalAxes
+using NeuroCore.AnatomicalAPI
 using FieldProperties
 
 export

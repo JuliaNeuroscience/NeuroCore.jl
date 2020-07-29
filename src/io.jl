@@ -10,6 +10,7 @@ end
 read_type_noswap(io, ::Type{T}) where {T} = read(io, T)
 read_type_swap(io, ::Type{T}) where {T} = bswap(read(io, T))
 
+
 @inline function read_type(io, ::Type{T}, needswap::Bool) where {T}
     if needswap
         return read_type_swap(io, T)
@@ -45,6 +46,9 @@ function read_array(
 end
 
 
+
+
+
 #=
 
 @inline function read_type_noswap(io, ::Type{T}) where {T<:Tuple}
@@ -57,4 +61,6 @@ end
 end
 @inline read_type_swap(io, ::Type{T}) where {T} = bswap(read(io, T))
 =#
+
+
 

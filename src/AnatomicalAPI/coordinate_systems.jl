@@ -43,5 +43,3 @@ Returns `true` if `T` represents electrophysiology data.
 """
 is_electrophysiology(::T) where {T} = is_electrophysiology(T)
 is_electrophysiology(::Type{T}) where {T} = has_channel_axis(T) & has_time_axis(T)
-
-

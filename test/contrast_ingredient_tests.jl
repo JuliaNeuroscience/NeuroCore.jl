@@ -1,3 +1,4 @@
+
 using NeuroCore: ContrastIngredient
 
 @testset "Contrast Ingredients" begin

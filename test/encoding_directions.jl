@@ -11,3 +11,4 @@ import NeuroCore: EncodingDirection
 
     @test_throws ErrorException EncodingDirection(:xyz)
 end
+

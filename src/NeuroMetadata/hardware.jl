@@ -72,7 +72,8 @@ struct HardwareMetadata{M} <: AbstractPropertyList{M}
     serial_number::String
     extension::M
 end
-FieldProperties.proplist(m::HardwareMetadata) = getfield(m, :extension)
+
+FieldProperties.properties(m::HardwareMetadata) = getfield(m, :extension)
 
 function HardwareMetadata(manufacturer, model, serial_number; kwargs...)
     return HardwareMetadata(manufacturer, model, serial_number, Metadata(; kwargs...))

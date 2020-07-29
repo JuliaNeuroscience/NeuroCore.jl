@@ -18,7 +18,12 @@ using NeuroCore.SemanticPositions
                      (is_csp, (:csp,)),
                     )
         for v in vars
-            @test f(v)
+            @test @inferred(f(v))
         end
     end
 end
+
+
+img = NAPArray(ones(2,2), sagittal=1:2, time=1:2)
+@test @inferred(is_anatomical(img))
+
