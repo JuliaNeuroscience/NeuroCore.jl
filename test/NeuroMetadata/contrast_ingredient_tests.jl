@@ -1,6 +1,4 @@
 
-using NeuroCore: ContrastIngredient
-
 @testset "Contrast Ingredients" begin
     @test ContrastIngredient(0) == ContrastIngredient("IODINE")
     @test ContrastIngredient(1) == ContrastIngredient("GADOLINIUM")

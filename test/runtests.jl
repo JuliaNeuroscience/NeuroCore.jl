@@ -14,7 +14,7 @@ using NeuroCore.FieldProperties
 
 include("./ColorChannels/ColorChannels.jl")
 include("SpatialAPI.jl")
-#include("named_axes.jl")
+include("./NeuroMetadata/NeuroMetadata.jl")
 
 #=
 
@@ -237,7 +237,7 @@ include("contrast_ingredient_tests.jl")
 =#
 
 @testset "docs" begin
-    doctest(NeuroCore; manual=false)
+    doctest(NeuroCore)
 end
 
 

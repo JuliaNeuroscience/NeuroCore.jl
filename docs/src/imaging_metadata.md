@@ -14,7 +14,7 @@ NeuroCore.pulse_sequence
 NeuroCore.pulse_sequence_details
 NeuroCore.scanning_sequence
 NeuroCore.sequence_name
-NeuroCore.sequence_varient
+NeuroCore.sequence_variant
 ```
 
 ## Encoding Direction
