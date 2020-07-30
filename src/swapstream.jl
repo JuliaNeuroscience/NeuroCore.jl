@@ -1,6 +1,11 @@
 module SwapStreams
 
-export SwapStream
+using MappedArrays
+
+export
+    BigEndian,
+    LittleEndian,
+    SwapStream
 
 const LittleEndian = 0x01020304
 const BigEndian = 0x04030201
@@ -8,9 +13,11 @@ const BigEndian = 0x04030201
 """
 
 ```jldoctest
-julia> s = SwapStream(IOBuffer(), true);
+julia> using NeuroCore
 
-julia> write(s, [1:10...])
+julia> s = NeuroCore.SwapStream(IOBuffer());
+
+julia> write(s, [1:10...]);
 
 julia> seek(s, 0);
 
@@ -48,11 +55,19 @@ struct SwapStream{S,IOType<:IO} <: IO
     io::IOType
 
     SwapStream{S}(io::IOType) where {S,IOType<:IO} = new{S,IOType}(io)
+
+    SwapStream(io::IO) = SwapStream{true}(io)
+
+    function SwapStream(file_endianness::UInt32, io::IOType) where {IOType}
+        if file_endianness === ENDIAN_BOM
+            return new{false,IOType}(io)
+        else
+            return new{true,IOType}(io)
+        end
+    end
 end
 
-SwapStream(io::IO, endianness::UInt32) =
-    SwapStream{ENDIAN_BOM != endianness}(io)
-SwapStream(io::IO; needswap::Bool=false) = SwapStream{needswap}(io)
+
 
 
 Base.seek(s::SwapStream, n::Integer) = seek(s.io, n)

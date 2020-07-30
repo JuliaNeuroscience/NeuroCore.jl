@@ -54,6 +54,8 @@ $(description_list(manufacturer, manufacturer_model_name, device_serial_number))
 ```jldoctest
 julia> using NeuroCore
 
+julia> using NeuroCore.NeuroMetadata
+
 julia> m = HardwareMetadata("a", "b", "c");
 
 julia> m.device_serial_number
@@ -76,7 +78,7 @@ end
 FieldProperties.proplist(m::HardwareMetadata) = getfield(m, :extension)
 
 function HardwareMetadata(manufacturer, model, serial_number; kwargs...)
-    return HardwareMetadata(manufacturer, model, serial_number, Metadata(; kwargs...))
+    return HardwareMetadata(manufacturer, model, serial_number, PropertyList(; kwargs...))
 end
 
 @properties HardwareMetadata begin

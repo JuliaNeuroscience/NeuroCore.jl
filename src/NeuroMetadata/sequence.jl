@@ -53,12 +53,12 @@ Manufacturer’s designation of the sequence name.
 @defprop SequenceName{:sequence_name}::String
 
 """
-    sequence_varient(x)
-    sequence_varient!(x, val)
+    sequence_variant(x)
+    sequence_variant!(x, val)
 
 Variant of the `scanning_sequence` property.
 """
-@defprop SequenceVarient{:sequence_varient}::String
+@defprop SequenceVariant{:sequence_variant}::String
 """
     SequenceMetadata 
 
@@ -66,7 +66,7 @@ Metadata structure for general MRI sequence information.
 
 ## Supported Properties
 $(description_list(nonlinear_gradient_correction, pulse_sequence, pulse_sequence_details,
-                   pulse_sequence_type, scanning_sequence, sequence_name, sequence_varient))
+                   pulse_sequence_type, scanning_sequence, sequence_name, sequence_variant))
 """
 struct SequenceMetadata
     nonlinear_gradient_correction::Bool
@@ -75,7 +75,7 @@ struct SequenceMetadata
     pulse_sequence_type::String
     scanning_sequence::String
     sequence_name::String
-    sequence_varient::String
+    sequence_variant::String
 end
 
 @properties SequenceMetadata begin
@@ -85,6 +85,6 @@ end
     pulse_seqtype(self) => :pulse_sequence_type
     scanning_sequence(self) => :scanning_sequence
     sequence_name(self) => :sequence_name
-    sequence_varient(self) => :sequence_varient
+    sequence_variant(self) => :sequence_variant
 end
 

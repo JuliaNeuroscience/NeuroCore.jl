@@ -234,9 +234,11 @@ include("encoding_directions.jl")
 include("time_tests.jl")
 include("contrast_ingredient_tests.jl")
 
+=#
+
 @testset "docs" begin
     doctest(NeuroCore; manual=false)
 end
-=#
+
 
 

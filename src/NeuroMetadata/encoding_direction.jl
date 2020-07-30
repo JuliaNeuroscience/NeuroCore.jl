@@ -90,6 +90,8 @@ $(description_list(freqdim, phasedim, slicedim, slice_start, slice_end, slice_du
 ```jldoctest
 julia> using NeuroCore
 
+julia> using NeuroCore.NeuroMetadata
+
 julia> m = EncodingDirectionMetadata(1, 2, 3, 4, 5, 6)
 EncodingDirectionMetadata(1, 2, 3, 4, 5, 6.0)
 

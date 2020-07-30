@@ -36,6 +36,8 @@ $(description_list(institution_name,institutional_department_name,institution_ad
 ```jldoctest
 julia> using NeuroCore
 
+julia> using NeuroCore.NeuroMetadata
+
 julia> m = InstitutionInformation("a", "b", "c")
 InstitutionInformation("a", "b", "c")
 
