@@ -1,8 +1,8 @@
 """
     SpatialAPI
 
-
-
+Module responsible for defining core methods for accessing and manipulating spatial
+components data structures in Julia.
 """
 module SpatialAPI
 
@@ -251,31 +251,6 @@ By default this is computed from `pixel_spacing`, but you can set this
 manually using ImagesMeta.
 """
 spatial_directions(img::AbstractArray) = _spatial_directions(pixel_spacing(img))
-
-#spatial_directions(img) = _spatial_directions(img, spatialdims(x))
-#=
-function _spatial_directions(img::AbstractArray{T,N}, spatdims::Tuple{Vararg{Int}}) where {N}
-    map(spatdims) do i
-        axis = axes(img, i)
-        if hasproperty(axis, :spatial_directions)
-            return getproperty(x, :spatial_directions)
-        else
-            ntuple(Val(N)) do j
-                if j === i
-                    ks = keys(axis)
-                    if AxisIndices.StaticRanges.has_step(ks)
-                        return step(ks)
-                    else
-                        return 1  # If keys are not range then just treat as one unit spacing
-                    end
-                else
-                    return 0
-                end
-            end
-        end
-    end
-end
-=#
 
 # FIXME
 spatial_directions(img::AbstractMappedArray) = spatial_directions(parent(img))
