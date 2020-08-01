@@ -5,16 +5,18 @@ makedocs(;
     format=Documenter.HTML(),
     pages = [
         "Introduction" => "index.md",
-        "Properties" => [
-            "Introduction to Properties" => "introduction_properties.md",
-            "Imaging" => "imaging_metadata.md",
-            "Electrophysiology" => "electrophysiology.md",
+        "Sub-Modules" => [
+            "Anatomical API" => "anatomical_api.md",
+            "Spatial API" => "spatial_api.md",  # TODO
+            "Color Channels" => "color_channels.md",  # TODO
+            "Properties" => [
+                "Introduction to Properties" => "introduction_properties.md",
+                "Imaging" => "imaging_metadata.md",
+                "Electrophysiology" => "electrophysiology.md",
+            ],
         ],
-        "Anatomical API" => "anatomical_api.md",
-        "Spatial API" => "spatial_api.md",  # TODO
-        "Color Channels" => "color_channels.md",  # TODO
         "Interfaceing With NeuroCore" => "working_with_interface.md",
-        "Types" => "types.md",
+        "Plots" => "plots.md"
     ],
     repo="https://github.com/JuliaNeuroscience/NeuroCore.jl/blob/{commit}{path}#L{line}",
     sitename="NeuroCore.jl",
