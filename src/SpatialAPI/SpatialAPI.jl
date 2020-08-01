@@ -1,3 +1,4 @@
+
 """
     SpatialAPI
 
@@ -56,7 +57,7 @@ Returns the `dimnames` of `x` that correspond to spatial dimensions.
     if has_dimnames(T)
         return _spatial_order(Val(dimnames(T)))
     else
-        return AxisIndices.Interface.default_names(Val(min(3, ndims(T))))
+        return AxisIndices.NamedAxes.default_names(Val(min(3, ndims(T))))
     end
 end
 
@@ -124,11 +125,20 @@ end
 
 Returns a tuple of each axis corresponding to a spatial dimensions.
 """
-#l@inline spatial_axes(x) = map(i -> axes(x, i), spatialdims(x))
 @inline spatial_axes(x) = _filter_axes(named_axes(x), spatial_order(x))
 
 @inline function _filter_axes(naxs::NamedTuple, d::Tuple{Vararg{Any,N}}) where {N}
     return ntuple(i -> getfield(naxs, getfield(d, i)), Val(N))
+end
+
+
+"""
+    spatial_axes(x, sz; kwargs...)
+
+Returns an `AxesIterator` along the spatial axes.
+"""
+@inline function spatial_axes(x, sz; kwargs...)
+    return AxesIterator(CartesianIndices(spatial_axes(x)), sz; kwargs...)
 end
 
 """

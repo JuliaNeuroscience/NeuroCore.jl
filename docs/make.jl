@@ -3,7 +3,7 @@ using Documenter, NeuroCore
 makedocs(;
     modules=[NeuroCore],
     format=Documenter.HTML(),
-    pages=[
+    pages = [
         "Introduction" => "index.md",
         "Properties" => [
             "Introduction to Properties" => "introduction_properties.md",
@@ -13,6 +13,7 @@ makedocs(;
         "Anatomical API" => "anatomical_api.md",
         "Spatial API" => "spatial_api.md",  # TODO
         "Color Channels" => "color_channels.md",  # TODO
+        "Interfaceing With NeuroCore" => "working_with_interface.md",
         "Types" => "types.md",
     ],
     repo="https://github.com/JuliaNeuroscience/NeuroCore.jl/blob/{commit}{path}#L{line}",
@@ -20,8 +21,6 @@ makedocs(;
     authors="Zachary P. Christensen",
 )
 
-deploydocs(
-    repo = "github.com/JuliaNeuroscience/NeuroCore.jl.git",
-)
+deploydocs(repo = "github.com/JuliaNeuroscience/NeuroCore.jl.git")
 
 

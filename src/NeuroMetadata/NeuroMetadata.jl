@@ -70,6 +70,7 @@ function ContrastIngredient(i::Symbol)
 end
 
 Base.String(i::ContrastIngredient) = String(Symbol(i))
+
 include("mri.jl")
 include("encoding_direction.jl")
 include("magnetization_transfer.jl")

@@ -1,3 +1,8 @@
+"""
+    ColorChannels
+
+Defines methods for conveniently swapping between arrays with color elements and channels.
+"""
 module ColorChannels
 
 using AxisIndices
@@ -55,7 +60,6 @@ export
     StackedView,
     channel_view,
     color_view,
-    permuteddimsview,
     raw_view,
     normed_view,
     reinterpretc,
@@ -73,10 +77,10 @@ export
     clamp01!,
     clamp01nan,
     clamp01nan!,
-    colorsigned,
-    scaleminmax,
-    scalesigned,
-    takemap,
+    color_signed,
+    scale_minmax,
+    scale_signed,
+    take_map,
     # spatial
     # channels
     channeldim,
@@ -85,7 +89,7 @@ export
     channel_keys,
     channel_indices,
     nchannel,
-    select_channeldim,
+    select_channel,
     zeroarray
 
 include("channels.jl")

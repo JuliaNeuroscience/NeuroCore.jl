@@ -11,9 +11,8 @@ using NeuroCore: s, Hz, °, T
 
 using NeuroCore.FieldProperties
 
-
 include("./ColorChannels/ColorChannels.jl")
-include("SpatialAPI.jl")
+include("./SpatialAPI/SpatialAPI.jl")
 include("./NeuroMetadata/NeuroMetadata.jl")
 
 #=

@@ -25,7 +25,7 @@ function clamp01!(img::AbstractArray)
     @inbounds for i in eachindex(img)
         img[i] = clamp01(img[i])
     end
-    img
+    return img
 end
 
 """
@@ -51,12 +51,12 @@ function clamp01nan!(img::GenericImage)
     @inbounds for i in eachindex(img)
         img[i] = clamp01nan(img[i])
     end
-    img
+    return img
 end
 
 """
-    scaleminmax(min, max) -> f
-    scaleminmax(T, min, max) -> f
+    scale_minmax(min, max) -> f
+    scale_minmax(T, min, max) -> f
 
 Return a function `f` which maps values less than or equal to `min` to
 0, values greater than or equal to `max` to 1, and uses a linear scale
@@ -70,7 +70,7 @@ RGB), then scaling is applied to each color channel.
 ## Example 1
 
 ```julia
-julia> f = scaleminmax(-10, 10)
+julia> f = scale_minmax(-10, 10)
 (::#9) (generic function with 1 method)
 
 julia> f(10)
@@ -89,23 +89,23 @@ julia> f(5)
 julia> c = RGB(255.0,128.0,0.0)
 RGB{Float64}(255.0,128.0,0.0)
 
-julia> f = scaleminmax(RGB, 0, 255)
+julia> f = scale_minmax(RGB, 0, 255)
 (::#13) (generic function with 1 method)
 
 julia> f(c)
 RGB{Float64}(1.0,0.5019607843137255,0.0)
 ```
 
-See also: [`takemap`](@ref).
+See also: [`take_map`](@ref).
 """
-function scaleminmax(min::T, max::T) where T
+function scale_minmax(min::T, max::T) where T
     @inline function(x)
         xp, minp, maxp = promote(x, min, max)  # improves performance to promote explicitly
         y = clamp(xp, minp, maxp)
         (y-minp)/(maxp-minp)
     end
 end
-function scaleminmax(::Type{Tout}, min::T, max::T) where {Tout,T}
+function scale_minmax(::Type{Tout}, min::T, max::T) where {Tout,T}
     @inline function(x)
         xp, minp, maxp = promote(x, min, max)
         y = clamp(xp, minp, maxp)
@@ -116,67 +116,50 @@ end
 # since we know the result will be between 0 and 1, we can use rem to save a check
 @inline smmconvert(::Type{Tout}, x) where {Tout<:Normed} = rem(x, Tout)
 
-scaleminmax(min, max) = scaleminmax(promote(min, max)...)
-scaleminmax(::Type{T}, min, max) where {T} = scaleminmax(T, promote(min, max)...)
+scale_minmax(min, max) = scale_minmax(promote(min, max)...)
+scale_minmax(::Type{T}, min, max) where {T} = scale_minmax(T, promote(min, max)...)
 
 # TODO: use triangular dispatch when we can count on Julia 0.6+
-function scaleminmax(::Type{C}, min::T, max::T) where {C<:Colorant, T<:Real}
-    _scaleminmax(C, eltype(C), min, max)
+function scale_minmax(::Type{C}, min::T, max::T) where {C<:Colorant, T<:Real}
+    return _scale_minmax(C, eltype(C), min, max)
 end
-function _scaleminmax(::Type{C}, ::Type{TC}, min::T, max::T) where {C<:Colorant, TC<:Real, T<:Real}
-    freal = scaleminmax(TC, min, max)
+function _scale_minmax(::Type{C}, ::Type{TC}, min::T, max::T) where {C<:Colorant, TC<:Real, T<:Real}
+    freal = scale_minmax(TC, min, max)
     @inline function(c)
         C(mapc(freal, c))
     end
 end
-function _scaleminmax(::Type{C}, ::Type{Any}, min::T, max::T) where {C<:Colorant, T<:Real}
-    freal = scaleminmax(min, max)
+function _scale_minmax(::Type{C}, ::Type{Any}, min::T, max::T) where {C<:Colorant, T<:Real}
+    freal = scale_minmax(min, max)
     @inline function(c)
         C(mapc(freal, c))
     end
-end
-
-function takemap(::typeof(scaleminmax), A::AbstractArray{T}) where T<:Real
-    min, max = extrema(A)
-    scaleminmax(min, max)
-end
-function takemap(::typeof(scaleminmax), A::AbstractArray{C}) where C<:Colorant
-    min, max = extrema(channel_view(A))
-    scaleminmax(C, min, max)
-end
-function takemap(::typeof(scaleminmax), ::Type{Tout}, A::AbstractArray{T}) where {Tout,T<:Real}
-    min, max = extrema(A)
-    scaleminmax(Tout, min, max)
-end
-function takemap(::typeof(scaleminmax), ::Type{Cout}, A::AbstractArray{C}) where {Cout<:Colorant,C<:Colorant}
-    min, max = extrema(channel_view(A))
-    scaleminmax(Cout, min, max)
 end
 
 """
-    scalesigned(maxabs) -> f
+    scale_signed(maxabs) -> f
 
 Return a function `f` which scales values in the range `[-maxabs,
 maxabs]` (clamping values that lie outside this range) to the range
 `[-1, 1]`.
 
-See also: [`colorsigned`](@ref).
+See also: [`color_signed`](@ref).
 """
-function scalesigned(maxabs::Real)
+function scale_signed(maxabs::Real)
     maxabs > 0 || throw(ArgumentError("maxabs must be positive, got $maxabs"))
-    x -> clamp(x, -maxabs, maxabs)/maxabs
+    return x -> clamp(x, -maxabs, maxabs)/maxabs
 end
 
 """
-    scalesigned(min, center, max) -> f
+    scale_signed(min, center, max) -> f
 
 Return a function `f` which scales values in the range `[min, center]`
 to `[-1,0]` and `[center,max]` to `[0,1]`. Values smaller than
 `min`/`max` get clamped to `min`/`max`, respectively.
 
-See also: [`colorsigned`](@ref).
+See also: [`color_signed`](@ref).
 """
-function scalesigned(min::T, center::T, max::T) where T<:Real
+function scale_signed(min::T, center::T, max::T) where T<:Real
     min <= center <= max || throw(ArgumentError("values must be ordered, got $min, $center, $max"))
     sneg, spos = 1/(center-min), 1/(max-center)
     function(x)
@@ -184,17 +167,14 @@ function scalesigned(min::T, center::T, max::T) where T<:Real
         ifelse(Δy < 0, sneg*Δy, spos*Δy)
     end
 end
-scalesigned(min::Real, center::Real, max::Real) = scalesigned(promote(min, center, max)...)
-
-function takemap(::typeof(scalesigned), A::AbstractArray{T}) where T<:Real
-    mn, mx = extrema(A)
-    scalesigned(max(abs(mn), abs(mx)))
+function scale_signed(min::Real, center::Real, max::Real)
+    return scale_signed(promote(min, center, max)...)
 end
 
 """
-    colorsigned()
-    colorsigned(colorneg, colorpos) -> f
-    colorsigned(colorneg, colorcenter, colorpos) -> f
+    color_signed()
+    color_signed(colorneg, colorpos) -> f
+    color_signed(colorneg, colorcenter, colorpos) -> f
 
 Define a function that maps negative values (in the range [-1,0]) to
 the linear colormap between `colorneg` and `colorcenter`, and positive
@@ -207,25 +187,25 @@ The default colors are:
 - `colorneg`: green1
 - `colorpos`: magenta
 
-See also: [`scalesigned`](@ref).
+See also: [`scale_signed`](@ref).
 """
-colorsigned(neg::C, center::C, pos::C) where {C<:Colorant} = function(x)
+color_signed(neg::C, center::C, pos::C) where {C<:Colorant} = function(x)
     y = clamp(x, -oneunit(x), oneunit(x))
     yabs = abs(y)
     C(ifelse(y>0, weighted_color_mean(yabs, pos, center),
                   weighted_color_mean(yabs, neg, center)))
 end
 
-function colorsigned(colorneg::C, colorpos::C) where C<:Colorant
-    colorsigned(colorneg, C(colorant"white"), colorpos)
+function color_signed(colorneg::C, colorpos::C) where C<:Colorant
+    return color_signed(colorneg, C(colorant"white"), colorpos)
 end
 
-colorsigned() = colorsigned(colorant"green1", colorant"magenta")
+color_signed() = color_signed(colorant"green1", colorant"magenta")
 
 
 """
-    takemap(f, A) -> fnew
-    takemap(f, T, A) -> fnew
+    take_map(f, A) -> fnew
+    take_map(f, T, A) -> fnew
 
 Given a value-mapping function `f` and an array `A`, return a
 "concrete" mapping function `fnew`. When applied to elements of `A`,
@@ -240,7 +220,7 @@ Optionally one can specify the output type `T` that `fnew` should produce.
 ```julia
 julia> A = [0, 1, 1000];
 
-julia> f = takemap(scaleminmax, A)
+julia> f = take_map(scale_minmax, A)
 (::#7) (generic function with 1 method)
 
 julia> f.(A)
@@ -250,7 +230,30 @@ julia> f.(A)
  1.0
 ```
 """
-takemap
+take_map
 
-takemap(f, A) = f
-takemap(f, ::Type{T}, A) where {T} = x->T(f(x))
+take_map(f, A) = f
+take_map(f, ::Type{T}, A) where {T} = x->T(f(x))
+
+function take_map(::typeof(scale_minmax), A::AbstractArray{T}) where T<:Real
+    min, max = extrema(A)
+    scale_minmax(min, max)
+end
+function take_map(::typeof(scale_minmax), A::AbstractArray{C}) where C<:Colorant
+    min, max = extrema(channel_view(A))
+    scale_minmax(C, min, max)
+end
+function take_map(::typeof(scale_minmax), ::Type{Tout}, A::AbstractArray{T}) where {Tout,T<:Real}
+    min, max = extrema(A)
+    scale_minmax(Tout, min, max)
+end
+function take_map(::typeof(scale_minmax), ::Type{Cout}, A::AbstractArray{C}) where {Cout<:Colorant,C<:Colorant}
+    min, max = extrema(channel_view(A))
+    scale_minmax(Cout, min, max)
+end
+
+function take_map(::typeof(scale_signed), A::AbstractArray{T}) where T<:Real
+    mn, mx = extrema(A)
+    scale_signed(max(abs(mn), abs(mx)))
+end
+
