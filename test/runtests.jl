@@ -1,12 +1,21 @@
-using NeuroCore, Test, Unitful, CoordinateTransformations, Documenter
+using NeuroCore
+using Test
+using Unitful
+using CoordinateTransformations
+using Documenter
+using ColorTypes
 
-using NeuroCore: SPQuat, RotMatrix, quat2mat, mat2quat, pixelspacing
+#using NeuroCore: SPQuat, RotMatrix, quat2mat, mat2qua
 
 using NeuroCore: s, Hz, °, T
 
 using NeuroCore.FieldProperties
 
+include("./ColorChannels/ColorChannels.jl")
+include("./SpatialAPI/SpatialAPI.jl")
+include("./NeuroMetadata/NeuroMetadata.jl")
 
+#=
 
 @testset "dimensions" begin
     x = NeuroArray(rand(2,3,4,10);
@@ -215,13 +224,20 @@ end
 end
 
 
+x = NAPArray(ones(2,2,2,2), x = 1:2, y = 1:2, time=1:2, z = 1:2)
+@test @inferred(spatial_order(x)) == (:x, :y, :z)
+
 include("semantic_positions.jl")
 include("orientation.jl")
 include("encoding_directions.jl")
 include("time_tests.jl")
 include("contrast_ingredient_tests.jl")
 
+=#
+
 @testset "docs" begin
-    doctest(NeuroCore; manual=false)
+    doctest(NeuroCore)
 end
+
+
 

@@ -1,73 +1,44 @@
+
 module NeuroCore
 
-using Images
+using AxisIndices
 using NamedDims
-using StaticArrays, CoordinateTransformations, LinearAlgebra
+using TimeAxes
+using FieldProperties
+using StaticArrays
+using GeometryBasics
+using Mmap
+using CoordinateTransformations
+using LinearAlgebra
 using Unitful
 using Unitful: s, Hz, T, °, mm
-using FieldProperties
 
 using CoordinateTransformations: Rotations
 using CoordinateTransformations.Rotations: SPQuat, Rotation
 
-export
-    NeuroArray,
-    NeuroCoordinates,
-    CoordinateMetadata,
-    InstitutionInformation,
-    HardwareMetadata,
-    OrientationMetadata,
-    # Orientation
-    affine_map,
-    # Units
-    #second_type,
-    #tesla_type,
-    #hertz_type,
-    #degree_type,
-    #ohms_type,
-    # methods
-    sagittaldim,
-    coronaldim,
-    axialdim,
-    indices_sagittal,
-    indices_axial,
-    indices_coronal,
-    is_radiologic,
-    is_neurologic,
-    # time
-    onset,
-    onset!,
-    sampling_rate,
-    sampling_rate!,
-    duration,
-    duration!,
-    stop_time,
-    stop_time!,
-    # encoding directions
-    EncodingDirection,
-    freqdim,
-    freqdim!,
-    phasedim,
-    phasedim!,
-    slice_start,
-    slice_start!,
-    slice_end,
-    slice_end!,
-    slicedim,
-    slicedim!,
-    slice_duration,
-    slice_duration!,
-    phase_encoding_direction,
-    phase_encoding_direction!,
-    slice_encoding_direction,
-    slice_encoding_direction!,
-    EncodingDirectionMetadata,
-    # reexprots
-    Metadata,
-    spatialorder,
-    dimnames,
-    dim,
-    arraydata
+using Base: @propagate_inbounds
+
+using Reexport
+
+include("./ColorChannels/ColorChannels.jl")
+
+include("./SpatialAPI/SpatialAPI.jl")
+@reexport using .SpatialAPI
+
+include("./AnatomicalAPI/AnatomicalAPI.jl")
+using .AnatomicalAPI
+@reexport using .AnatomicalAPI
+
+#include("./Nodes/Nodes.jl")
+#using .Nodes
+#@reexport using .Nodes
+
+include("./swapstream.jl")
+using .SwapStreams
+@reexport using .SwapStreams
+
+include("./NeuroMetadata/NeuroMetadata.jl")
+using .NeuroMetadata
 
 const F64Second = typeof(one(Float64) * s)
 const F64Tesla = typeof(one(Float64) * T)
@@ -75,17 +46,46 @@ const F64kOhms = typeof(1.0u"kΩ")
 const F64Hertz = typeof(one(Float64) * Hz)
 const IntDegree = typeof(1 * °)
 
-include("./SemanticPositions/SemanticPositions.jl")
-using .SemanticPositions
+include("io.jl")
 
-include("dimensions.jl")
-include("./Orientation/Orientation.jl")
-include("hardware.jl")
-include("institution.jl")
-include("enums.jl")
-include("traits.jl")
-include("./Imaging/Imaging.jl")
-include("./Electrophysiology/Electrophysiology.jl")
-include("coordinates.jl")
+"""
+    CoordinateSpace
+
+Returns an instance of `CoordinateSystem` describing the coordinate system for `x`.
+"""
+struct CoordinateSpace{S}
+    space::S
+end
+
+const UnkownCoordinatesSpace = CoordinateSpace(nothing)
+
+coordinate_space(x) = UnkownCoordinatesSystem
+
+#= TODO formalize this interaction
+CoordinateSpace(sc::MetadataArray{T,N,<:CoordinateSystem}) = metadata(sc)
+
+CoordinateSpace(sc::AbstractAxisArray) = (parent(sc))
+
+CoordinateSpace(sc::NamedDimsArray) = (parent(sc))
+=#
+
+# TODO document SpatialCoordinates
+"""
+    SpatialCoordinates
+
+"""
+const SpatialCoordinates{L,CS,N,Axs} = NamedMetaCartesianAxes{L,N,CoordinateSpace{CS},Axs}
+
+function SpatialCoordinates(x)
+    return NamedMetaCartesianAxes{spatial_order(x)}(spatial_axes(x), metadata=CoordinateSpace(x))
+end
+
+#= TODO Is this a good name for this
+"The anatomical coordinate system."
+@defprop AnatomicalSystem{:anatsystem}
+
+"The acquisition coordinate system."
+@defprop AcquisitionSystem{:acqsystem}
+=#
 
 end
